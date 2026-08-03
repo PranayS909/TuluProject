@@ -6,17 +6,16 @@
 <title>Tulu · ತುಳು — Learn the language of the coast</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&family=Noto+Sans+Kannada:wght@400;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&family=Noto+Sans+Kannada:wght@500;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-<div class="grain"></div>
-
-<!-- NAV -->
+<!-- ============ NAV ============ -->
 <header class="nav" id="nav">
   <div class="nav-inner">
     <a href="#top" class="nav-brand">
+      <span class="brand-mascot">🦜</span>
       <span class="brand-kn">ತುಳು</span>
       <span class="brand-en">Tulu</span>
     </a>
@@ -26,8 +25,8 @@
       <a href="#roadmap">Roadmap</a>
     </nav>
     <div class="nav-actions">
-      <a href="#roadmap" class="btn btn-ghost">Course</a>
-      <a href="#leaderboard" class="btn btn-solid">Start learning</a>
+      <a href="#roadmap" class="btn btn-outline">Course</a>
+      <a href="#leaderboard" class="btn btn-solid">GET STARTED</a>
       <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
@@ -35,176 +34,196 @@
   </div>
 </header>
 
-<!-- HERO -->
+<!-- ============ HERO ============ -->
 <section class="hero" id="top">
-  <div class="hero-bg" aria-hidden="true">
-    <svg class="hero-waves" viewBox="0 0 1440 220" preserveAspectRatio="none">
-      <path class="wave wave-1" d="M0,120 C 240,180 480,60 720,110 C 960,160 1200,70 1440,120 L1440,220 L0,220 Z"></path>
-      <path class="wave wave-2" d="M0,150 C 220,90 460,190 720,140 C 980,90 1220,180 1440,150 L1440,220 L0,220 Z"></path>
-    </svg>
-  </div>
+  <div class="hero-blob hero-blob--1" aria-hidden="true"></div>
+  <div class="hero-blob hero-blob--2" aria-hidden="true"></div>
 
-  <div class="hero-content">
-    <p class="eyebrow"><span class="eyebrow-kn">ತುಳು</span><span class="eyebrow-line"></span>Tulu Nadu · Coastal Karnataka &amp; Kerala</p>
-    <h1 class="hero-title">
-      A language carried in<br>
-      <em>song, spirit, and soil.</em>
-    </h1>
-    <p class="hero-sub">
-      Tulu is a classical Dravidian language spoken along India's southwestern coast — home to the
-      Tigalari script, the epic <em>Tulu Mahabharato</em>, and the ritual theatre of Yakshagana and Bhuta Kola.
-      Learn it the way it has always lived: by ear, by story, by place.
-    </p>
-    <div class="hero-cta">
-      <a href="#roadmap" class="btn btn-solid btn-lg">Begin the course</a>
-      <a href="#history" class="btn btn-outline btn-lg">Explore the history</a>
+  <div class="hero-inner">
+    <div class="hero-copy">
+      <p class="eyebrow-pill"><span class="eyebrow-kn">ತುಳು</span>Tulu Nadu · Coastal Karnataka &amp; Kerala</p>
+      <h1 class="hero-title">Learn Tulu the<br><span class="hl">fun</span>, free way.</h1>
+      <p class="hero-sub">
+        A free, playful path into Tulu — the Dravidian language of India's southwestern coast,
+        carried in Bhoota Kola ritual, buffalo-racing Kambala, and everyday kitchens making Neer Dosa.
+      </p>
+      <div class="hero-cta">
+        <a href="#roadmap" class="btn btn-solid btn-lg">START LEARNING FOR FREE</a>
+        <a href="#history" class="btn btn-outline btn-lg">EXPLORE THE HISTORY</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><span class="stat-num">2.5M+</span><span class="stat-label">speakers</span></div>
+        <div class="stat"><span class="stat-num">6</span><span class="stat-label">ruling eras</span></div>
+        <div class="stat"><span class="stat-num">2</span><span class="stat-label">scripts</span></div>
+      </div>
     </div>
 
-    <div class="hero-stats">
-      <div class="stat">
-        <span class="stat-num">~2.5M</span>
-        <span class="stat-label">estimated speakers</span>
-      </div>
-      <div class="stat">
-        <span class="stat-num">3</span>
-        <span class="stat-label">coastal districts</span>
-      </div>
-      <div class="stat">
-        <span class="stat-num">15th c.</span>
-        <span class="stat-label">oldest known text</span>
-      </div>
-      <div class="stat">
-        <span class="stat-num">1</span>
-        <span class="stat-label">native script — Tigalari</span>
+    <div class="hero-art" aria-hidden="true">
+      <div class="mascot-card">
+        <svg viewBox="0 0 220 220" class="mascot-svg">
+          <ellipse cx="110" cy="205" rx="70" ry="12" fill="rgba(0,0,0,0.08)"/>
+          <path d="M110 30 C 60 30 35 75 40 120 C 44 158 72 188 110 188 C 148 188 176 158 180 120 C 185 75 160 30 110 30 Z" fill="var(--accent)"/>
+          <path d="M45 100 C 20 95 10 70 18 45 C 30 55 42 68 48 85 Z" fill="var(--accent)"/>
+          <path d="M175 100 C 200 95 210 70 202 45 C 190 55 178 68 172 85 Z" fill="var(--accent)"/>
+          <circle cx="85" cy="105" r="11" fill="#12332C"/>
+          <circle cx="135" cy="105" r="11" fill="#12332C"/>
+          <circle cx="88" cy="101" r="3.5" fill="#fff"/>
+          <circle cx="138" cy="101" r="3.5" fill="#fff"/>
+          <path d="M100 130 Q110 140 120 130" stroke="#12332C" stroke-width="4" fill="none" stroke-linecap="round"/>
+          <path d="M95 60 Q110 40 125 60" fill="var(--accent-dark)"/>
+          <path d="M60 150 C 40 175 45 195 70 195 C 85 195 90 175 80 158 Z" fill="var(--accent-dark)"/>
+          <path d="M160 150 C 180 175 175 195 150 195 C 135 195 130 175 140 158 Z" fill="var(--accent-dark)"/>
+        </svg>
+        <div class="mascot-bubble">ನಮಸ್ಕಾರ! 👋<br><span>Let's learn Tulu.</span></div>
       </div>
     </div>
   </div>
+
+  <svg class="hero-wave" viewBox="0 0 1440 100" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0,40 C 240,90 480,10 720,45 C 960,80 1200,20 1440,50 L1440,100 L0,100 Z" fill="var(--page-bg)"></path>
+  </svg>
 </section>
 
-<!-- HISTORY -->
+<!-- ============ HISTORY ============ -->
 <section class="history" id="history">
   <div class="section-head">
     <p class="section-eyebrow">Where it comes from</p>
-    <h2 class="section-title">The language and the land</h2>
-    <p class="section-sub">Tulu's story and Tulu Nadu's story are the same river, told from two banks.</p>
+    <h2 class="section-title">The language, the land, the culture</h2>
+    <p class="section-sub">Three sides of the same story — flip between them.</p>
   </div>
 
-  <div class="history-grid">
-    <!-- LANGUAGE COLUMN -->
-    <div class="history-col">
-      <h3 class="history-col-title">History of the Tulu language</h3>
-      <p class="history-lede">
-        Tulu belongs to the South Dravidian language family, related to Kannada, Malayalam, and Tamil,
-        but standing apart with its own grammar, vocabulary, and, historically, its own script.
-      </p>
-      <ul class="timeline" data-column="lang">
-        <li class="tl-item">
-          <span class="tl-marker">◈</span>
-          <div class="tl-body">
-            <h4>Ancient roots</h4>
-            <p>Linguists trace Tulu's separation from related Dravidian tongues back well over a thousand years, shaped in relative isolation by the Western Ghats and the Arabian Sea.</p>
-          </div>
-        </li>
-        <li class="tl-item">
-          <span class="tl-marker">◈</span>
-          <div class="tl-body">
-            <h4>The Tigalari script</h4>
-            <p>For centuries Tulu was written in Tigalari (also called the Tulu script), a script closely related to Malayalam's, once used across the region for religious and literary Sanskrit manuscripts as well as Tulu itself.</p>
-          </div>
-        </li>
-        <li class="tl-item">
-          <span class="tl-marker">◈</span>
-          <div class="tl-body">
-            <h4><em>Tulu Mahabharato</em></h4>
-            <p>Composed by the poet Arunabja around the 15th century, this retelling of the Mahabharata is the oldest substantial work of Tulu literature known to survive.</p>
-          </div>
-        </li>
-        <li class="tl-item">
-          <span class="tl-marker">◈</span>
-          <div class="tl-body">
-            <h4>An oral epic tradition</h4>
-            <p>Long before — and alongside — written literature, Tulu carried the <em>Paddanas</em>: sung oral epics performed during Bhuta Kola spirit-worship rituals, passed down through generations of hereditary singers.</p>
-          </div>
-        </li>
-        <li class="tl-item">
-          <span class="tl-marker">◈</span>
-          <div class="tl-body">
-            <h4>Kannada script era</h4>
-            <p>As printing spread and Kannada became the region's administrative language, Tulu came to be written mainly in the Kannada script — the convention still most widely used today.</p>
-          </div>
-        </li>
-        <li class="tl-item">
-          <span class="tl-marker">◈</span>
-          <div class="tl-body">
-            <h4>A living revival</h4>
-            <p>Today, universities, the Tulu Sahitya Academy, and community groups document Tulu, teach the Tigalari script, and campaign for the language's formal recognition.</p>
-          </div>
-        </li>
-      </ul>
+  <div class="hist-tabs" role="tablist">
+    <button class="hist-tab is-active" data-panel="language" role="tab" aria-selected="true">🗣️ Language</button>
+    <button class="hist-tab" data-panel="region" role="tab" aria-selected="false">🗺️ Region</button>
+    <button class="hist-tab" data-panel="culture" role="tab" aria-selected="false">🎭 Culture</button>
+  </div>
+
+  <!-- LANGUAGE PANEL -->
+  <div class="hist-panel is-active" id="panel-language">
+    <p class="hist-lede">Tulu belongs to the South Dravidian family, related to Kannada, Malayalam, and Tamil, but with its own grammar, vocabulary, and historically, its own script.</p>
+    <div class="fact-grid">
+      <div class="fact-card">
+        <span class="fact-icon">📜</span>
+        <h4>The Tigalari script</h4>
+        <p>For centuries Tulu was written in Tigalari, a script closely related to Malayalam's, once used across the coast for Sanskrit manuscripts as well as Tulu itself.</p>
+      </div>
+      <div class="fact-card">
+        <span class="fact-icon">📖</span>
+        <h4><em>Tulu Mahabharato</em></h4>
+        <p>Composed by the poet Arunabja around the 15th century, this is the oldest substantial work of Tulu literature known to survive.</p>
+      </div>
+      <div class="fact-card">
+        <span class="fact-icon">🎶</span>
+        <h4>The Paddana tradition</h4>
+        <p>Long before — and alongside — written literature, Tulu carried sung oral epics called Paddanas, performed during Bhoota Kola rituals by hereditary singers.</p>
+      </div>
+      <div class="fact-card">
+        <span class="fact-icon">🔤</span>
+        <h4>Kannada script today</h4>
+        <p>As printing spread, Tulu came to be written mainly in the Kannada script — the convention most widely used for the language today.</p>
+      </div>
+      <div class="fact-card">
+        <span class="fact-icon">🏛️</span>
+        <h4>An active revival</h4>
+        <p>Universities, the Tulu Sahitya Academy, and community groups now document Tulu, teach the Tigalari script, and campaign for the language's formal recognition.</p>
+      </div>
+      <div class="fact-card">
+        <span class="fact-icon">🌐</span>
+        <h4>Two related tongues</h4>
+        <p>Tulu is often discussed alongside Kannada and Malayalam, its closest neighbours, yet remains distinct enough to be its own language, not a dialect.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- REGION PANEL -->
+  <div class="hist-panel" id="panel-region">
+    <p class="hist-lede">Tulu Nadu — "the land of the Tulu people" — stretches along the coast through Dakshina Kannada and the coastal strip of Uttara Kannada up to Gokarna. Tulu is spoken south of the Kalyanpur river; north of it, Kannada takes over. The region's old name was <strong>Alvakheda</strong>.</p>
+
+    <div class="region-chips">
+      <span class="chip">📍 Historic name: Alvakheda</span>
+      <span class="chip">🌊 Southern boundary: River Kalyanpur</span>
+      <span class="chip">🗺️ Today: Dakshina Kannada, Udupi &amp; Kasaragod</span>
     </div>
 
-    <!-- REGION COLUMN -->
-    <div class="history-col">
-      <h3 class="history-col-title">History of Tulu Nadu, the region</h3>
-      <p class="history-lede">
-        Tulu Nadu — "the land of the Tulu people" — runs along the coast from the Chandragiri river in the
-        south to the Kali river in the north, roughly today's Dakshina Kannada and Udupi districts of
-        Karnataka and Kasaragod district of Kerala.
-      </p>
-      <ul class="timeline" data-column="region">
-        <li class="tl-item">
-          <span class="tl-marker">◈</span>
-          <div class="tl-body">
-            <h4>The Alupa dynasty</h4>
-            <p>For over a millennium, the Alupas ruled the coast from their capital near present-day Mangalore, leaving behind temples, inscriptions, and a distinct regional identity.</p>
-          </div>
-        </li>
-        <li class="tl-item">
-          <span class="tl-marker">◈</span>
-          <div class="tl-body">
-            <h4>A crossroads of trade</h4>
-            <p>Coastal ports connected Tulu Nadu to Arab, Persian, and later European traders, bringing spices, textiles, and ideas through harbours that still anchor the region's towns.</p>
-          </div>
-        </li>
-        <li class="tl-item">
-          <span class="tl-marker">◈</span>
-          <div class="tl-body">
-            <h4>Vijayanagara &amp; the Nayakas</h4>
-            <p>The region later came under the Vijayanagara Empire and the Keladi Nayakas, who left their mark on temple architecture and local governance across the coast.</p>
-          </div>
-        </li>
-        <li class="tl-item">
-          <span class="tl-marker">◈</span>
-          <div class="tl-body">
-            <h4>Colonial rule</h4>
-            <p>Portuguese, then British administration reorganised the coast into the South Canara district, a boundary whose legacy still roughly shapes the Tulu-speaking region.</p>
-          </div>
-        </li>
-        <li class="tl-item">
-          <span class="tl-marker">◈</span>
-          <div class="tl-body">
-            <h4>Kambala &amp; Yakshagana</h4>
-            <p>Buffalo-racing Kambala festivals and night-long Yakshagana theatre — dance, music, and myth performed in elaborate costume — remain the region's most visible living traditions.</p>
-          </div>
-        </li>
-        <li class="tl-item">
-          <span class="tl-marker">◈</span>
-          <div class="tl-body">
-            <h4>Tulu Nadu today</h4>
-            <p>Split across two modern states, the region is united by cuisine, festival, and language rather than a single administrative line — and by an active movement for Tulu Nadu statehood.</p>
-          </div>
-        </li>
-      </ul>
+    <h4 class="subhead">Six eras of Tulu Nadu</h4>
+    <div class="era-track">
+      <div class="era-step" style="--c:var(--e1)">
+        <span class="era-num">1</span>
+        <div class="era-body"><h5>The Alupa period</h5><p>For centuries the Alupa (Aluva) dynasty ruled the coast from near present-day Mangalore, shaping the region's earliest distinct identity.</p></div>
+      </div>
+      <div class="era-step" style="--c:var(--e2)">
+        <span class="era-num">2</span>
+        <div class="era-body"><h5>The Rayas of Vijayanagara</h5><p>Tulu Nadu later came under the Vijayanagara Empire, whose rulers ("Rayas") left their mark on temples and regional governance.</p></div>
+      </div>
+      <div class="era-step" style="--c:var(--e3)">
+        <span class="era-num">3</span>
+        <div class="era-body"><h5>The Nayaks of Keladi</h5><p>The Keladi Nayaks then held sway over the coast, continuing patterns of temple patronage and local rule.</p></div>
+      </div>
+      <div class="era-step" style="--c:var(--e4)">
+        <span class="era-num">4</span>
+        <div class="era-body"><h5>The Sultans of Mysore</h5><p>Control passed to the Sultans of Mysore, a turbulent chapter that reshaped power across the wider Kannada- and Tulu-speaking regions.</p></div>
+      </div>
+      <div class="era-step" style="--c:var(--e5)">
+        <span class="era-num">5</span>
+        <div class="era-body"><h5>The British period</h5><p>Colonial administration organised the coast into South Canara district, a boundary whose legacy still roughly shapes the Tulu-speaking region.</p></div>
+      </div>
+      <div class="era-step" style="--c:var(--e6)">
+        <span class="era-num">6</span>
+        <div class="era-body"><h5>Post-Independence</h5><p>After 1947, the region was eventually split between Karnataka and Kerala — the same administrative line that divides Tulu Nadu today.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CULTURE PANEL -->
+  <div class="hist-panel" id="panel-culture">
+    <p class="hist-lede">In Tulu Nadu, culture isn't kept in museums — it flavors the food, fills the festival calendar, and shapes everyday family life.</p>
+    <div class="culture-grid">
+      <a class="culture-card" href="bhoota-kola.html" style="--cc:var(--e1); cursor:pointer;">
+        <span class="culture-icon">👹</span>
+        <h4>Bhoota Kola</h4>
+        <p>A dramatic spirit-possession ritual: a performer channels a deity or ancestral spirit and shares divine messages with the community, in elaborate costume to rhythmic drumming.</p>
+        <span style="display:block;margin-top:12px;font-family:var(--font-display);font-weight:600;font-size:12.5px;color:var(--accent-dark);">Learn more →</span>
+      </a>
+      <a class="culture-card" href="nagaradhane.html" style="--cc:var(--e2); cursor:pointer;">
+        <span class="culture-icon">🐍</span>
+        <h4>Nagaradhane</h4>
+        <p>Serpent worship honouring deities believed to protect the land — central to Nagapanchami, when communities gather in temples for prayers and rituals.</p>
+        <span style="display:block;margin-top:12px;font-family:var(--font-display);font-weight:600;font-size:12.5px;color:var(--accent-dark);">Learn more →</span>
+      </a>
+      <a class="culture-card" href="kambala.html" style="--cc:var(--e3); cursor:pointer;">
+        <span class="culture-icon">🐃</span>
+        <h4>Kambala</h4>
+        <p>The traditional buffalo race of Tulu Nadu. Originally run after the rice harvest through flooded paddy fields, it's now one of the region's most famous festivals.</p>
+        <span style="display:block;margin-top:12px;font-family:var(--font-display);font-weight:600;font-size:12.5px;color:var(--accent-dark);">Learn more →</span>
+      </a>
+      <a class="culture-card" href="aliyasantana.html" style="--cc:var(--e4); cursor:pointer;">
+        <span class="culture-icon">👩‍👧</span>
+        <h4>Aliyasantana</h4>
+        <p>A distinctive matrilineal inheritance system: property passed through the female line, nephews inherited rather than sons, and women held real importance in family structure.</p>
+        <span style="display:block;margin-top:12px;font-family:var(--font-display);font-weight:600;font-size:12.5px;color:var(--accent-dark);">Learn more →</span>
+      </a>
+      <a class="culture-card" href="everyday-cuisine.html" style="--cc:var(--e5); cursor:pointer;">
+        <span class="culture-icon">🍽️</span>
+        <h4>Everyday cuisine</h4>
+        <p>Neer Dosa, Mangalore Buns, and Kori Rotti aren't just dishes — they're cultural symbols rooted in coastal and agrarian tradition, eaten every day.</p>
+        <span style="display:block;margin-top:12px;font-family:var(--font-display);font-weight:600;font-size:12.5px;color:var(--accent-dark);">Learn more →</span>
+      </a>
+      <a class="culture-card" href="festivals.html" style="--cc:var(--e6); cursor:pointer;">
+        <span class="culture-icon">🎉</span>
+        <h4>Festivals</h4>
+        <p>During Dasara and the Tulu New Year, streets fill with dance, music, and spiritual celebration — a yearly showcase of the region's hospitality and strength.</p>
+        <span style="display:block;margin-top:12px;font-family:var(--font-display);font-weight:600;font-size:12.5px;color:var(--accent-dark);">Learn more →</span>
+      </a>
     </div>
   </div>
 </section>
 
-<!-- LEADERBOARD -->
+<!-- ============ LEADERBOARD ============ -->
 <section class="leaderboard" id="leaderboard">
-  <div class="section-head section-head--dark">
+  <div class="section-head">
     <p class="section-eyebrow">This week's learners</p>
     <h2 class="section-title">Leaderboard</h2>
-    <p class="section-sub">Earn points for lessons, streaks, and pronunciation drills. Top learners each week are featured here.</p>
+    <p class="section-sub">Earn XP for lessons, streaks, and pronunciation drills.</p>
   </div>
 
   <div class="lb-panel">
@@ -212,7 +231,6 @@
       <button class="lb-tab is-active" data-range="weekly" role="tab" aria-selected="true">This week</button>
       <button class="lb-tab" data-range="alltime" role="tab" aria-selected="false">All time</button>
     </div>
-
     <div class="lb-table" id="lbTable" role="table" aria-label="Leaderboard">
       <div class="lb-row lb-row--head" role="row">
         <span role="columnheader">Rank</span>
@@ -220,41 +238,79 @@
         <span role="columnheader">Streak</span>
         <span role="columnheader">XP</span>
       </div>
-      <!-- rows injected by script.js -->
     </div>
   </div>
 </section>
 
-<!-- ROADMAP -->
+<!-- ============ ROADMAP ============ -->
 <section class="roadmap" id="roadmap">
   <div class="section-head">
     <p class="section-eyebrow">The course</p>
     <h2 class="section-title">Course roadmap</h2>
-    <p class="section-sub">Six stretches of river, from your first word to storytelling in Tulu. Tap a stop for what's inside.</p>
+    <p class="section-sub">A skill path from your first greeting to reading old inscriptions. Tap any stop.</p>
   </div>
 
-  <div class="river-wrap">
-    <svg class="river" viewBox="0 0 320 1400" preserveAspectRatio="xMidYMin meet" aria-hidden="true">
-      <path class="river-path" d="M160,10 C 40,120 40,220 160,300 C 280,380 280,460 160,540
-               C 40,620 40,700 160,780 C 280,860 280,940 160,1020
-               C 40,1100 40,1180 160,1260 C 220,1310 220,1350 160,1390" />
-    </svg>
-
-    <ol class="river-stops" id="riverStops">
-      <!-- stops injected by script.js -->
-    </ol>
+  <div class="path-progress" id="pathProgress">
+    <div class="pp-row">
+      <div class="pp-stat">🔥 <span id="ppStreak">0</span> day streak</div>
+      <div class="pp-stat">💎 <span id="ppGems">0</span> gems</div>
+      <div class="pp-stat"><span id="ppCount">0 / 0</span> lessons</div>
+    </div>
+    <div class="pp-bar"><div class="pp-fill" id="ppFill"></div></div>
   </div>
+
+  <div class="path-wrap" id="pathWrap"></div>
 </section>
 
 <footer class="footer">
   <div class="footer-inner">
-    <div class="footer-brand">
-      <span class="brand-kn">ತುಳು</span>
-      <span class="brand-en">Tulu</span>
-    </div>
+    <div class="footer-brand"><span class="brand-mascot">🦜</span><span class="brand-kn">ತುಳು</span><span class="brand-en">Tulu</span></div>
     <p class="footer-note">Built to keep a coastal language spoken. Content is a starting point — corrections from Tulu speakers are always welcome.</p>
   </div>
 </footer>
+
+<!-- ============ THEME CUSTOMIZER ============ -->
+<button class="theme-fab" id="themeFab" aria-label="Customize theme" aria-expanded="false">🎨</button>
+
+<div class="theme-panel" id="themePanel">
+  <div class="theme-panel-head">
+    <h3>Customize</h3>
+    <button class="theme-close" id="themeClose" aria-label="Close">✕</button>
+  </div>
+
+  <div class="theme-group">
+    <p class="theme-label">Accent color</p>
+    <div class="swatch-row" id="accentSwatches">
+      <button class="swatch" style="--sw:#58CC02" data-accent="#58CC02" aria-label="Green"></button>
+      <button class="swatch" style="--sw:#1CB0F6" data-accent="#1CB0F6" aria-label="Blue"></button>
+      <button class="swatch" style="--sw:#FF9600" data-accent="#FF9600" aria-label="Orange"></button>
+      <button class="swatch" style="--sw:#CE82FF" data-accent="#CE82FF" aria-label="Purple"></button>
+      <button class="swatch" style="--sw:#FF4B4B" data-accent="#FF4B4B" aria-label="Red"></button>
+      <button class="swatch" style="--sw:#FF86D0" data-accent="#FF86D0" aria-label="Pink"></button>
+      <label class="swatch swatch--custom" style="--sw:conic-gradient(red,orange,yellow,green,blue,violet,red)">
+        <input type="color" id="accentCustom" value="#58CC02">
+      </label>
+    </div>
+  </div>
+
+  <div class="theme-group">
+    <p class="theme-label">Background</p>
+    <div class="swatch-row" id="bgSwatches">
+      <button class="swatch" style="--sw:#FFFFFF" data-bg="#FFFFFF" aria-label="White"></button>
+      <button class="swatch" style="--sw:#DDF4FF" data-bg="#DDF4FF" aria-label="Sky"></button>
+      <button class="swatch" style="--sw:#F5EEDA" data-bg="#F5EEDA" aria-label="Cream"></button>
+      <button class="swatch" style="--sw:#E3F9E5" data-bg="#E3F9E5" aria-label="Mint"></button>
+      <button class="swatch" style="--sw:#F3E8FF" data-bg="#F3E8FF" aria-label="Lavender"></button>
+      <button class="swatch" style="--sw:#FFE9D6" data-bg="#FFE9D6" aria-label="Peach"></button>
+      <label class="swatch swatch--custom" style="--sw:conic-gradient(red,orange,yellow,green,blue,violet,red)">
+        <input type="color" id="bgCustom" value="#FFFFFF">
+      </label>
+    </div>
+  </div>
+
+  <button class="theme-reset" id="themeReset">Reset to default</button>
+</div>
+<div class="theme-scrim" id="themeScrim"></div>
 
 <script src="script.js"></script>
 </body>
