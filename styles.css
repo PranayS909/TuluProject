@@ -253,7 +253,6 @@ button{ font:inherit; background:none; border:none; cursor:pointer; color:inheri
 .culture-card h4{ font-family:var(--font-display); font-weight:600; font-size:17px; margin-bottom:8px; }
 .culture-card p{ font-size:13.5px; color:rgba(18,51,44,.66); line-height:1.55; }
 
-
 /* ===================================================================
    LEADERBOARD
 =================================================================== */
