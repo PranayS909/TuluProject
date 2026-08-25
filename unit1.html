@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unit 1 Practice · Tulu · ತುಳು</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&family=Noto+Sans+Kannada:wght@500;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="unit1.css">
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<header class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="dashboard.html" class="nav-brand">
+      <span class="brand-mascot">🦜</span>
+      <span class="brand-kn">ತುಳು</span>
+      <span class="brand-en">Tulu</span>
+    </a>
+    <a href="dashboard.html" class="btn btn-outline">← Dashboard</a>
+  </div>
+</header>
+
+<main class="u1">
+
+  <!-- ---- header / progress ---- -->
+  <div class="u1-head">
+    <span class="u1-eyebrow">UNIT 1</span>
+    <h1 class="u1-title">First Words</h1>
+    <p class="u1-sub">Five quick games. Greetings, numbers, family, and market words.</p>
+
+    <div class="u1-progress" id="u1Progress">
+      <!-- dots injected by JS -->
+    </div>
+  </div>
+
+  <!-- ---- exercise stage ---- -->
+  <div class="u1-stage" id="u1Stage">
+
+    <!-- ============ 1. GREETINGS — TAP TO MATCH ============ -->
+    <section class="u1-ex" data-ex="0" id="exGreetings">
+      <div class="u1-ex-head">
+        <span class="u1-ex-icon" style="--c:var(--e1)">👋</span>
+        <div>
+          <h2>Match the greetings</h2>
+          <p>Tap a Tulu phrase, then tap its English meaning.</p>
+        </div>
+      </div>
+      <div class="match-board">
+        <div class="match-col" id="matchTulu"></div>
+        <div class="match-col" id="matchEnglish"></div>
+      </div>
+      <p class="u1-ex-status" id="greetStatus"></p>
+    </section>
+
+    <!-- ============ 2. NUMBERS — DRAG WORD TO DOT GROUP ============ -->
+    <section class="u1-ex" data-ex="1" id="exNumbers" hidden>
+      <div class="u1-ex-head">
+        <span class="u1-ex-icon" style="--c:var(--e2)">🔢</span>
+        <div>
+          <h2>Numbers: drag to the right group</h2>
+          <p>Drag each word onto the tile with the matching number of shells.</p>
+        </div>
+      </div>
+      <div class="drag-tray" id="numbersTray"></div>
+      <div class="drop-grid" id="numbersGrid"></div>
+      <p class="u1-ex-status" id="numbersStatus"></p>
+    </section>
+
+    <!-- ============ 3. FAMILY — DRAG WORD TO PORTRAIT ============ -->
+    <section class="u1-ex" data-ex="2" id="exFamily" hidden>
+      <div class="u1-ex-head">
+        <span class="u1-ex-icon" style="--c:var(--e3)">👨‍👩‍👧</span>
+        <div>
+          <h2>Family: drag the word to the person</h2>
+          <p>Match each Tulu word to who it means.</p>
+        </div>
+      </div>
+      <div class="drag-tray" id="familyTray"></div>
+      <div class="drop-grid" id="familyGrid"></div>
+      <p class="u1-ex-status" id="familyStatus"></p>
+    </section>
+
+    <!-- ============ 4. MARKET — DRAG WORD TO ITEM ============ -->
+    <section class="u1-ex" data-ex="3" id="exMarket" hidden>
+      <div class="u1-ex-head">
+        <span class="u1-ex-icon" style="--c:var(--e4)">🧺</span>
+        <div>
+          <h2>Market basket: drag the word to the item</h2>
+          <p>Match each Tulu word to what's on the table.</p>
+        </div>
+      </div>
+      <div class="drag-tray" id="marketTray"></div>
+      <div class="drop-grid" id="marketGrid"></div>
+      <p class="u1-ex-status" id="marketStatus"></p>
+    </section>
+
+    <!-- ============ 5. QUICK QUIZ ============ -->
+    <section class="u1-ex" data-ex="4" id="exQuiz" hidden>
+      <div class="u1-ex-head">
+        <span class="u1-ex-icon" style="--c:var(--e5)">⚡</span>
+        <div>
+          <h2>Quick quiz</h2>
+          <p>A speed round mixing everything from this unit.</p>
+        </div>
+      </div>
+      <div class="quiz-card" id="quizCard"></div>
+    </section>
+
+    <!-- ============ DONE SCREEN ============ -->
+    <section class="u1-ex u1-done" data-ex="5" id="exDone" hidden>
+      <div class="u1-done-emoji">🎉</div>
+      <h2>Unit 1 complete!</h2>
+      <p id="doneSummary">Nice work — you matched every word.</p>
+      <div class="u1-done-actions">
+        <button class="btn btn-outline btn-lg" id="replayBtn">Replay unit</button>
+        <a href="dashboard.html" class="btn btn-solid btn-lg">Back to dashboard →</a>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- ---- nav buttons ---- -->
+  <div class="u1-nav" id="u1Nav">
+    <button class="btn btn-outline" id="prevBtn">← Back</button>
+    <button class="btn btn-solid" id="nextBtn">Next →</button>
+  </div>
+
+</main>
+
+<script src="unit1.js"></script>
+</body>
+</html>
