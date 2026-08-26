@@ -1,0 +1,183 @@
+/* ===================================================================
+   DETAIL PAGES — shared styling for language sub-topic pages
+   Extends styles.css (same design tokens, same nav/footer look)
+=================================================================== */
+
+/* ---------- photo slot ----------
+   A placeholder box for a real photo. To use your own image, delete the
+   <div class="photo-slot">...</div> markup in the HTML and replace it with:
+   <img class="photo-slot-img" src="your-photo.jpg" alt="Describe the photo">
+   (the .photo-slot-img class keeps the same rounded corners/aspect ratio) */
+.photo-slot-wrap{ max-width:var(--container); margin:0 auto; padding:0 24px 8px; }
+.photo-slot{
+  position:relative; width:100%; aspect-ratio:21/9; border-radius:22px;
+  border:2.5px dashed var(--grey); background:var(--canvas-2);
+  display:flex; align-items:center; justify-content:center;
+  transition:border-color .15s ease, background .15s ease;
+}
+.photo-slot:hover{ border-color:var(--accent); background:color-mix(in srgb, var(--accent) 6%, var(--canvas-2)); }
+.photo-slot-inner{ text-align:center; padding:24px; max-width:420px; }
+.photo-slot-icon{ font-size:34px; display:block; margin-bottom:10px; opacity:.6; }
+.photo-slot-title{ font-family:var(--font-display); font-weight:600; font-size:16px; color:rgba(18,51,44,.55); margin-bottom:6px; }
+.photo-slot-hint{ font-size:12.5px; color:rgba(18,51,44,.42); line-height:1.55; }
+.photo-slot-img{
+  width:100%; aspect-ratio:21/9; object-fit:cover; border-radius:22px;
+  border:2.5px solid var(--grey-light); display:block;
+}
+@media (max-width:640px){
+  .photo-slot, .photo-slot-img{ aspect-ratio:4/3; }
+}
+
+/* ---------- breadcrumb ---------- */
+.crumb-bar{
+  max-width:var(--container); margin:0 auto; padding:118px 24px 0;
+}
+.crumb-link{
+  display:inline-flex; align-items:center; gap:8px;
+  font-family:var(--font-display); font-weight:600; font-size:13.5px;
+  color:rgba(18,51,44,.6); padding:8px 4px;
+  transition:color .15s ease, transform .15s ease;
+}
+.crumb-link:hover{ color:var(--accent-dark); transform:translateX(-3px); }
+.crumb-arrow{ font-size:15px; }
+
+/* ---------- detail hero ---------- */
+.detail-hero{
+  max-width:var(--container); margin:0 auto; padding:26px 24px 64px;
+  display:grid; grid-template-columns:1.15fr .85fr; gap:44px; align-items:center;
+}
+.detail-eyebrow{
+  display:inline-flex; align-items:center; gap:10px;
+  background:var(--white); border:2px solid var(--grey-light);
+  padding:8px 16px; border-radius:999px;
+  font-size:12.5px; font-weight:700; color:var(--ink);
+  margin-bottom:22px;
+}
+.detail-eyebrow .ek{ font-family:var(--font-kn); color:var(--accent-dark); font-weight:700; font-size:14px; }
+.detail-title{
+  font-family:var(--font-display); font-weight:600;
+  font-size:clamp(32px,4.6vw,48px); line-height:1.1; letter-spacing:-.01em;
+  color:var(--ink); margin-bottom:18px;
+}
+.detail-title .kn{ display:block; font-family:var(--font-kn); font-size:.55em; color:var(--accent-dark); font-weight:700; margin-bottom:8px; }
+.detail-dek{ font-size:17px; color:rgba(18,51,44,.7); max-width:520px; margin-bottom:26px; }
+.detail-meta{ display:flex; gap:10px; flex-wrap:wrap; }
+.meta-chip{
+  background:var(--white); border:2px solid var(--grey-light); border-radius:999px;
+  padding:8px 15px; font-size:12.5px; font-weight:700; color:var(--ink);
+}
+
+.detail-visual{ display:flex; justify-content:center; }
+.visual-card{
+  position:relative; width:100%; max-width:340px; aspect-ratio:1/1;
+  border-radius:28px; background:var(--dv-face, var(--accent));
+  display:flex; align-items:center; justify-content:center;
+  box-shadow:0 10px 0 0 var(--dv-shadow, var(--accent-dark)), 0 20px 40px rgba(0,0,0,.14);
+}
+.visual-card .vc-glyph{ font-size:88px; filter:drop-shadow(0 6px 10px rgba(0,0,0,.15)); }
+.visual-card svg{ width:78%; height:78%; }
+
+/* ---------- content body ---------- */
+.detail-body{
+  max-width:760px; margin:0 auto; padding:0 24px 20px;
+}
+.detail-body > p{
+  font-size:16.5px; line-height:1.75; color:rgba(18,51,44,.78); margin-bottom:20px;
+}
+.detail-body h2{
+  font-family:var(--font-display); font-weight:600; font-size:24px;
+  color:var(--ink); margin:48px 0 16px;
+}
+.detail-body h2 .kn-inline{ font-family:var(--font-kn); color:var(--accent-dark); font-size:.85em; margin-right:8px; }
+.detail-body strong{ color:var(--ink); }
+
+.pull-note{
+  display:flex; gap:14px; align-items:flex-start;
+  background:color-mix(in srgb, var(--accent) 9%, white);
+  border:2px solid color-mix(in srgb, var(--accent) 30%, var(--grey-light));
+  border-radius:18px; padding:20px 22px; margin:28px 0;
+}
+.pull-note .pn-icon{ font-size:22px; flex:none; }
+.pull-note p{ font-size:14.5px; color:rgba(18,51,44,.75); line-height:1.6; margin:0; }
+.pull-note strong{ display:block; font-family:var(--font-display); font-weight:600; font-size:13.5px; color:var(--accent-dark); margin-bottom:4px; text-transform:uppercase; letter-spacing:.03em; }
+
+/* two-up info cards inside body */
+.mini-grid{ display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:24px 0 8px; }
+.mini-card{
+  background:var(--white); border:2.5px solid var(--grey-light); border-radius:16px;
+  padding:18px 20px;
+}
+.mini-card h5{ font-family:var(--font-display); font-weight:600; font-size:14.5px; margin-bottom:6px; color:var(--ink); }
+.mini-card p{ font-size:13px; color:rgba(18,51,44,.65); line-height:1.55; margin:0; }
+
+/* timeline reused for revival / history style content */
+.mini-track{ display:flex; flex-direction:column; gap:0; margin:24px 0 8px; }
+.mini-step{
+  display:flex; gap:16px; padding:14px 0;
+  border-left:3px solid var(--grey-light);
+  margin-left:16px; padding-left:22px; position:relative;
+}
+.mini-step:last-child{ border-left-color:transparent; }
+.mini-step .ms-dot{
+  position:absolute; left:-11px; top:14px;
+  width:20px; height:20px; border-radius:50%;
+  background:var(--accent); box-shadow:0 3px 0 0 var(--accent-dark);
+  flex:none;
+}
+.mini-step h5{ font-family:var(--font-display); font-weight:600; font-size:15px; margin-bottom:3px; color:var(--ink); }
+.mini-step p{ font-size:13.5px; color:rgba(18,51,44,.65); margin:0; max-width:520px; }
+
+/* figure / manuscript style panel */
+.detail-figure{
+  border-radius:20px; overflow:hidden; margin:32px 0;
+  border:2.5px solid var(--grey-light);
+}
+.detail-figure .fig-art{
+  background:var(--fig-bg, var(--canvas-2)); padding:40px 24px;
+  display:flex; align-items:center; justify-content:center;
+}
+.detail-figure figcaption{
+  padding:14px 20px; font-size:12.5px; color:rgba(18,51,44,.55);
+  background:var(--white); border-top:2.5px solid var(--grey-light);
+}
+
+/* source note */
+.source-note{
+  max-width:760px; margin:8px auto 0; padding:0 24px;
+  font-size:12px; color:rgba(18,51,44,.45); line-height:1.6;
+}
+
+/* ---------- cross links ---------- */
+.crosslinks{ background:var(--canvas-2); padding:70px 24px 90px; margin-top:70px; }
+.crosslinks-inner{ max-width:var(--container); margin:0 auto; }
+.crosslinks h3{
+  font-family:var(--font-display); font-weight:600; font-size:22px;
+  text-align:center; margin-bottom:8px; color:var(--ink);
+}
+.crosslinks .cl-sub{ text-align:center; font-size:14px; color:rgba(18,51,44,.55); margin-bottom:34px; }
+.cl-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+.cl-card{
+  background:var(--white); border:2.5px solid var(--grey-light); border-radius:16px;
+  padding:18px 20px; display:flex; gap:12px; align-items:flex-start;
+  transition:transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+}
+.cl-card:hover{ transform:translateY(-3px); box-shadow:0 10px 0 0 var(--grey-light); border-color:var(--accent); }
+.cl-card.is-current{ opacity:.5; pointer-events:none; }
+.cl-icon{ font-size:22px; flex:none; }
+.cl-card h5{ font-family:var(--font-display); font-weight:600; font-size:14px; margin-bottom:4px; color:var(--ink); }
+.cl-card p{ font-size:12.5px; color:rgba(18,51,44,.6); line-height:1.5; margin:0; }
+
+/* back-to-course cta */
+.detail-cta{ text-align:center; margin-top:44px; }
+
+@media (max-width:900px){
+  .detail-hero{ grid-template-columns:1fr; text-align:center; }
+  .detail-dek{ margin-left:auto; margin-right:auto; }
+  .detail-meta{ justify-content:center; }
+  .mini-grid{ grid-template-columns:1fr; }
+  .cl-grid{ grid-template-columns:1fr 1fr; }
+}
+@media (max-width:640px){
+  .cl-grid{ grid-template-columns:1fr; }
+  .crumb-bar{ padding-top:104px; }
+}
