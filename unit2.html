@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unit 2 Practice · Tulu · ತುಳು</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&family=Noto+Sans+Kannada:wght@500;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="unit2.css">
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<header class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="dashboard.html" class="nav-brand">
+      <span class="brand-mascot">🦜</span>
+      <span class="brand-kn">ತುಳು</span>
+      <span class="brand-en">Tulu</span>
+    </a>
+    <a href="dashboard.html" class="btn btn-outline">← Dashboard</a>
+  </div>
+</header>
+
+<main class="u2">
+
+  <!-- ---- header / progress ---- -->
+  <div class="u2-head">
+    <span class="u2-eyebrow">UNIT 2</span>
+    <h1 class="u2-title">Everyday Tulu</h1>
+    <p class="u2-sub">Action verbs, tenses, and simple sentences.</p>
+
+    <div class="u2-progress" id="u2Progress"></div>
+  </div>
+
+  <!-- ---- exercise stage ---- -->
+  <div class="u2-stage" id="u2Stage">
+
+    <!-- ============ 1. VERB PICTURE MATCH (flip card) ============ -->
+    <section class="u2-ex" data-ex="0" id="exVerbs">
+      <div class="u2-ex-head">
+        <span class="u2-ex-icon" style="--c:var(--e2)">🖼️</span>
+        <div>
+          <h2>Match the verb to the picture</h2>
+          <p>Pick the image that shows what the word means. Get it right and the card flips.</p>
+        </div>
+      </div>
+
+      <p class="u2-count" id="verbCount">Word 1 / 22</p>
+
+      <div class="flip-card" id="flipCard">
+        <div class="flip-card-inner" id="flipCardInner">
+          <div class="flip-front">
+            <span class="flip-word" id="flipWord">Tin</span>
+            <span class="flip-hint">Which picture matches?</span>
+          </div>
+          <div class="flip-back">
+            <span class="flip-back-visual" id="flipBackVisual">🍽️</span>
+            <span class="flip-back-word" id="flipBackWord">Tin</span>
+            <span class="flip-back-meaning" id="flipBackMeaning">To eat</span>
+            <div class="flip-back-tenses" id="flipBackTenses"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="verb-options" id="verbOptions"></div>
+
+      <button class="btn btn-solid u2-next-word" id="nextWordBtn" hidden>Next word →</button>
+      <p class="u2-ex-status" id="verbStatus"></p>
+    </section>
+
+    <!-- ============ 2. TENSE PRACTICE ============ -->
+    <section class="u2-ex" data-ex="1" id="exTenses" hidden>
+      <div class="u2-ex-head">
+        <span class="u2-ex-icon" style="--c:var(--e3)">⏱️</span>
+        <div>
+          <h2>Conjugate it</h2>
+          <p>Complete the sentence with the correct first-person (Yaan / I) form.</p>
+        </div>
+      </div>
+      <div class="fib-card" id="tenseCard"></div>
+    </section>
+
+    <!-- ============ 3. SIMPLE SENTENCES ============ -->
+    <section class="u2-ex" data-ex="2" id="exSentences" hidden>
+      <div class="u2-ex-head">
+        <span class="u2-ex-icon" style="--c:var(--e4)">💬</span>
+        <div>
+          <h2>Complete the sentence</h2>
+          <p>Choose the word that finishes the sentence correctly.</p>
+        </div>
+      </div>
+      <div class="fib-card" id="sentenceCard"></div>
+    </section>
+
+    <!-- ============ DONE SCREEN ============ -->
+    <section class="u2-ex u2-done" data-ex="3" id="exDone" hidden>
+      <div class="u2-done-emoji">🎉</div>
+      <h2>Unit 2 complete!</h2>
+      <p id="doneSummary">Nice work — you practiced verbs, tenses, and sentences.</p>
+      <div class="u2-done-actions">
+        <button class="btn btn-outline btn-lg" id="replayBtn">Replay unit</button>
+        <a href="dashboard.html" class="btn btn-solid btn-lg">Back to dashboard →</a>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- ---- nav buttons ---- -->
+  <div class="u2-nav" id="u2Nav">
+    <button class="btn btn-outline" id="prevBtn">← Back</button>
+    <button class="btn btn-solid" id="nextBtn">Next →</button>
+  </div>
+
+</main>
+
+<script src="unit2.js"></script>
+</body>
+</html>
