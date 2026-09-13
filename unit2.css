@@ -1,0 +1,299 @@
+/* ===================================================================
+   UNIT 2 PRACTICE EXERCISES
+=================================================================== */
+
+.u2{
+  max-width:720px;
+  margin:0 auto;
+  padding:120px 24px 60px;
+  min-height:100vh;
+}
+
+/* ---- header ---- */
+.u2-head{ text-align:center; margin-bottom:28px; }
+.u2-eyebrow{
+  display:inline-block;
+  font-family:var(--font-mono);
+  font-weight:700;
+  font-size:12px;
+  letter-spacing:.1em;
+  color:var(--accent-dark);
+  background:color-mix(in srgb, var(--e2) 14%, white);
+  padding:4px 10px;
+  border-radius:999px;
+  margin-bottom:10px;
+}
+.u2-title{
+  font-family:var(--font-display); font-weight:600;
+  font-size:clamp(26px,4vw,34px);
+  color:var(--ink);
+  margin-bottom:6px;
+}
+.u2-sub{ font-size:14.5px; color:rgba(18,51,44,.6); margin-bottom:20px; }
+
+.u2-progress{ display:flex; justify-content:center; gap:8px; }
+.u2-dot{
+  width:34px; height:8px;
+  border-radius:99px;
+  background:var(--grey-light);
+  border:none;
+  cursor:pointer;
+  padding:0;
+  transition:background .15s ease;
+}
+.u2-dot.is-current{ background:var(--e2); }
+.u2-dot.is-done{ background:#0D8ECF; }
+
+/* ---- stage / exercise shell ---- */
+.u2-stage{ min-height:460px; }
+.u2-ex{
+  background:var(--white);
+  border:2.5px solid var(--grey-light);
+  border-radius:22px;
+  box-shadow:0 6px 0 0 var(--grey-light);
+  padding:26px 22px;
+}
+.u2-ex-head{
+  display:flex;
+  align-items:flex-start;
+  gap:14px;
+  margin-bottom:18px;
+}
+.u2-ex-icon{
+  width:46px; height:46px;
+  border-radius:14px;
+  display:flex; align-items:center; justify-content:center;
+  font-size:22px;
+  flex:none;
+  background:color-mix(in srgb, var(--c) 18%, white);
+}
+.u2-ex-head h2{
+  font-family:var(--font-display); font-weight:600;
+  font-size:18px;
+  color:var(--ink);
+  margin-bottom:3px;
+}
+.u2-ex-head p{ font-size:13.5px; color:rgba(18,51,44,.6); }
+
+.u2-count{
+  text-align:center;
+  font-family:var(--font-mono);
+  font-size:12px;
+  font-weight:700;
+  color:rgba(18,51,44,.5);
+  margin-bottom:14px;
+}
+
+/* ---- flip card ---- */
+.flip-card{
+  perspective:1200px;
+  max-width:280px;
+  margin:0 auto 22px;
+}
+.flip-card-inner{
+  position:relative;
+  width:100%;
+  height:180px;
+  transition:transform .6s cubic-bezier(.4,.2,.2,1);
+  transform-style:preserve-3d;
+}
+.flip-card-inner.is-flipped{ transform:rotateY(180deg); }
+
+.flip-front, .flip-back{
+  position:absolute;
+  inset:0;
+  backface-visibility:hidden;
+  border-radius:20px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  padding:16px;
+  text-align:center;
+}
+.flip-front{
+  background:var(--white);
+  border:2.5px solid var(--grey-light);
+  box-shadow:0 5px 0 0 var(--grey-light);
+}
+.flip-word{
+  font-family:var(--font-display); font-weight:700;
+  font-size:26px;
+  color:var(--ink);
+}
+.flip-hint{ font-size:12.5px; color:rgba(18,51,44,.5); }
+
+.flip-back{
+  background:color-mix(in srgb, var(--e2) 14%, white);
+  border:2.5px solid var(--e2);
+  transform:rotateY(180deg);
+}
+.flip-back-visual{ font-size:32px; }
+.flip-back-word{
+  font-family:var(--font-display); font-weight:700;
+  font-size:19px;
+  color:var(--ink);
+}
+.flip-back-meaning{ font-size:13px; color:rgba(18,51,44,.65); }
+.flip-back-tenses{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  justify-content:center;
+  font-family:var(--font-mono);
+  font-size:10.5px;
+  color:var(--accent-dark);
+  font-weight:700;
+}
+.flip-back-tenses span{
+  background:var(--white);
+  padding:2px 7px;
+  border-radius:999px;
+}
+
+/* ---- verb image options ---- */
+.verb-options{
+  display:grid;
+  grid-template-columns:repeat(2, 1fr);
+  gap:12px;
+  max-width:340px;
+  margin:0 auto;
+}
+.verb-option{
+  aspect-ratio:1;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:34px;
+  border-radius:18px;
+  border:2.5px solid var(--grey-light);
+  background:var(--canvas-2);
+  cursor:pointer;
+  transition:transform .1s ease, border-color .12s ease;
+}
+.verb-option:hover{ transform:translateY(-2px); }
+.verb-option.is-correct{
+  border-color:var(--e2);
+  background:color-mix(in srgb, var(--e2) 20%, white);
+}
+.verb-option.is-wrong{
+  animation:u2-shake .35s ease;
+  border-color:#E5484D;
+  opacity:.5;
+  cursor:default;
+}
+.verb-option[disabled]{ pointer-events:none; }
+@keyframes u2-shake{
+  20%,60%{ transform:translateX(-6px); }
+  40%,80%{ transform:translateX(6px); }
+}
+
+.u2-next-word{
+  display:flex;
+  margin:16px auto 0;
+}
+
+.u1-ex-status,
+.u2-ex-status{
+  margin-top:14px;
+  min-height:20px;
+  text-align:center;
+  font-family:var(--font-display); font-weight:600;
+  font-size:14px;
+  color:var(--accent-dark);
+}
+
+/* ---- fill-in-the-blank cards (tenses + sentences) ---- */
+.fib-progress{
+  font-family:var(--font-mono);
+  font-size:12px;
+  font-weight:700;
+  color:rgba(18,51,44,.5);
+  text-align:center;
+  margin-bottom:10px;
+}
+.fib-sentence{
+  text-align:center;
+  font-family:var(--font-display); font-weight:600;
+  font-size:18px;
+  color:var(--ink);
+  margin-bottom:6px;
+  line-height:1.5;
+}
+.fib-blank{
+  display:inline-block;
+  min-width:70px;
+  border-bottom:3px solid var(--e3);
+}
+.fib-gloss{
+  text-align:center;
+  font-size:13px;
+  color:rgba(18,51,44,.55);
+  margin-bottom:20px;
+}
+.fib-options{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+.fib-option{
+  font-family:var(--font-body);
+  font-weight:700;
+  font-size:14.5px;
+  text-align:left;
+  padding:14px 16px;
+  border-radius:14px;
+  border:2.5px solid var(--grey-light);
+  background:var(--white);
+  color:var(--ink);
+  cursor:pointer;
+}
+.fib-option:hover{ border-color:var(--e3); }
+.fib-option.is-correct{
+  border-color:#D97F00;
+  background:color-mix(in srgb, var(--e3) 20%, white);
+  color:#B36600;
+}
+.fib-option.is-wrong{
+  border-color:#E5484D;
+  background:#FDEDED;
+  color:#E5484D;
+}
+.fib-option[disabled]{ cursor:default; }
+.fib-score{
+  text-align:center;
+  margin-top:18px;
+  font-family:var(--font-mono);
+  font-weight:700;
+  font-size:13px;
+  color:rgba(18,51,44,.55);
+}
+
+/* ---- done screen ---- */
+.u2-done{ text-align:center; padding:52px 24px; }
+.u2-done-emoji{ font-size:52px; margin-bottom:10px; }
+.u2-done h2{
+  font-family:var(--font-display); font-weight:600;
+  font-size:26px;
+  margin-bottom:8px;
+}
+.u2-done p{ color:rgba(18,51,44,.65); margin-bottom:26px; }
+.u2-done-actions{
+  display:flex;
+  gap:12px;
+  justify-content:center;
+  flex-wrap:wrap;
+}
+
+/* ---- nav buttons ---- */
+.u2-nav{
+  display:flex;
+  justify-content:space-between;
+  margin-top:18px;
+}
+
+@media (max-width:480px){
+  .verb-options{ max-width:280px; }
+  .flip-card{ max-width:240px; }
+}
