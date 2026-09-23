@@ -1,461 +1,322 @@
 /* ===================================================================
-   UNIT 2 PRACTICE EXERCISES
-   1. Verb → picture match (flip card reveal)
-   2. Tense conjugation fill-in-the-blank
-   3. Simple sentence fill-in-the-blank
+   UNIT 2 PRACTICE — Food & Market, Simple Sentences, Coastal Phrases,
+   Questions & Verbs, Quiz. Structured to match the unit1.html pattern
+   you shared: a sequence of mini-games behind progress dots and a
+   prev/next nav, ending on a "unit complete" screen.
+
+   Scoring/progress is local to this page (session-only) — nothing is
+   written to Supabase here, matching how unit1's practice page works
+   for now.
+
+   All vocabulary below is exactly what's already sourced in script.js
+   (ROADMAP_UNITS → Unit 2), so it stays consistent with the roadmap.
 =================================================================== */
 
 /* ---------------------------------------------------------------
-   1. DATA — verb table from the study material
+   DATA
 --------------------------------------------------------------- */
-const VERBS = [
-  { key: "Pola",   meaning: "to go",           emoji: "🚶➡️",
-    past: "Pothe",     pastGloss: "I went",
-    present: "Povaondulle", presentGloss: "I am going",
-    future: "Pove",    futureGloss: "I will go" },
-  { key: "Bala",   meaning: "to come",         emoji: "⬅️🚶",
-    past: "Bathe",     pastGloss: "I came",
-    present: "Baraondulle", presentGloss: "I am coming",
-    future: "Barpe",   futureGloss: "I will come" },
-  { key: "Tin",    meaning: "to eat",          emoji: "🍽️",
-    past: "Thinde",    pastGloss: "I ate",
-    present: "Tinaondulle", presentGloss: "I am eating",
-    future: "Thinpe",  futureGloss: "I will eat" },
-  { key: "Par",    meaning: "to drink",        emoji: "🥤",
-    past: "Phare",     pastGloss: "I drank",
-    present: "Paraondulle", presentGloss: "I am drinking",
-    future: "Parpe",   futureGloss: "I will drink" },
-  { key: "Pan",    meaning: "to tell",         emoji: "🗣️",
-    past: "Pandhe",    pastGloss: "I told",
-    present: "Panaondulle", presentGloss: "I am telling",
-    future: "Panpe",   futureGloss: "I will tell" },
-  { key: "Manpu",  meaning: "to do",           emoji: "🛠️",
-    past: "Malthe",    pastGloss: "I did",
-    present: "Malpaondulle", presentGloss: "I am doing",
-    future: "Malpe",   futureGloss: "I will do" },
-  { key: "Kullu",  meaning: "to sit",          emoji: "🪑",
-    past: "Kullude",   pastGloss: "I sat",
-    present: "Kullaondulle", presentGloss: "I am sitting",
-    future: "Kulluve", futureGloss: "I will sit" },
-  { key: "Lakk",   meaning: "to get up",       emoji: "⬆️🧍",
-    past: "Lakh'the",  pastGloss: "I got up",
-    present: "Lakkaondulle", presentGloss: "I am getting up",
-    future: "Lakpe",   futureGloss: "I will get up" },
-  { key: "Koru",   meaning: "to give",         emoji: "🎁➡️",
-    past: "Korthe",    pastGloss: "I gave",
-    present: "Koraondulle", presentGloss: "I am giving",
-    future: "Korpe",   futureGloss: "I will give" },
-  { key: "Detonu", meaning: "to take",         emoji: "⬅️🎁",
-    past: "Detonde",   pastGloss: "I took",
-    present: "Detonaondulle", presentGloss: "I am taking",
-    future: "Detonpe", futureGloss: "I will take" },
-  { key: "Malagu", meaning: "to sleep",        emoji: "😴",
-    past: "Jethe",     pastGloss: "I slept",
-    present: "Jalaondulle", presentGloss: "I am sleeping",
-    future: "Jelpe",   futureGloss: "I will sleep" },
-  { key: "Buru",   meaning: "to fall",         emoji: "😵⬇️",
-    past: "Burthe",    pastGloss: "I fell",
-    present: "Buraondulle", presentGloss: "I am falling",
-    future: "Burpe",   futureGloss: "I will fall" },
-  { key: "Balipu", meaning: "to run",          emoji: "🏃",
-    past: "Balithe",   pastGloss: "I ran",
-    present: "Balipaondulle", presentGloss: "I am running",
-    future: "Balipe",  futureGloss: "I will run" },
-  { key: "Nalipu", meaning: "to dance",        emoji: "💃",
-    past: "Nalithe",   pastGloss: "I danced",
-    present: "Nalipaondulle", presentGloss: "I am dancing",
-    future: "Nalipe",  futureGloss: "I will dance" },
-  { key: "Jakk",   meaning: "to wash",         emoji: "🧼",
-    past: "Jakh'the",  pastGloss: "I washed",
-    present: "Jakkaondulle", presentGloss: "I am washing",
-    future: "Jakpe",   futureGloss: "I will wash" },
-  { key: "Mi",     meaning: "to bathe",        emoji: "🛁",
-    past: "Mithe",     pastGloss: "I bathed",
-    present: "Miaondulle", presentGloss: "I am bathing",
-    future: "Mipe",    futureGloss: "I will bathe" },
-  { key: "Too",    meaning: "to see",          emoji: "👀",
-    past: "Thuye",     pastGloss: "I saw",
-    present: "Thuvaondulle", presentGloss: "I am seeing",
-    future: "Thuve",   futureGloss: "I will see" },
-  { key: "Ken",    meaning: "to listen / ask", emoji: "👂",
-    past: "Kende",     pastGloss: "I heard",
-    present: "Kenaondulle", presentGloss: "I am listening",
-    future: "Kenpe",   futureGloss: "I will listen" },
-  { key: "Odu",    meaning: "to read",         emoji: "📖",
-    past: "Od'the",    pastGloss: "I read",
-    present: "Odaondulle", presentGloss: "I am reading",
-    future: "Odpe",    futureGloss: "I will read" },
-  { key: "Bare",   meaning: "to write",        emoji: "✍️",
-    past: "Barenthe",  pastGloss: "I wrote",
-    present: "Bareaondulle", presentGloss: "I am writing",
-    future: "Barepe",  futureGloss: "I will write" },
-  { key: "Paater", meaning: "to talk",         emoji: "💬",
-    past: "Paaterthe", pastGloss: "I spoke",
-    present: "Paateraondulle", presentGloss: "I am talking",
-    future: "Paaterpe", futureGloss: "I will talk" },
-  { key: "Madapu", meaning: "to forget",       emoji: "🧽💭",
-    past: "Madapthe",  pastGloss: "I forgot",
-    present: "Madapaondulle", presentGloss: "I am forgetting",
-    future: "Madappe", futureGloss: "I will forget" },
+const MARKET_PAIRS = [
+  { tulu:'maNoli', en:'ivy gourd' },
+  { tulu:'touthe', en:'cucumber' },
+  { tulu:'koththambari', en:'coriander' },
+  { tulu:'moolangi', en:'radish' },
+  { tulu:'munchi', en:'pepper' },
 ];
 
-const TENSE_LABEL = { past: "Past", present: "Present", future: "Future" };
-
-// The five sentences given for this unit, cleaned up.
-const TENSE_FIXED = [
-  { sentence: "Yaan nanteed gunturodu ___.", verb: "Pola", tense: "future" },
-  { sentence: "Yaanette ___.",               verb: "Tin",  tense: "past" },
-  { sentence: "Yaan neer ___.",              verb: "Par",  tense: "present" },
-  { sentence: "Yaan kurchilu ___.",          verb: "Kullu", tense: "past" },
-  { sentence: "Yaan kalsa ___.",             verb: "Manpu", tense: "future" },
+const SENTENCE_PAIRS = [
+  { tulu:'yAn pOpae', en:'I go', icon:'🧍' },
+  { tulu:'Aye pOpe', en:'he goes', icon:'👨' },
+  { tulu:'mOlu pOpal', en:'she goes', icon:'👩' },
+];
+// Used only in the quiz round (don't fit the drag-to-subject format above)
+const SENTENCE_EXTRA = [
+  { tulu:'yAn sAleg pOpae', en:'I go to school' },
+  { tulu:'enkulu dinola pEpar Oduva', en:'we read the newspaper daily' },
 ];
 
-// Simple sentence practice (some accept more than one correct word).
-const SENTENCES = [
-  { sentence: "Yaan illade ___.",     gloss: "I come home", answers: ["Barpe"] },
-  { sentence: "Ee olpa ___?",         gloss: "Where are you going", answers: ["Pova", "Pove"] },
-  { sentence: "Aal koodlaDsis ___.",  gloss: "She came from Mangalore", answers: ["Batte", "Bydini"] },
+const PHRASE_PAIRS = [
+  { tulu:'nekk Eth?', en:'how much is this?' },
+  { tulu:'vaNas aanDa?', en:'had your lunch?' },
+];
+
+const QUESTION_PAIRS = [
+  { tulu:'att / ata', en:'no / isn’t it (statement)', icon:'🚫' },
+  { tulu:'ijji / ijja', en:'no / isn’t it (existence)', icon:'❌' },
+  { tulu:'undu dAde?', en:'what is this?', icon:'❓' },
+  { tulu:'Ir dUra pOvondullar?', en:'where are you going? (formal)', icon:'🚶' },
+  { tulu:'gaNTae EtAND?', en:'what time is it?', icon:'🕐' },
+];
+
+const QUIZ_QUESTIONS = [
+  { prompt:'What does "maNoli" mean?', answer:'ivy gourd', choices:['ivy gourd','cucumber','radish','pepper'] },
+  { prompt:'What does "touthe" mean?', answer:'cucumber', choices:['cucumber','coriander','radish','ivy gourd'] },
+  { prompt:'How do you say "I go" in Tulu?', answer:'yAn pOpae', choices:['yAn pOpae','Aye pOpe','mOlu pOpal','yAn sAleg pOpae'] },
+  { prompt:'What does "yAn sAleg pOpae" mean?', answer:'I go to school', choices:['I go to school','I go home','he goes to school','we go daily'] },
+  { prompt:'What does "enkulu dinola pEpar Oduva" mean?', answer:'we read the newspaper daily', choices:['we read the newspaper daily','I read the newspaper','he reads daily','we go to school daily'] },
+  { prompt:'What does "nekk Eth?" mean?', answer:'how much is this?', choices:['how much is this?','what is this?','where are you going?','had your lunch?'] },
+  { prompt:'What does "undu dAde?" mean?', answer:'what is this?', choices:['what is this?','how much is this?','what time is it?','where are you going?'] },
+  { prompt:'What does "gaNTae EtAND?" mean?', answer:'what time is it?', choices:['what time is it?','what is this?','where are you going?','had your lunch?'] },
+  { prompt:'Which word means "she goes"?', answer:'mOlu pOpal', choices:['mOlu pOpal','Aye pOpe','yAn pOpae','ijji / ijja'] },
+  { prompt:'What does "ijji / ijja" mean?', answer:'no / isn’t it (existence)', choices:['no / isn’t it (existence)','no / isn’t it (statement)','what is this?','how much is this?'] },
 ];
 
 /* ---------------------------------------------------------------
-   2. SHARED HELPERS + NAVIGATION
+   UTILITIES
 --------------------------------------------------------------- */
-const EXERCISE_COUNT = 3; // verbs, tenses, sentences (done screen = index 3)
-let current = 0;
-let completed = [false, false, false];
-
-const stageSections = Array.from(document.querySelectorAll(".u2-ex"));
-const progressWrap = document.getElementById("u2Progress");
-const navWrap = document.getElementById("u2Nav");
-const prevBtn = document.getElementById("prevBtn");
-const nextBtn = document.getElementById("nextBtn");
-
-function shuffle(arr) {
-  const a = [...arr];
-  for (let i = a.length - 1; i > 0; i--) {
+function shuffle(arr){
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--){
     const j = Math.floor(Math.random() * (i + 1));
     [a[i], a[j]] = [a[j], a[i]];
   }
   return a;
 }
-
-function findVerb(key) {
-  return VERBS.find((v) => v.key === key);
-}
-
-function tenses() {
-  return ["past", "present", "future"];
-}
-
-function buildDots() {
-  progressWrap.innerHTML = "";
-  for (let i = 0; i < EXERCISE_COUNT; i++) {
-    const dot = document.createElement("button");
-    dot.type = "button";
-    dot.className = "u2-dot";
-    dot.setAttribute("aria-label", `Go to exercise ${i + 1}`);
-    dot.addEventListener("click", () => goTo(i));
-    progressWrap.appendChild(dot);
-  }
-}
-
-function markComplete(index) {
-  completed[index] = true;
-  updateUI();
-}
-
-function showExercise(index) {
-  stageSections.forEach((sec) => {
-    sec.hidden = Number(sec.dataset.ex) !== index;
-  });
-  navWrap.style.display = index === EXERCISE_COUNT ? "none" : "flex";
-  updateUI();
-}
-
-function updateUI() {
-  const dots = progressWrap.querySelectorAll(".u2-dot");
-  dots.forEach((dot, i) => {
-    dot.classList.toggle("is-current", i === current);
-    dot.classList.toggle("is-done", completed[i] && i !== current);
-  });
-  prevBtn.disabled = current === 0;
-  if (current < EXERCISE_COUNT) {
-    nextBtn.textContent = current === EXERCISE_COUNT - 1 ? "Finish 🎉" : "Next →";
-    nextBtn.disabled = !completed[current];
-  }
-}
-
-function goTo(index) {
-  current = index;
-  showExercise(current);
-}
-
-prevBtn.addEventListener("click", () => {
-  if (current > 0) goTo(current - 1);
-});
-
-nextBtn.addEventListener("click", () => {
-  if (current === EXERCISE_COUNT - 1 && completed[current]) {
-    goToDone();
-    return;
-  }
-  if (current < EXERCISE_COUNT - 1) goTo(current + 1);
-});
+function cssKey(str){ return str.replace(/"/g, '\\"'); }
 
 /* ---------------------------------------------------------------
-   3. EXERCISE 1 — VERB → PICTURE MATCH (flip card)
+   STAGE CONTROLLER
 --------------------------------------------------------------- */
-const verbCountEl = document.getElementById("verbCount");
-const flipCardInner = document.getElementById("flipCardInner");
-const flipWordEl = document.getElementById("flipWord");
-const flipBackVisual = document.getElementById("flipBackVisual");
-const flipBackWord = document.getElementById("flipBackWord");
-const flipBackMeaning = document.getElementById("flipBackMeaning");
-const flipBackTenses = document.getElementById("flipBackTenses");
-const verbOptionsEl = document.getElementById("verbOptions");
-const nextWordBtn = document.getElementById("nextWordBtn");
-const verbStatus = document.getElementById("verbStatus");
+const TOTAL_STAGES = 6; // 0-4 exercises, 5 = done
+const stageComplete = [false, false, false, false, false];
+let curStage = 0;
 
-let verbOrder = [];
-let verbIndex = 0;
-
-function setupVerbExercise() {
-  verbOrder = shuffle(VERBS.map((v, i) => i));
-  verbIndex = 0;
-  flipCardInner.classList.remove("is-flipped");
-  verbStatus.textContent = "";
-  nextWordBtn.hidden = true;
-  renderVerbRound();
+function initStages(){
+  document.getElementById('prevBtn').addEventListener('click', () => goTo(curStage - 1));
+  document.getElementById('nextBtn').addEventListener('click', () => goTo(curStage + 1));
+  document.getElementById('replayBtn').addEventListener('click', () => location.reload());
+  renderDots();
+  showStage(0);
 }
 
-function renderVerbRound() {
-  const verb = VERBS[verbOrder[verbIndex]];
-  verbCountEl.textContent = `Word ${verbIndex + 1} / ${VERBS.length}`;
-  flipWordEl.textContent = verb.key;
-  flipBackVisual.textContent = verb.emoji;
-  flipBackWord.textContent = verb.key;
-  flipBackMeaning.textContent = verb.meaning;
-  flipBackTenses.innerHTML = `
-    <span>${verb.past}</span>
-    <span>${verb.present}</span>
-    <span>${verb.future}</span>
-  `;
-  flipCardInner.classList.remove("is-flipped");
-  nextWordBtn.hidden = true;
+function goTo(i){
+  if (i < 0 || i >= TOTAL_STAGES) return;
+  if (i > curStage && !stageComplete[curStage]) return; // can't skip ahead of an unfinished stage
+  curStage = i;
+  showStage(curStage);
+}
 
-  const distractors = shuffle(VERBS.filter((v) => v.key !== verb.key)).slice(0, 3);
-  const options = shuffle([verb, ...distractors]);
-
-  verbOptionsEl.innerHTML = "";
-  options.forEach((opt) => {
-    const tile = document.createElement("button");
-    tile.type = "button";
-    tile.className = "verb-option";
-    tile.textContent = opt.emoji;
-    tile.dataset.key = opt.key;
-    tile.addEventListener("click", () => onVerbOptionClick(tile, opt.key === verb.key));
-    verbOptionsEl.appendChild(tile);
+function showStage(i){
+  document.querySelectorAll('.u1-ex').forEach(sec => {
+    sec.hidden = Number(sec.dataset.ex) !== i;
   });
+  renderDots();
+  const nav = document.getElementById('u2Nav');
+  nav.hidden = (i === 5);
+  document.getElementById('prevBtn').disabled = (i === 0);
+  document.getElementById('nextBtn').disabled = i < 5 && !stageComplete[i];
+  document.getElementById('nextBtn').textContent = (i === 4) ? 'Finish →' : 'Next →';
 }
 
-function onVerbOptionClick(tile, isCorrect) {
-  if (isCorrect) {
-    Array.from(verbOptionsEl.children).forEach((t) => (t.disabled = true));
-    tile.classList.add("is-correct");
-    setTimeout(() => {
-      flipCardInner.classList.add("is-flipped");
-      nextWordBtn.hidden = false;
-    }, 250);
-  } else {
-    tile.classList.add("is-wrong");
-    tile.disabled = true;
-  }
+function markComplete(stageIndex){
+  stageComplete[stageIndex] = true;
+  renderDots();
+  if (curStage === stageIndex) document.getElementById('nextBtn').disabled = false;
 }
 
-nextWordBtn.addEventListener("click", () => {
-  verbIndex++;
-  if (verbIndex < verbOrder.length) {
-    renderVerbRound();
-  } else {
-    verbStatus.textContent = "All 22 verbs matched! 🎉";
-    nextWordBtn.hidden = true;
-    markComplete(0);
+function renderDots(){
+  const wrap = document.getElementById('u2Progress');
+  wrap.innerHTML = '';
+  for (let i = 0; i < 5; i++){
+    const dot = document.createElement('span');
+    dot.className = 'u1-dot';
+    if (stageComplete[i]) dot.classList.add('is-done');
+    if (i === curStage) dot.classList.add('is-current');
+    wrap.appendChild(dot);
   }
-});
+}
 
 /* ---------------------------------------------------------------
-   4. GENERIC FILL-IN-THE-BLANK ENGINE (shared by tenses + sentences)
+   GAME TYPE 1 — tap-to-match
 --------------------------------------------------------------- */
-function makeFibRunner({ cardEl, questions, buildQuestionView, exIndex }) {
-  let index = 0;
-  let score = 0;
+function initTapMatch(leftId, rightId, statusId, pairs, stageIndex){
+  const leftCol = document.getElementById(leftId);
+  const rightCol = document.getElementById(rightId);
+  leftCol.innerHTML = '';
+  rightCol.innerHTML = '';
+  let selected = null;
+  let matchedCount = 0;
 
-  function render() {
-    const q = questions[index];
-    const { sentenceHtml, glossText, options, isCorrect } = buildQuestionView(q);
-    const shuffledOptions = shuffle(options);
+  shuffle(pairs).forEach(p => {
+    const chip = document.createElement('button');
+    chip.type = 'button';
+    chip.className = 'match-chip';
+    chip.textContent = p.tulu;
+    chip.addEventListener('click', () => {
+      if (chip.classList.contains('is-matched')) return;
+      leftCol.querySelectorAll('.match-chip').forEach(c => c.classList.remove('is-selected'));
+      chip.classList.add('is-selected');
+      selected = { chip, p };
+    });
+    leftCol.appendChild(chip);
+  });
 
-    cardEl.innerHTML = `
-      <p class="fib-progress">Question ${index + 1} of ${questions.length}</p>
-      <p class="fib-sentence">${sentenceHtml}</p>
-      <p class="fib-gloss">${glossText}</p>
-      <div class="fib-options"></div>
-      <p class="fib-score">Score: ${score} / ${questions.length}</p>
+  shuffle(pairs).forEach(p => {
+    const chip = document.createElement('button');
+    chip.type = 'button';
+    chip.className = 'match-chip';
+    chip.textContent = p.en;
+    chip.addEventListener('click', () => {
+      if (chip.classList.contains('is-matched') || !selected) return;
+      if (selected.p.tulu === p.tulu){
+        selected.chip.classList.add('is-matched');
+        selected.chip.classList.remove('is-selected');
+        chip.classList.add('is-matched');
+        matchedCount++;
+        selected = null;
+        document.getElementById(statusId).textContent =
+          matchedCount === pairs.length ? 'All matched! ✓' : `${matchedCount} / ${pairs.length} matched`;
+        if (matchedCount === pairs.length) markComplete(stageIndex);
+      } else {
+        const wrongChip = selected.chip;
+        chip.classList.add('is-wrong');
+        wrongChip.classList.add('is-wrong');
+        selected = null;
+        setTimeout(() => {
+          chip.classList.remove('is-wrong');
+          wrongChip.classList.remove('is-wrong');
+        }, 500);
+      }
+    });
+    rightCol.appendChild(chip);
+  });
+
+  document.getElementById(statusId).textContent = `0 / ${pairs.length} matched`;
+}
+
+/* ---------------------------------------------------------------
+   GAME TYPE 2 — drag (or tap) word onto matching tile
+--------------------------------------------------------------- */
+function initDragMatch(trayId, gridId, statusId, pairs, stageIndex){
+  const tray = document.getElementById(trayId);
+  const grid = document.getElementById(gridId);
+  tray.innerHTML = '';
+  grid.innerHTML = '';
+  let selectedChip = null;
+  let placedCount = 0;
+
+  shuffle(pairs).forEach(p => {
+    const chip = document.createElement('button');
+    chip.type = 'button';
+    chip.className = 'drag-chip';
+    chip.textContent = p.tulu;
+    chip.draggable = true;
+    chip.dataset.key = p.tulu;
+    chip.addEventListener('click', () => {
+      if (chip.classList.contains('is-placed')) return;
+      tray.querySelectorAll('.drag-chip').forEach(c => c.classList.remove('is-selected'));
+      chip.classList.add('is-selected');
+      selectedChip = chip;
+    });
+    chip.addEventListener('dragstart', (e) => {
+      e.dataTransfer.setData('text/plain', p.tulu);
+    });
+    tray.appendChild(chip);
+  });
+
+  shuffle(pairs).forEach(p => {
+    const tile = document.createElement('div');
+    tile.className = 'drop-tile';
+    tile.innerHTML = `
+      <span class="drop-icon">${p.icon || '🔹'}</span>
+      <span class="drop-label">${p.en}</span>
+      <span class="drop-fill"></span>
     `;
+    tile.addEventListener('click', () => {
+      if (!selectedChip || tile.classList.contains('is-filled')) return;
+      attempt(selectedChip, selectedChip.dataset.key, tile, p);
+    });
+    tile.addEventListener('dragover', (e) => e.preventDefault());
+    tile.addEventListener('drop', (e) => {
+      e.preventDefault();
+      if (tile.classList.contains('is-filled')) return;
+      const key = e.dataTransfer.getData('text/plain');
+      const chip = tray.querySelector(`.drag-chip[data-key="${cssKey(key)}"]`);
+      if (chip && !chip.classList.contains('is-placed')) attempt(chip, key, tile, p);
+    });
+    grid.appendChild(tile);
+  });
 
-    const wrap = cardEl.querySelector(".fib-options");
-    shuffledOptions.forEach((opt) => {
-      const btn = document.createElement("button");
-      btn.type = "button";
-      btn.className = "fib-option";
-      btn.textContent = opt;
-      btn.addEventListener("click", () => onAnswer(btn, opt, isCorrect, wrap));
-      wrap.appendChild(btn);
+  function attempt(chip, chipKey, tile, tileP){
+    if (chipKey === tileP.tulu){
+      chip.classList.add('is-placed');
+      chip.classList.remove('is-selected');
+      chip.disabled = true;
+      tile.classList.add('is-filled');
+      tile.querySelector('.drop-fill').textContent = chip.textContent;
+      placedCount++;
+      selectedChip = null;
+      document.getElementById(statusId).textContent =
+        placedCount === pairs.length ? 'All placed! ✓' : `${placedCount} / ${pairs.length} placed`;
+      if (placedCount === pairs.length) markComplete(stageIndex);
+    } else {
+      tile.classList.add('is-wrong');
+      if (selectedChip) selectedChip.classList.remove('is-selected');
+      selectedChip = null;
+      setTimeout(() => tile.classList.remove('is-wrong'), 500);
+    }
+  }
+
+  document.getElementById(statusId).textContent = `0 / ${pairs.length} placed`;
+}
+
+/* ---------------------------------------------------------------
+   GAME TYPE 3 — quiz
+--------------------------------------------------------------- */
+function initQuiz(cardId, questions, stageIndex){
+  const card = document.getElementById(cardId);
+  let qIdx = 0, score = 0;
+
+  function render(){
+    if (qIdx >= questions.length){
+      card.innerHTML = `<p class="quiz-final">You got ${score} / ${questions.length} right! 🎉</p>`;
+      markComplete(stageIndex);
+      return;
+    }
+    const q = questions[qIdx];
+    card.innerHTML = `
+      <p class="quiz-progress">Question ${qIdx + 1} of ${questions.length}</p>
+      <p class="quiz-question">${q.prompt}</p>
+      <div class="quiz-choices"></div>
+      <p class="quiz-feedback"></p>
+    `;
+    const choicesWrap = card.querySelector('.quiz-choices');
+    shuffle(q.choices).forEach(choice => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'quiz-choice';
+      btn.textContent = choice;
+      btn.addEventListener('click', () => {
+        card.querySelectorAll('.quiz-choice').forEach(b => b.disabled = true);
+        const fb = card.querySelector('.quiz-feedback');
+        if (choice === q.answer){
+          score++;
+          btn.classList.add('is-correct');
+          fb.textContent = '✓ Correct!';
+          fb.className = 'quiz-feedback is-correct';
+        } else {
+          btn.classList.add('is-wrong');
+          fb.textContent = `✗ It's "${q.answer}."`;
+          fb.className = 'quiz-feedback is-wrong';
+          card.querySelectorAll('.quiz-choice').forEach(b => {
+            if (b.textContent === q.answer) b.classList.add('is-correct');
+          });
+        }
+        setTimeout(() => { qIdx++; render(); }, 900);
+      });
+      choicesWrap.appendChild(btn);
     });
   }
-
-  function onAnswer(btn, chosen, isCorrect, wrap) {
-    const allButtons = wrap.querySelectorAll(".fib-option");
-    allButtons.forEach((b) => (b.disabled = true));
-
-    const correct = isCorrect(chosen);
-    if (correct) {
-      btn.classList.add("is-correct");
-      score++;
-    } else {
-      btn.classList.add("is-wrong");
-      allButtons.forEach((b) => {
-        if (isCorrect(b.textContent)) b.classList.add("is-correct");
-      });
-    }
-
-    setTimeout(() => {
-      index++;
-      if (index < questions.length) {
-        render();
-      } else {
-        cardEl.innerHTML = `
-          <p class="fib-sentence">You scored ${score} / ${questions.length}! 🎯</p>
-        `;
-        markComplete(exIndex);
-      }
-    }, 800);
-  }
-
-  return {
-    render,
-    reset: () => {
-      index = 0;
-      score = 0;
-      render();
-    },
-  };
+  render();
 }
 
 /* ---------------------------------------------------------------
-   5. EXERCISE 2 — TENSE PRACTICE
+   INIT
 --------------------------------------------------------------- */
-function buildTenseQuestions() {
-  const usedKeys = new Set(TENSE_FIXED.map((q) => q.verb));
-  const remaining = shuffle(VERBS.filter((v) => !usedKeys.has(v.key))).slice(0, 7);
-
-  const extra = remaining.map((v) => ({
-    sentence: "Yaan ___.",
-    verb: v.key,
-    tense: tenses()[Math.floor(Math.random() * 3)],
-  }));
-
-  return [...TENSE_FIXED, ...extra];
-}
-
-function tenseQuestionView(q) {
-  const verb = findVerb(q.verb);
-  const form = verb[q.tense];
-  const gloss = verb[q.tense + "Gloss"];
-  const sentenceHtml = q.sentence.replace("___", '<span class="fib-blank">______</span>');
-  const glossText = `(${verb.key} \u2192 ${TENSE_LABEL[q.tense]}: \u201c${gloss}\u201d)`;
-
-  const otherTenses = tenses().filter((t) => t !== q.tense).map((t) => verb[t]);
-  const otherVerb = VERBS[Math.floor(Math.random() * VERBS.length)];
-  const randomForm = otherVerb[tenses()[Math.floor(Math.random() * 3)]];
-
-  let options = [form, ...otherTenses, randomForm].filter((v, i, arr) => arr.indexOf(v) === i);
-  while (options.length < 4) {
-    const filler = VERBS[Math.floor(Math.random() * VERBS.length)].past;
-    if (!options.includes(filler)) options.push(filler);
-  }
-
-  return {
-    sentenceHtml,
-    glossText,
-    options: options.slice(0, 4),
-    isCorrect: (chosen) => chosen === form,
-  };
-}
-
-const tenseCardEl = document.getElementById("tenseCard");
-let tenseRunner;
-
-/* ---------------------------------------------------------------
-   6. EXERCISE 3 — SIMPLE SENTENCES
---------------------------------------------------------------- */
-function sentenceQuestionView(q) {
-  const sentenceHtml = q.sentence.replace("___", '<span class="fib-blank">______</span>');
-  const glossText = `(${q.gloss})`;
-
-  const pool = VERBS.flatMap((v) => [v.past, v.present, v.future]);
-  const distractors = shuffle(pool.filter((w) => !q.answers.includes(w))).slice(0, 4 - q.answers.length);
-  const options = shuffle([...q.answers, ...distractors]).slice(0, 4);
-
-  return {
-    sentenceHtml,
-    glossText,
-    options,
-    isCorrect: (chosen) => q.answers.includes(chosen),
-  };
-}
-
-const sentenceCardEl = document.getElementById("sentenceCard");
-let sentenceRunner;
-
-/* ---------------------------------------------------------------
-   7. DONE SCREEN + REPLAY
---------------------------------------------------------------- */
-const replayBtn = document.getElementById("replayBtn");
-
-function goToDone() {
-  current = EXERCISE_COUNT;
-  showExercise(current);
-}
-
-replayBtn.addEventListener("click", () => {
-  completed = [false, false, false];
-  setupVerbExercise();
-  tenseRunner.reset();
-  sentenceRunner.reset();
-  goTo(0);
+document.addEventListener('DOMContentLoaded', () => {
+  initStages();
+  initTapMatch('marketTulu', 'marketEnglish', 'marketStatus', MARKET_PAIRS, 0);
+  initDragMatch('sentencesTray', 'sentencesGrid', 'sentencesStatus', SENTENCE_PAIRS, 1);
+  initTapMatch('phrasesTulu', 'phrasesEnglish', 'phrasesStatus', PHRASE_PAIRS, 2);
+  initDragMatch('questionsTray', 'questionsGrid', 'questionsStatus', QUESTION_PAIRS, 3);
+  initQuiz('quizCard', QUIZ_QUESTIONS, 4);
 });
-
-/* ---------------------------------------------------------------
-   8. INIT
---------------------------------------------------------------- */
-buildDots();
-setupVerbExercise();
-
-tenseRunner = makeFibRunner({
-  cardEl: tenseCardEl,
-  questions: buildTenseQuestions(),
-  buildQuestionView: tenseQuestionView,
-  exIndex: 1,
-});
-tenseRunner.render();
-
-sentenceRunner = makeFibRunner({
-  cardEl: sentenceCardEl,
-  questions: SENTENCES,
-  buildQuestionView: sentenceQuestionView,
-  exIndex: 2,
-});
-sentenceRunner.render();
-
-showExercise(0);

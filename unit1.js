@@ -1,429 +1,552 @@
 /* ===================================================================
-   UNIT 1 PRACTICE EXERCISES
-   Five self-contained mini-games built from the Unit 1 study material.
-   Pure vanilla JS, Pointer Events for drag-and-drop (works with mouse,
-   touch, and pen alike). No backend calls yet — see the note at the
-   bottom about wiring completion into XP/streak.
+   UNIT 1 PRACTICE — a learning module (flashcards, click-to-play
+   audio) before each matching/dragging exercise, then a mixed quiz.
+
+   AUDIO FILE CONVENTION — same folders/names as study.html, so a
+   recording only has to be made once for a word:
+     audio/<section>/<slugified-tulu-term>.mp3
+   sections: greetings | numbers | family | market
+   Slug rule: text before the first "/" or "(", lowercased, anything
+   that isn't a-z/0-9 collapsed to a single hyphen. E.g. "Yencha
+   ullar?" → audio/greetings/yencha-ullar.mp3
+   Just drop real .mp3 files into those folders — no code changes
+   needed, cards pick them up automatically. (If you already used
+   different filenames, edit AUDIO_OVERRIDES below to map a term to
+   its exact filename instead of relying on the slug.)
 =================================================================== */
 
 /* ---------------------------------------------------------------
-   1. DATA — straight from the Unit 1 study material
+   AUDIO
 --------------------------------------------------------------- */
-const GREETINGS = [
-  { tulu: "Yencha ullar?",        en: "How are you?" },
-  { tulu: "Yaan usar ulle",       en: "I am fine" },
-  { tulu: "Erena pudar enchina?", en: "What is your name?" },
-  { tulu: "Yenna pudar…",         en: "My name is…" },
-  { tulu: "Solmelu",              en: "Thank you" },
-  { tulu: "Barpe",                en: "Goodbye" },
+const AUDIO_OVERRIDES = {
+  // 'Yencha ullar?': 'greetings/how-are-you-formal.mp3',   // example override
+  
+};
+
+function slugify(term){
+  return term
+    .split('/')[0].split('(')[0]
+    .trim().toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+}
+
+function audioSrcFor(section, term){
+  if (AUDIO_OVERRIDES[term]) return `audio/${AUDIO_OVERRIDES[term]}`;
+  return `audio/${section}/${slugify(term)}.mp3`;
+}
+
+let toastTimer = null;
+function showToast(msg){
+  let toast = document.getElementById('u1Toast');
+  if (!toast){
+    toast = document.createElement('div');
+    toast.id = 'u1Toast';
+    toast.className = 'u1-toast';
+    document.body.appendChild(toast);
+  }
+  toast.textContent = msg;
+  toast.classList.add('is-shown');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toast.classList.remove('is-shown'), 2000);
+}
+
+function playCardAudio(card, section, term){
+  const src = audioSrcFor(section, term);
+  const audio = new Audio(src);
+  card.classList.add('is-playing');
+  const clearPlaying = () => card.classList.remove('is-playing');
+
+  const onFail = () => {
+    clearPlaying();
+    card.classList.add('no-audio-known');
+    card.classList.remove('has-audio');
+    card.classList.add('is-noaudio-flash');
+    setTimeout(() => card.classList.remove('is-noaudio-flash'), 400);
+    showToast(`🔇 No recording yet for "${term}"`);
+  };
+
+  audio.addEventListener('ended', clearPlaying);
+  audio.addEventListener('error', onFail);
+  audio.play().then(() => {
+    card.classList.add('has-audio');
+    card.classList.remove('no-audio-known');
+  }).catch(onFail);
+}
+
+/* ---------------------------------------------------------------
+   LEARNING MODULE DATA (term = Tulu, def = English)
+--------------------------------------------------------------- */
+const LEARN_GREETINGS = [
+  { term:'Namaskara', def:'Hello / Greetings' },
+  { term:'Yencha ullar?', def:'How are you?' },
+  { term:'Yaan usar ulle', def:'I am fine' },
+  { term:'Erena pudar enchina?', def:'What is your name?' },
+  { term:'Yenna pudar…', def:'My name is...' },
+  { term:'Solmelu', def:'Thank you' },
+  { term:'Barpe', def:'Goodbye' },
+  { term:'Swagatha', def:'Welcome' },
+  { term:'Ulai bale', def:'Come in (polite / formal)' },
+  { term:'Ulai bala', def:'Come in (casual / informal)' },
+  { term:'Kullule', def:'Please sit down' },
+  { term:'vanas aanda?', def:'Did you have food?' },
+  { term:'Cha aanda?', def:'Did you have tea / coffee?' },
+  { term:'Bale', def:'Come / Welcome' },
+  { term:'Bannaga', def:'Welcome / Upon your arrival' },
+  { term:'Yencha undu?', def:'How is it going?' },
+  { term:'Kushi aand thikaad', def:'Glad to meet you / Nice to meet you' },
+  { term:'Yedde ponna?', def:'Is everything going well?' },
+  { term:'Ullara?', def:'Are you there?' },
+  { term:'Saavu', def:'Greetings / Bowing to you' },
 ];
 
-const NUMBERS = [
-  { key: "onji",   word: "onji",   n: 1 },
-  { key: "raDD",   word: "raDD",   n: 2 },
-  { key: "mUji",   word: "mUji",   n: 3 },
-  { key: "nAl",    word: "nAl",    n: 4 },
-  { key: "ain",    word: "ain",    n: 5 },
-  { key: "Aji",    word: "Aji",    n: 6 },
-  { key: "El",     word: "El",     n: 7 },
-  { key: "enma",   word: "enma",   n: 8 },
-  { key: "orumba", word: "orumba", n: 9 },
-  { key: "patt",   word: "patt",   n: 10 },
+const LEARN_NUMBERS = [
+  { term:'onji', def:'1' }, { term:'raDD', def:'2' }, { term:'mUji', def:'3' },
+  { term:'nAl', def:'4' }, { term:'ain', def:'5' }, { term:'Aji', def:'6' },
+  { term:'El', def:'7' }, { term:'enma', def:'8' }, { term:'orumba', def:'9' },
+  { term:'patt', def:'10' }, { term:'pattonji', def:'11' }, { term:'padiraDD', def:'12' },
+  { term:'padimUji', def:'13' }, { term:'padinAl', def:'14' }, { term:'padinain', def:'15' },
+  { term:'padinAji', def:'16' }, { term:'padinel', def:'17' }, { term:'padinenma', def:'18' },
+  { term:'padinorumba', def:'19' }, { term:'irva', def:'20' },
+];
+const NUMBERS_TENS_NOTE = 'Bonus pattern: the tens keep going the same way — muppa (30), nalpa (40), aiva (50), ajipa (60), elpa (70), enpa (80), sonpa (90), nUdu (100). Add "-ttonji" (+1) up to "-ttorumba" (+9) to count past each ten, e.g. irvattonji = 21.';
+
+const LEARN_FAMILY = [
+  { term:'appae (amma)', def:'Mother / Mummy' },
+  { term:'amme (ayye / poppa)', def:'Father / Daddy' },
+  { term:'mage', def:'Son' },
+  { term:'magal', def:'Daughter' },
+  { term:'bAlae', def:'Child / kid / baby' },
+  { term:'bAlelu / jOkulu', def:'Children' },
+  { term:'palaye (aNNe)', def:'Elder brother' },
+  { term:'paldi / pali (akka)', def:'Elder sister' },
+  { term:'megye', def:'Younger brother' },
+  { term:'megdi / tangaDi', def:'Younger sister' },
+  { term:'ajje', def:'Grandfather' },
+  { term:'ajji (abba)', def:'Grandmother' },
+  { term:'pulli', def:'Grandchild' },
+  { term:'talli', def:'Great-grandchild (or great-great-grandchild)' },
+  { term:'kaNDane / kaNDani', def:'Husband' },
+  { term:'boDedi', def:'Wife' },
+  { term:'mAmu / mAme', def:'Father-in-law / paternal uncle' },
+  { term:'mAmi', def:'Mother-in-law / paternal aunt' },
+  { term:'marmaye', def:'Son-in-law / nephew' },
+  { term:'marmal', def:'Daughter-in-law / niece' },
+  { term:'tammala / tammale', def:'Maternal uncle / father-in-law’s side' },
+  { term:'bhAve', def:'Elder brother-in-law / sister’s husband' },
+  { term:'nanike / maitine', def:'Younger brother-in-law / wife’s younger brother' },
+  { term:'attai / atyae', def:'Sister-in-law / brother’s wife' },
+  { term:'maitidi', def:'Sister-in-law / husband’s sister' },
+  { term:'arvatte', def:'Nephew / son-in-law relations' },
+  { term:'kuTuma', def:'Family' },
+  { term:'kuTumbadalli', def:'Relatives' },
+  { term:'sisTer', def:'Friends / well-wishers' },
+  { term:'dOsti', def:'Friend / friendship' },
 ];
 
-const FAMILY = [
-  { key: "appe",    word: "appe",    visual: "👩" }, // mother
-  { key: "amme",    word: "amme",    visual: "👨" }, // father
-  { key: "ajje",    word: "ajje",    visual: "👴" }, // grandfather
-  { key: "ajji",    word: "ajji",    visual: "👵" }, // grandmother
-  { key: "mage",    word: "mage",    visual: "👦" }, // son
-  { key: "magal",   word: "magal",   visual: "👧" }, // daughter
-  { key: "kaNDane", word: "kaNDane", visual: "🤵" }, // husband
-  { key: "boDedi",  word: "boDedi",  visual: "👰" }, // wife
-];
-
-const MARKET = [
-  { key: "bangude",  word: "bangude",  visual: "🐟" }, // mackerel
-  { key: "yetti",    word: "yetti",    visual: "🦐" }, // prawns
-  { key: "denji",    word: "denji",    visual: "🦀" }, // crab
-  { key: "noonji",   word: "noonji",   visual: "🦑" }, // squid
-  { key: "ulli",     word: "ulli",     visual: "🧅" }, // onion
-  { key: "bollulli", word: "bollulli", visual: "🧄" }, // garlic
-  { key: "munchi",   word: "munchi",   visual: "🌶️" }, // chilli
-  { key: "kumbala",  word: "kumbala",  visual: "🎃" }, // pumpkin
-];
-
-const QUIZ = [
-  { q: "How do you say \u201cThank you\u201d in Tulu?", options: ["Solmelu", "Barpe", "Yencha ullar?", "Yenna pudar…"] },
-  { q: "What does \u201cBarpe\u201d mean?", options: ["Goodbye", "Thank you", "How are you?", "My name is…"] },
-  { q: "What number is \u201cmUji\u201d?", options: ["3", "4", "2", "5"] },
-  { q: "How do you say \u201c7\u201d in Tulu?", options: ["El", "Aji", "enma", "orumba"] },
-  { q: "Who is your \u201cajji\u201d?", options: ["Grandmother", "Grandfather", "Mother", "Daughter"] },
-  { q: "\u201cmagal\u201d means…", options: ["Daughter", "Son", "Wife", "Sister"] },
-  { q: "\u201cbangude\u201d is a kind of…", options: ["Fish", "Prawn", "Crab", "Vegetable"] },
-  { q: "\u201culli\u201d means…", options: ["Onion", "Garlic", "Ginger", "Chilli"] },
+const LEARN_MARKET = [
+  { term:'Ari', def:'Raw rice (the core staple of Tulunadu)' },
+  { term:'Nuji', def:'Broken rice pieces' },
+  { term:'Artha', def:'Flour (e.g., ari artha for rice flour)' },
+  { term:'Bele', def:'Lentils / Dals' },
+  { term:'Enme', def:'Sesame oil / Cooking oil' },
+  { term:'Neer', def:'Water' },
+  { term:'Pela', def:'Milk' },
+  { term:'Nenpu', def:'Ghee' },
+  { term:'Bangude', def:'Mackerel (most common fish)' },
+  { term:'Anjal / Surmai', def:'Kingfish (premium)' },
+  { term:'Boothai', def:'Sardines' },
+  { term:'Meen', def:'Fish (generic term)' },
+  { term:'Yetti', def:'Prawns / Shrimp' },
+  { term:'Denji', def:'Crab' },
+  { term:'Noonji', def:'Squid / Cuttlefish' },
+  { term:'Muru', def:'Reef Cod' },
+  { term:'Munchi', def:'Chilli (general)' },
+  { term:'Paji Munchi', def:'Green chilli' },
+  { term:'Kanja Munchi', def:'Dried red chilli' },
+  { term:'Ulli / Nirulli', def:'Onion' },
+  { term:'Bollulli', def:'Garlic' },
+  { term:'Inji', def:'Ginger' },
+  { term:'Uppu', def:'Salt' },
+  { term:'Churki', def:'Black pepper' },
+  { term:'Thore', def:'Cumin' },
+  { term:'Sarsu', def:'Mustard seeds' },
+  { term:'Thev', def:'Colocasia / Taro leaves' },
+  { term:'Pelakaayi', def:'Jackfruit' },
+  { term:'Kanchala', def:'Bitter gourd' },
+  { term:'Padpe', def:'Amaranth leaves / Red spinach' },
+  { term:'Kumbala', def:'Pumpkin' },
+  { term:'Bende', def:'Okra / Ladyfinger' },
+  { term:'Parangi Pelakaayi', def:'Papaya or Pineapple (dialect-dependent)' },
+  { term:'Gua', def:'Guava' },
+  { term:'Booruda', def:'Watermelon' },
+  { term:'Baajil', def:'Beaten rice / Poha' },
 ];
 
 /* ---------------------------------------------------------------
-   2. SHARED STATE + NAVIGATION
+   EXERCISE DATA (a practiced subset of each learning module above)
 --------------------------------------------------------------- */
-const EXERCISE_COUNT = 5; // greetings, numbers, family, market, quiz (done screen = index 5)
-let current = 0;
-let completed = [false, false, false, false, false];
+const GREETINGS_MATCH_PAIRS = [
+  { tulu:'Namaskara', en:'hello / greetings' },
+  { tulu:'Yencha ullar?', en:'how are you?' },
+  { tulu:'Yaan usar ulle', en:'I am fine' },
+  { tulu:'Solmelu', en:'thank you' },
+  { tulu:'Barpe', en:'goodbye' },
+  { tulu:'Swagatha', en:'welcome' },
+];
 
-const stageSections = Array.from(document.querySelectorAll(".u1-ex"));
-const progressWrap = document.getElementById("u1Progress");
-const navWrap = document.getElementById("u1Nav");
-const prevBtn = document.getElementById("prevBtn");
-const nextBtn = document.getElementById("nextBtn");
+const NUMBERS_DRAG_PAIRS = [1,2,3,4,5,6,7,8,9,10].map((n, i) => ({
+  tulu: LEARN_NUMBERS[i].term, en:`${n}`, icon:'🐚'.repeat(n),
+}));
 
-function shuffle(arr) {
-  const a = [...arr];
-  for (let i = a.length - 1; i > 0; i--) {
+const FAMILY_DRAG_PAIRS = [
+  { tulu:'appae (amma)', en:'mother', icon:'👩' },
+  { tulu:'amme (ayye / poppa)', en:'father', icon:'👨' },
+  { tulu:'mage', en:'son', icon:'👦' },
+  { tulu:'magal', en:'daughter', icon:'👧' },
+  { tulu:'palaye (aNNe)', en:'elder brother', icon:'🧑' },
+  { tulu:'paldi / pali (akka)', en:'elder sister', icon:'👩‍🦱' },
+  { tulu:'ajje', en:'grandfather', icon:'👴' },
+  { tulu:'ajji (abba)', en:'grandmother', icon:'👵' },
+];
+
+const MARKET_DRAG_PAIRS = [
+  { tulu:'Ari', en:'rice', icon:'🍚' },
+  { tulu:'Neer', en:'water', icon:'💧' },
+  { tulu:'Pela', en:'milk', icon:'🥛' },
+  { tulu:'Meen', en:'fish', icon:'🐟' },
+  { tulu:'Yetti', en:'prawns', icon:'🦐' },
+  { tulu:'Ulli / Nirulli', en:'onion', icon:'🧅' },
+  { tulu:'Bollulli', en:'garlic', icon:'🧄' },
+  { tulu:'Munchi', en:'chilli', icon:'🌶️' },
+];
+
+const QUIZ_QUESTIONS = [
+  { prompt:'What does "Namaskara" mean?', answer:'Hello / Greetings', choices:['Hello / Greetings','Goodbye','Thank you','Welcome'] },
+  { prompt:'How do you say "how are you?" in Tulu?', answer:'Yencha ullar?', choices:['Yencha ullar?','Yaan usar ulle','Solmelu','Barpe'] },
+  { prompt:'What does "irva" mean?', answer:'20', choices:['20','12','2','10'] },
+  { prompt:'What is "raDD" in numbers?', answer:'2', choices:['2','20','12','7'] },
+  { prompt:'How do you say "5" in Tulu?', answer:'ain', choices:['ain','El','Aji','nAl'] },
+  { prompt:'What does "appae" mean?', answer:'Mother', choices:['Mother','Father','Son','Daughter'] },
+  { prompt:'What does "ajje" mean?', answer:'Grandfather', choices:['Grandfather','Grandmother','Uncle','Father'] },
+  { prompt:'Which word means "elder sister"?', answer:'paldi / pali (akka)', choices:['paldi / pali (akka)','megdi / tangaDi','magal','ajji (abba)'] },
+  { prompt:'What does "Ari" mean at the market?', answer:'Raw rice', choices:['Raw rice','Water','Milk','Fish'] },
+  { prompt:'What does "Meen" mean?', answer:'Fish (generic term)', choices:['Fish (generic term)','Prawns','Crab','Squid'] },
+  { prompt:'Which word means "onion"?', answer:'Ulli / Nirulli', choices:['Ulli / Nirulli','Bollulli','Inji','Munchi'] },
+  { prompt:'What does "Solmelu" mean?', answer:'Thank you', choices:['Thank you','Goodbye','Welcome','Please sit down'] },
+];
+
+/* ---------------------------------------------------------------
+   UTILITIES
+--------------------------------------------------------------- */
+function shuffle(arr){
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--){
     const j = Math.floor(Math.random() * (i + 1));
     [a[i], a[j]] = [a[j], a[i]];
   }
   return a;
 }
-
-function buildDots() {
-  progressWrap.innerHTML = "";
-  for (let i = 0; i < EXERCISE_COUNT; i++) {
-    const dot = document.createElement("button");
-    dot.type = "button";
-    dot.className = "u1-dot";
-    dot.setAttribute("aria-label", `Go to exercise ${i + 1}`);
-    dot.addEventListener("click", () => goTo(i));
-    progressWrap.appendChild(dot);
-  }
-}
-
-function markComplete(index) {
-  completed[index] = true;
-  updateUI();
-}
-
-function showExercise(index) {
-  stageSections.forEach((sec) => {
-    sec.hidden = Number(sec.dataset.ex) !== index;
-  });
-  navWrap.style.display = index === EXERCISE_COUNT ? "none" : "flex";
-  updateUI();
-}
-
-function updateUI() {
-  const dots = progressWrap.querySelectorAll(".u1-dot");
-  dots.forEach((dot, i) => {
-    dot.classList.toggle("is-current", i === current);
-    dot.classList.toggle("is-done", completed[i] && i !== current);
-  });
-
-  prevBtn.disabled = current === 0;
-  if (current < EXERCISE_COUNT) {
-    nextBtn.textContent = current === EXERCISE_COUNT - 1 ? "Finish 🎉" : "Next →";
-    nextBtn.disabled = !completed[current];
-  }
-}
-
-function goTo(index) {
-  current = index;
-  showExercise(current);
-}
-
-prevBtn.addEventListener("click", () => {
-  if (current > 0) goTo(current - 1);
-});
-
-nextBtn.addEventListener("click", () => {
-  if (current === EXERCISE_COUNT - 1 && completed[current]) {
-    goToDone();
-    return;
-  }
-  if (current < EXERCISE_COUNT - 1) goTo(current + 1);
-});
+function cssKey(str){ return str.replace(/"/g, '\\"'); }
 
 /* ---------------------------------------------------------------
-   3. EXERCISE 1 — TAP TO MATCH (greetings)
+   STAGE CONTROLLER
+   0 Greetings learn · 1 Greetings match · 2 Numbers learn ·
+   3 Numbers drag · 4 Family learn · 5 Family drag ·
+   6 Market learn · 7 Market drag · 8 Quiz · 9 Done
 --------------------------------------------------------------- */
-const matchTuluEl = document.getElementById("matchTulu");
-const matchEnglishEl = document.getElementById("matchEnglish");
-const greetStatus = document.getElementById("greetStatus");
+const TOTAL_STAGES = 10;
+const LESSON_STAGES = new Set([0, 2, 4, 6]);
+const stageComplete = [false, false, false, false, false, false, false, false, false];
+let curStage = 0;
 
-let greetSelected = null;
-let greetMatchedCount = 0;
-
-function renderGreetings() {
-  matchTuluEl.innerHTML = "";
-  matchEnglishEl.innerHTML = "";
-  greetSelected = null;
-  greetMatchedCount = 0;
-  greetStatus.textContent = "";
-
-  const tuluOrder = shuffle(GREETINGS.map((g, i) => i));
-  const enOrder = shuffle(GREETINGS.map((g, i) => i));
-
-  tuluOrder.forEach((idx) => {
-    const card = document.createElement("button");
-    card.type = "button";
-    card.className = "match-card";
-    card.textContent = GREETINGS[idx].tulu;
-    card.dataset.idx = idx;
-    card.addEventListener("click", () => onGreetClick("tulu", idx, card));
-    matchTuluEl.appendChild(card);
+function initStages(){
+  document.getElementById('prevBtn').addEventListener('click', () => goTo(curStage - 1));
+  document.getElementById('nextBtn').addEventListener('click', () => goTo(curStage + 1));
+  document.getElementById('replayBtn').addEventListener('click', () => location.reload());
+  document.querySelectorAll('.lm-continue-btn').forEach(btn => {
+    btn.addEventListener('click', () => goTo(curStage + 1));
   });
-
-  enOrder.forEach((idx) => {
-    const card = document.createElement("button");
-    card.type = "button";
-    card.className = "match-card";
-    card.textContent = GREETINGS[idx].en;
-    card.dataset.idx = idx;
-    card.addEventListener("click", () => onGreetClick("en", idx, card));
-    matchEnglishEl.appendChild(card);
-  });
+  renderDots();
+  showStage(0);
 }
 
-function onGreetClick(type, idx, el) {
-  if (el.classList.contains("is-correct")) return;
+function goTo(i){
+  if (i < 0 || i >= TOTAL_STAGES) return;
+  if (i > curStage && !stageComplete[curStage]) return; // can't skip ahead of an unfinished stage
+  curStage = i;
+  showStage(curStage);
+}
 
-  if (!greetSelected) {
-    greetSelected = { type, idx, el };
-    el.classList.add("is-selected");
-    return;
-  }
+function showStage(i){
+  document.querySelectorAll('.u1-ex').forEach(sec => {
+    sec.hidden = Number(sec.dataset.ex) !== i;
+  });
+  renderDots();
+  const nav = document.getElementById('u1Nav');
+  nav.hidden = (i === 9);
+  document.getElementById('prevBtn').disabled = (i === 0);
+  document.getElementById('nextBtn').disabled = i < 9 && !stageComplete[i];
+  document.getElementById('nextBtn').textContent = (i === 8) ? 'Finish →' : 'Next →';
+}
 
-  if (greetSelected.type === type) {
-    greetSelected.el.classList.remove("is-selected");
-    greetSelected = { type, idx, el };
-    el.classList.add("is-selected");
-    return;
-  }
+function markComplete(stageIndex){
+  stageComplete[stageIndex] = true;
+  renderDots();
+  if (curStage === stageIndex) document.getElementById('nextBtn').disabled = false;
+}
 
-  const a = greetSelected;
-  const b = { type, idx, el };
-  if (a.idx === b.idx) {
-    a.el.classList.remove("is-selected");
-    a.el.classList.add("is-correct");
-    b.el.classList.add("is-correct");
-    greetMatchedCount++;
-    if (greetMatchedCount === GREETINGS.length) {
-      greetStatus.textContent = "All matched! Great job. 🎉";
-      markComplete(0);
-    }
-  } else {
-    a.el.classList.add("is-wrong");
-    b.el.classList.add("is-wrong");
-    setTimeout(() => {
-      a.el.classList.remove("is-selected", "is-wrong");
-      b.el.classList.remove("is-wrong");
-    }, 400);
+function renderDots(){
+  const wrap = document.getElementById('u1Progress');
+  wrap.innerHTML = '';
+  for (let i = 0; i < 9; i++){
+    const dot = document.createElement('span');
+    dot.className = 'u1-dot';
+    if (LESSON_STAGES.has(i)) dot.classList.add('is-lesson');
+    if (stageComplete[i]) dot.classList.add('is-done');
+    if (i === curStage) dot.classList.add('is-current');
+    wrap.appendChild(dot);
   }
-  greetSelected = null;
 }
 
 /* ---------------------------------------------------------------
-   4. EXERCISES 2–4 — GENERIC DRAG & DROP ENGINE
+   LEARNING MODULE — flashcard grid, click/tap to play audio,
+   click again (or a flip control) to reveal the definition.
 --------------------------------------------------------------- */
-let ghostEl = null;
+function renderLearningModule(gridId, items, section, stageIndex, noteId, noteText){
+  const grid = document.getElementById(gridId);
+  grid.innerHTML = '';
 
-function moveGhost(x, y) {
-  if (!ghostEl) return;
-  ghostEl.style.left = x + "px";
-  ghostEl.style.top = y + "px";
+  items.forEach(item => {
+    const card = document.createElement('button');
+    card.type = 'button';
+    card.className = 'lm-card';
+    card.innerHTML = `
+      <div class="lm-card-top">
+        <span class="lm-flip-hint">tap to hear</span>
+        <span class="lm-speaker" aria-hidden="true">🔊</span>
+      </div>
+      <div class="lm-card-term">${item.term}</div>
+      <div class="lm-card-def">${item.def}</div>
+    `;
+    card.addEventListener('click', () => {
+      card.classList.add('is-flipped');
+      playCardAudio(card, section, item.term);
+    });
+    grid.appendChild(card);
+  });
+
+  if (noteId && noteText){
+    const noteEl = document.getElementById(noteId);
+    if (noteEl) noteEl.textContent = noteText;
+  }
+
+  // Study material isn't graded — mark the stage complete as soon as it's shown.
+  markComplete(stageIndex);
 }
 
-function setupDragDrop(trayEl, gridEl, items, statusEl, exIndex, visualFn) {
-  trayEl.innerHTML = "";
-  gridEl.innerHTML = "";
-  statusEl.textContent = "";
+/* ---------------------------------------------------------------
+   GAME TYPE 1 — tap-to-match
+--------------------------------------------------------------- */
+function initTapMatch(leftId, rightId, statusId, pairs, stageIndex){
+  const leftCol = document.getElementById(leftId);
+  const rightCol = document.getElementById(rightId);
+  leftCol.innerHTML = '';
+  rightCol.innerHTML = '';
+  let selected = null;
+  let matchedCount = 0;
+
+  shuffle(pairs).forEach(p => {
+    const chip = document.createElement('button');
+    chip.type = 'button';
+    chip.className = 'match-chip';
+    chip.textContent = p.tulu;
+    chip.addEventListener('click', () => {
+      if (chip.classList.contains('is-matched')) return;
+      leftCol.querySelectorAll('.match-chip').forEach(c => c.classList.remove('is-selected'));
+      chip.classList.add('is-selected');
+      selected = { chip, p };
+    });
+    leftCol.appendChild(chip);
+  });
+
+  shuffle(pairs).forEach(p => {
+    const chip = document.createElement('button');
+    chip.type = 'button';
+    chip.className = 'match-chip';
+    chip.textContent = p.en;
+    chip.addEventListener('click', () => {
+      if (chip.classList.contains('is-matched') || !selected) return;
+      if (selected.p.tulu === p.tulu){
+        selected.chip.classList.add('is-matched');
+        selected.chip.classList.remove('is-selected');
+        chip.classList.add('is-matched');
+        matchedCount++;
+        selected = null;
+        document.getElementById(statusId).textContent =
+          matchedCount === pairs.length ? 'All matched! ✓' : `${matchedCount} / ${pairs.length} matched`;
+        if (matchedCount === pairs.length) markComplete(stageIndex);
+      } else {
+        const wrongChip = selected.chip;
+        chip.classList.add('is-wrong');
+        wrongChip.classList.add('is-wrong');
+        selected = null;
+        setTimeout(() => {
+          chip.classList.remove('is-wrong');
+          wrongChip.classList.remove('is-wrong');
+        }, 500);
+      }
+    });
+    rightCol.appendChild(chip);
+  });
+
+  document.getElementById(statusId).textContent = `0 / ${pairs.length} matched`;
+}
+
+/* ---------------------------------------------------------------
+   GAME TYPE 2 — drag (or tap) word onto matching tile
+--------------------------------------------------------------- */
+function initDragMatch(trayId, gridId, statusId, pairs, stageIndex){
+  const tray = document.getElementById(trayId);
+  const grid = document.getElementById(gridId);
+  tray.innerHTML = '';
+  grid.innerHTML = '';
+  let selectedChip = null;
   let placedCount = 0;
 
-  const chipOrder = shuffle(items.map((it, i) => i));
-  const targetOrder = shuffle(items.map((it, i) => i));
-
-  chipOrder.forEach((i) => {
-    const item = items[i];
-    const chip = document.createElement("div");
-    chip.className = "chip";
-    chip.textContent = item.word;
-    chip.dataset.key = item.key;
-    chip.dataset.word = item.word;
-    attachDragHandlers(chip);
-    trayEl.appendChild(chip);
+  shuffle(pairs).forEach(p => {
+    const chip = document.createElement('button');
+    chip.type = 'button';
+    chip.className = 'drag-chip';
+    chip.textContent = p.tulu;
+    chip.draggable = true;
+    chip.dataset.key = p.tulu;
+    chip.addEventListener('click', () => {
+      if (chip.classList.contains('is-placed')) return;
+      tray.querySelectorAll('.drag-chip').forEach(c => c.classList.remove('is-selected'));
+      chip.classList.add('is-selected');
+      selectedChip = chip;
+    });
+    chip.addEventListener('dragstart', (e) => {
+      e.dataTransfer.setData('text/plain', p.tulu);
+    });
+    tray.appendChild(chip);
   });
 
-  targetOrder.forEach((i) => {
-    const item = items[i];
-    const target = document.createElement("div");
-    target.className = "drop-target";
-    target.dataset.key = item.key;
-    target.innerHTML = `
-      <span class="drop-visual">${visualFn(item)}</span>
-      <span class="drop-answer"></span>
+  shuffle(pairs).forEach(p => {
+    const tile = document.createElement('div');
+    tile.className = 'drop-tile';
+    tile.innerHTML = `
+      <span class="drop-icon">${p.icon || '🔹'}</span>
+      <span class="drop-label">${p.en}</span>
+      <span class="drop-fill"></span>
     `;
-    gridEl.appendChild(target);
-  });
-
-  function attachDragHandlers(chip) {
-    chip.addEventListener("pointerdown", (e) => {
-      if (chip.classList.contains("is-placed")) return;
+    tile.addEventListener('click', () => {
+      if (!selectedChip || tile.classList.contains('is-filled')) return;
+      attempt(selectedChip, selectedChip.dataset.key, tile, p);
+    });
+    tile.addEventListener('dragover', (e) => e.preventDefault());
+    tile.addEventListener('drop', (e) => {
       e.preventDefault();
-      chip.setPointerCapture(e.pointerId);
-      chip.classList.add("is-dragging");
-
-      ghostEl = document.createElement("div");
-      ghostEl.className = "chip-ghost";
-      ghostEl.textContent = chip.dataset.word;
-      document.body.appendChild(ghostEl);
-      moveGhost(e.clientX, e.clientY);
-
-      let lastHover = null;
-
-      function onMove(ev) {
-        moveGhost(ev.clientX, ev.clientY);
-        ghostEl.style.display = "none";
-        const under = document.elementFromPoint(ev.clientX, ev.clientY);
-        ghostEl.style.display = "";
-        const target = under?.closest(".drop-target");
-        if (target !== lastHover) {
-          if (lastHover) lastHover.classList.remove("is-hover");
-          if (target && !target.classList.contains("is-filled")) target.classList.add("is-hover");
-          lastHover = target;
-        }
-      }
-
-      function onUp(ev) {
-        chip.removeEventListener("pointermove", onMove);
-        chip.removeEventListener("pointerup", onUp);
-        chip.removeEventListener("pointercancel", onUp);
-        chip.classList.remove("is-dragging");
-        if (lastHover) lastHover.classList.remove("is-hover");
-        ghostEl?.remove();
-        ghostEl = null;
-
-        const under2 = document.elementFromPoint(ev.clientX, ev.clientY);
-        const dropEl = under2?.closest(".drop-target");
-
-        if (dropEl && !dropEl.classList.contains("is-filled")) {
-          if (dropEl.dataset.key === chip.dataset.key) {
-            dropEl.classList.add("is-filled");
-            dropEl.querySelector(".drop-answer").textContent = chip.dataset.word;
-            chip.classList.add("is-placed");
-            placedCount++;
-            if (placedCount === items.length) {
-              statusEl.textContent = "All matched! 🎉";
-              markComplete(exIndex);
-            }
-          } else {
-            dropEl.classList.add("is-wrong-flash");
-            setTimeout(() => dropEl.classList.remove("is-wrong-flash"), 350);
-          }
-        }
-      }
-
-      chip.addEventListener("pointermove", onMove);
-      chip.addEventListener("pointerup", onUp);
-      chip.addEventListener("pointercancel", onUp);
+      if (tile.classList.contains('is-filled')) return;
+      const key = e.dataTransfer.getData('text/plain');
+      const chip = tray.querySelector(`.drag-chip[data-key="${cssKey(key)}"]`);
+      if (chip && !chip.classList.contains('is-placed')) attempt(chip, key, tile, p);
     });
-  }
-}
-
-function shellVisual(item) {
-  return `<span class="dot-cluster">${"🐚".repeat(item.n)}</span>`;
-}
-function emojiVisual(item) {
-  return item.visual;
-}
-
-/* ---------------------------------------------------------------
-   5. EXERCISE 5 — QUICK QUIZ
---------------------------------------------------------------- */
-const quizCard = document.getElementById("quizCard");
-let quizIndex = 0;
-let quizScore = 0;
-
-function renderQuiz() {
-  const q = QUIZ[quizIndex];
-  const correctText = q.options[0];
-  const shuffled = shuffle(q.options);
-
-  quizCard.innerHTML = `
-    <p class="quiz-progress">Question ${quizIndex + 1} of ${QUIZ.length}</p>
-    <p class="quiz-prompt">${q.q}</p>
-    <div class="quiz-options"></div>
-    <p class="quiz-score">Score: ${quizScore} / ${QUIZ.length}</p>
-  `;
-
-  const optionsWrap = quizCard.querySelector(".quiz-options");
-  shuffled.forEach((opt) => {
-    const btn = document.createElement("button");
-    btn.type = "button";
-    btn.className = "quiz-option";
-    btn.textContent = opt;
-    btn.addEventListener("click", () => onQuizAnswer(btn, opt, correctText, optionsWrap));
-    optionsWrap.appendChild(btn);
+    grid.appendChild(tile);
   });
-}
 
-function onQuizAnswer(btn, chosen, correctText, optionsWrap) {
-  const allButtons = optionsWrap.querySelectorAll(".quiz-option");
-  allButtons.forEach((b) => (b.disabled = true));
-
-  if (chosen === correctText) {
-    btn.classList.add("is-correct");
-    quizScore++;
-  } else {
-    btn.classList.add("is-wrong");
-    allButtons.forEach((b) => {
-      if (b.textContent === correctText) b.classList.add("is-correct");
-    });
+  function attempt(chip, chipKey, tile, tileP){
+    if (chipKey === tileP.tulu){
+      chip.classList.add('is-placed');
+      chip.classList.remove('is-selected');
+      chip.disabled = true;
+      tile.classList.add('is-filled');
+      tile.querySelector('.drop-fill').textContent = chip.textContent;
+      placedCount++;
+      selectedChip = null;
+      document.getElementById(statusId).textContent =
+        placedCount === pairs.length ? 'All placed! ✓' : `${placedCount} / ${pairs.length} placed`;
+      if (placedCount === pairs.length) markComplete(stageIndex);
+    } else {
+      tile.classList.add('is-wrong');
+      if (selectedChip) selectedChip.classList.remove('is-selected');
+      selectedChip = null;
+      setTimeout(() => tile.classList.remove('is-wrong'), 500);
+    }
   }
 
-  setTimeout(() => {
-    quizIndex++;
-    if (quizIndex < QUIZ.length) {
-      renderQuiz();
-    } else {
-      quizCard.innerHTML = `
-        <p class="quiz-prompt">You scored ${quizScore} / ${QUIZ.length}! 🎯</p>
-        <p class="quiz-score">Tap "Finish" below to wrap up Unit 1.</p>
-      `;
-      markComplete(4);
+  document.getElementById(statusId).textContent = `0 / ${pairs.length} placed`;
+}
+
+/* ---------------------------------------------------------------
+   GAME TYPE 3 — quiz
+--------------------------------------------------------------- */
+function initQuiz(cardId, questions, stageIndex){
+  const card = document.getElementById(cardId);
+  let qIdx = 0, score = 0;
+
+  function render(){
+    if (qIdx >= questions.length){
+      card.innerHTML = `<p class="quiz-final">You got ${score} / ${questions.length} right! 🎉</p>`;
+      document.getElementById('doneSummary').textContent =
+        `Nice work — you scored ${score} / ${questions.length} on the quiz and matched every word along the way.`;
+      markComplete(stageIndex);
+      return;
     }
-  }, 700);
+    const q = questions[qIdx];
+    card.innerHTML = `
+      <p class="quiz-progress">Question ${qIdx + 1} of ${questions.length}</p>
+      <p class="quiz-question">${q.prompt}</p>
+      <div class="quiz-choices"></div>
+      <p class="quiz-feedback"></p>
+    `;
+    const choicesWrap = card.querySelector('.quiz-choices');
+    shuffle(q.choices).forEach(choice => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'quiz-choice';
+      btn.textContent = choice;
+      btn.addEventListener('click', () => {
+        card.querySelectorAll('.quiz-choice').forEach(b => b.disabled = true);
+        const fb = card.querySelector('.quiz-feedback');
+        if (choice === q.answer){
+          score++;
+          btn.classList.add('is-correct');
+          fb.textContent = '✓ Correct!';
+          fb.className = 'quiz-feedback is-correct';
+        } else {
+          btn.classList.add('is-wrong');
+          fb.textContent = `✗ It's "${q.answer}."`;
+          fb.className = 'quiz-feedback is-wrong';
+          card.querySelectorAll('.quiz-choice').forEach(b => {
+            if (b.textContent === q.answer) b.classList.add('is-correct');
+          });
+        }
+        setTimeout(() => { qIdx++; render(); }, 900);
+      });
+      choicesWrap.appendChild(btn);
+    });
+  }
+  render();
 }
 
 /* ---------------------------------------------------------------
-   6. DONE SCREEN + REPLAY
+   INIT
 --------------------------------------------------------------- */
-const doneSummary = document.getElementById("doneSummary");
-const replayBtn = document.getElementById("replayBtn");
+document.addEventListener('DOMContentLoaded', () => {
+  initStages();
+  renderLearningModule('lmGreetingsGrid', LEARN_GREETINGS, 'greetings', 0);
+  initTapMatch('matchTulu', 'matchEnglish', 'greetStatus', GREETINGS_MATCH_PAIRS, 1);
 
-function goToDone() {
-  current = EXERCISE_COUNT;
-  showExercise(current);
-  doneSummary.textContent = `You matched every word and scored ${quizScore} / ${QUIZ.length} on the quiz.`;
-}
+  renderLearningModule('lmNumbersGrid', LEARN_NUMBERS, 'numbers', 2, 'lmNumbersNote', NUMBERS_TENS_NOTE);
+  initDragMatch('numbersTray', 'numbersGrid', 'numbersStatus', NUMBERS_DRAG_PAIRS, 3);
 
-replayBtn.addEventListener("click", () => {
-  completed = [false, false, false, false, false];
-  quizIndex = 0;
-  quizScore = 0;
-  renderGreetings();
-  setupDragDrop(document.getElementById("numbersTray"), document.getElementById("numbersGrid"), NUMBERS, document.getElementById("numbersStatus"), 1, shellVisual);
-  setupDragDrop(document.getElementById("familyTray"), document.getElementById("familyGrid"), FAMILY, document.getElementById("familyStatus"), 2, emojiVisual);
-  setupDragDrop(document.getElementById("marketTray"), document.getElementById("marketGrid"), MARKET, document.getElementById("marketStatus"), 3, emojiVisual);
-  renderQuiz();
-  goTo(0);
+  renderLearningModule('lmFamilyGrid', LEARN_FAMILY, 'family', 4);
+  initDragMatch('familyTray', 'familyGrid', 'familyStatus', FAMILY_DRAG_PAIRS, 5);
+
+  renderLearningModule('lmMarketGrid', LEARN_MARKET, 'market', 6);
+  initDragMatch('marketTray', 'marketGrid', 'marketStatus', MARKET_DRAG_PAIRS, 7);
+
+  initQuiz('quizCard', QUIZ_QUESTIONS, 8);
 });
-
-/* ---------------------------------------------------------------
-   7. INIT
---------------------------------------------------------------- */
-buildDots();
-renderGreetings();
-setupDragDrop(document.getElementById("numbersTray"), document.getElementById("numbersGrid"), NUMBERS, document.getElementById("numbersStatus"), 1, shellVisual);
-setupDragDrop(document.getElementById("familyTray"), document.getElementById("familyGrid"), FAMILY, document.getElementById("familyStatus"), 2, emojiVisual);
-setupDragDrop(document.getElementById("marketTray"), document.getElementById("marketGrid"), MARKET, document.getElementById("marketStatus"), 3, emojiVisual);
-renderQuiz();
-showExercise(0);

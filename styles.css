@@ -356,7 +356,7 @@ button{ font:inherit; background:none; border:none; cursor:pointer; color:inheri
 @keyframes floatBadge{ 0%,100%{ transform:translateX(-50%) translateY(0); } 50%{ transform:translateX(-50%) translateY(-6px); } }
 
 .node-popover{
-  position:absolute; z-index:20; width:250px; background:var(--white);
+  position:absolute; z-index:20; width:280px; max-width:calc(100vw - 32px); background:var(--white);
   border:2.5px solid var(--grey-light); border-radius:18px; padding:18px;
   box-shadow:0 16px 40px rgba(18,51,44,.18);
   opacity:0; transform:translateY(8px) scale(.96); pointer-events:none;
@@ -368,6 +368,26 @@ button{ font:inherit; background:none; border:none; cursor:pointer; color:inheri
 .np-list{ display:flex; flex-direction:column; gap:5px; margin-bottom:14px; }
 .np-list li{ font-size:12.5px; color:rgba(18,51,44,.62); padding-left:14px; position:relative; }
 .np-list li::before{ content:"·"; position:absolute; left:2px; color:var(--accent-dark); font-weight:700; }
+
+/* ---------- sourced vocabulary table inside a popover ---------- */
+.np-vocab{
+  max-height:190px; overflow-y:auto; margin-bottom:12px; border-radius:10px;
+  border:1.5px solid var(--grey-light); background:var(--canvas-2);
+}
+.np-vocab-row{
+  display:flex; justify-content:space-between; gap:10px; padding:6px 10px;
+  border-bottom:1px solid var(--grey-light); font-size:12px;
+}
+.np-vocab-row:last-child{ border-bottom:none; }
+.np-tulu{ font-weight:700; color:var(--ink); white-space:nowrap; }
+.np-en{ color:rgba(18,51,44,.6); text-align:right; }
+.np-note{
+  font-size:11.5px; color:rgba(18,51,44,.55); background:color-mix(in srgb, var(--e3) 12%, var(--white));
+  border-radius:8px; padding:7px 9px; margin-bottom:12px; line-height:1.45;
+}
+.np-sources{ font-size:11px; color:rgba(18,51,44,.45); margin-bottom:12px; line-height:1.5; }
+.np-sources a{ color:var(--accent-dark); text-decoration:underline; }
+
 .np-btn{ display:block; width:100%; text-align:center; padding:11px; border-radius:12px; font-family:var(--font-display); font-weight:600; font-size:13px; text-transform:uppercase; letter-spacing:.02em; color:var(--white); }
 .np-btn.is-locked{ background:var(--canvas-2); color:rgba(18,51,44,.4); box-shadow:0 4px 0 0 #D6D6D2 !important; }
 

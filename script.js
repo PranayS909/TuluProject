@@ -140,16 +140,52 @@ const ROADMAP_UNITS = [
     nodes:[
       { type:'lesson', icon:'👋', title:'Greetings', status:'complete',
         desc:'Say hello, introduce yourself, and be polite in Tulu.',
-        items:['Common greetings','Introducing yourself','Please & thank you'] },
+        items:['Common greetings','Introducing yourself','Please & thank you'],
+        vocab:[
+          {tulu:'namaskAra / namastE', en:'hello'},
+          {tulu:'Encha ullar?', en:'how are you? (formal)'},
+          {tulu:'encha ulla?', en:'how are you? (informal)'},
+          {tulu:'ushArullae', en:'I am fine'},
+          {tulu:'pudar enchine?', en:'what’s your name? (formal)'},
+          {tulu:'enna pudar…', en:'my name is…'},
+          {tulu:'dayamalt / dayadId', en:'please'},
+          {tulu:'barpae', en:'bye'},
+        ],
+        note:'“solmelu” turns up meaning both “hi” and “thank you” depending on the source — confirm which with a speaker before teaching it.',
+        source:[{label:'Easy Tulu — Lesson 41', url:'https://www.easytulu.com/2016/12/tulu-lesson-41-useful-phrases-in-tulu.html'},
+                {label:'Raveesh Kumar — Common Phrases', url:'https://www.raveeshkumar.com/2009/05/learn-tulu-online-commonly-used-phrases.html'}] },
       { type:'lesson', icon:'🔢', title:'Numbers 1–20', status:'complete',
         desc:'Count, ask prices, and tell simple quantities.',
-        items:['Numbers 1–20','Asking "how many?"','Simple counting phrases'] },
+        items:['Numbers 1–20','Asking "how many?"','Simple counting phrases'],
+        vocab:[
+          {tulu:'onji', en:'1'}, {tulu:'raDD', en:'2'}, {tulu:'mUji', en:'3'},
+          {tulu:'nAl', en:'4'}, {tulu:'ain', en:'5'}, {tulu:'Aji', en:'6'},
+          {tulu:'El', en:'7'}, {tulu:'enma', en:'8'}, {tulu:'orumba', en:'9'},
+          {tulu:'patt', en:'10'}, {tulu:'pattonji', en:'11'}, {tulu:'padiraDD', en:'12'},
+          {tulu:'padimUji', en:'13'}, {tulu:'padinAl', en:'14'}, {tulu:'padinain', en:'15'},
+          {tulu:'padinAji', en:'16'}, {tulu:'padinEl', en:'17'}, {tulu:'padinenma', en:'18'},
+          {tulu:'padinorumba', en:'19'}, {tulu:'irva', en:'20'},
+        ],
+        source:[{label:'Easy Tulu — Lesson 5', url:'https://www.easytulu.com/2016/02/tulu-lesson-5-more-interrogative.html'}] },
       { type:'chest', icon:'🎁', title:'Bonus: Tongue-Twisters', status:'complete',
         desc:'A playful bonus round of classic Tulu tongue-twisters.',
-        items:['Rhythm & pronunciation','Fun local phrases'] },
+        items:['Rhythm & pronunciation','Fun local phrases'],
+        note:'Real Tulu tongue-twisters are thin on the open web — native speakers or Tulu community groups are a better source than any site found so far.',
+        source:[{label:'Quora — Tulu slang thread (starting point)', url:'https://www.quora.com/What-are-some-tulu-slangs'}] },
       { type:'lesson', icon:'👪', title:'Family Words', status:'complete',
         desc:'Tulu has famously specific kinship terms — learn the essentials.',
-        items:['Immediate family terms','Extended family terms','Talking about relatives'] },
+        items:['Immediate family terms','Extended family terms','Talking about relatives'],
+        vocab:[
+          {tulu:'appae', en:'mother'}, {tulu:'amme', en:'father'},
+          {tulu:'mage', en:'son'}, {tulu:'magal', en:'daughter'},
+          {tulu:'ajje', en:'grandfather'}, {tulu:'ajji', en:'grandmother'},
+          {tulu:'kaNDane', en:'husband'}, {tulu:'boDedi', en:'wife'},
+          {tulu:'palaye', en:'elder brother'}, {tulu:'paldi', en:'elder sister'},
+          {tulu:'megye', en:'younger brother'}, {tulu:'tangaDi', en:'younger sister'},
+        ],
+        note:'Sources list “appae” as mother and “amme” as father — the reverse of Kannada. Surprising enough to double-check before teaching it.',
+        source:[{label:'Easy Tulu — Family Relationships', url:'https://www.easytulu.com/p/family-relationships-in-tulu.html'},
+                {label:'TuluBuzz — Family Relationship names', url:'https://www.tulubuzz.in/2024/03/Family-Relationship-names-in-tulu.html'}] },
       { type:'trophy', icon:'🏆', title:'Unit 1 Complete', status:'complete',
         desc:'You can greet people, count, and talk about family in Tulu.',
         items:['Review all Unit 1 skills'] },
@@ -160,16 +196,43 @@ const ROADMAP_UNITS = [
     nodes:[
       { type:'lesson', icon:'🍛', title:'Food & Market', status:'complete',
         desc:'Order food, shop at a market, and talk about meals.',
-        items:['Food vocabulary','Market phrases','Talking about meals'] },
+        items:['Food vocabulary','Market phrases','Talking about meals'],
+        vocab:[
+          {tulu:'maNoli', en:'ivy gourd'}, {tulu:'touthe', en:'cucumber'},
+          {tulu:'koththambari', en:'coriander'}, {tulu:'moolangi', en:'radish'},
+          {tulu:'munchi', en:'pepper'},
+          {tulu:'nekk Eth?', en:'how much is this?'},
+          {tulu:'vaNas aanDa?', en:'had your lunch?'},
+        ],
+        source:[{label:'Raveesh Kumar — Common Phrases', url:'https://www.raveeshkumar.com/2009/05/learn-tulu-online-commonly-used-phrases.html'}] },
       { type:'lesson', icon:'📝', title:'Simple Sentences', status:'complete',
         desc:'Build basic present-tense sentences with correct word order.',
-        items:['Subject–object–verb order','Present tense basics','Everyday statements'] },
+        items:['Subject–object–verb order','Present tense basics','Everyday statements'],
+        vocab:[
+          {tulu:'yAn pOpae', en:'I go'}, {tulu:'Aye pOpe', en:'he goes'},
+          {tulu:'mOlu pOpal', en:'she goes'}, {tulu:'yAn sAleg pOpae', en:'I go to school'},
+          {tulu:'enkulu dinola pEpar Oduva', en:'we read the newspaper daily'},
+        ],
+        note:'Pattern: short verbs take “-p-” + ending (pO → pOpe, “he goes”); longer verbs take “-uv-” + ending (mAr → mAruve, “he sells”).',
+        source:[{label:'Easy Tulu — Lesson 3: Simple Present Tense', url:'https://www.easytulu.com/2016/02/tulu-lesson-3-simple-present-tense.html'}] },
       { type:'chest', icon:'💎', title:'Bonus: Coastal Slang', status:'current',
-        desc:'Casual, everyday expressions you\u2019ll actually hear on the coast.',
-        items:['Informal greetings','Local expressions'] },
+        desc:'Casual, everyday expressions you’ll actually hear on the coast.',
+        items:['Informal greetings','Local expressions'],
+        note:'Idioms and slang need a native speaker to vet — the links below are a starting point, not a vocab list to copy verbatim.',
+        source:[{label:'Raveesh Kumar — Tulu/Kannada idioms & sayings', url:'https://www.raveeshkumar.com/2011/11/learn-tulu-idioms-sayings-with.html'},
+                {label:'Quora — Tulu slang thread', url:'https://www.quora.com/What-are-some-tulu-slangs'}] },
       { type:'lesson', icon:'❓', title:'Questions & Verbs', status:'locked',
         desc:'Ask questions and conjugate verbs across past, present, and future.',
-        items:['Question formation','Verb conjugation','Case markers'] },
+        items:['Question formation','Verb conjugation','Case markers'],
+        vocab:[
+          {tulu:'att / ata', en:'no / isn’t it (statement)'},
+          {tulu:'ijji / ijja', en:'no / isn’t it (existence)'},
+          {tulu:'undu dAde?', en:'what is this?'},
+          {tulu:'Ir dUra pOvondullar?', en:'where are you going? (formal)'},
+          {tulu:'gaNTae EtAND?', en:'what time is it?'},
+        ],
+        source:[{label:'Easy Tulu — Lesson 5', url:'https://www.easytulu.com/2016/02/tulu-lesson-5-more-interrogative.html'},
+                {label:'Easy Tulu — Lesson 41', url:'https://www.easytulu.com/2016/12/tulu-lesson-41-useful-phrases-in-tulu.html'}] },
       { type:'trophy', icon:'🏆', title:'Unit 2 Complete', status:'locked',
         desc:'Hold a basic everyday conversation in Tulu.',
         items:['Review all Unit 2 skills'] },
@@ -292,7 +355,12 @@ function initRoadmap(){
   wrap.appendChild(endNote);
 
   document.addEventListener('click', () => {
-    if (openPopover){ openPopover.classList.remove('is-open'); openPopover = null; }
+    if (openPopover){
+      openPopover.classList.remove('is-open');
+      const openItem = openPopover.closest('.node-item');
+      if (openItem) openItem.style.zIndex = '';
+      openPopover = null;
+    }
   });
 
   updateProgressHeader(completeNodes, totalNodes);
@@ -318,12 +386,17 @@ function drawConnector(track, pathEl, col, color){
 
 function togglePopover(item, node, theme, openPopover, btn){
   const existing = item.querySelector('.node-popover');
-  if (openPopover && openPopover !== existing) openPopover.classList.remove('is-open');
+  if (openPopover && openPopover !== existing){
+    openPopover.classList.remove('is-open');
+    const prevItem = openPopover.closest('.node-item');
+    if (prevItem) prevItem.style.zIndex = '';
+  }
 
   if (existing){
     const willOpen = !existing.classList.contains('is-open');
     existing.classList.toggle('is-open');
     btn.setAttribute('aria-expanded', String(willOpen));
+    item.style.zIndex = willOpen ? '30' : '';
     return willOpen ? existing : null;
   }
 
@@ -331,20 +404,32 @@ function togglePopover(item, node, theme, openPopover, btn){
   pop.className = 'node-popover';
   const locked = node.status === 'locked';
   const label = locked ? 'Locked' : node.status === 'complete' ? 'Review' : 'Start';
+  const vocabHtml = node.vocab ? `
+    <div class="np-vocab">${node.vocab.map(v => `
+      <div class="np-vocab-row"><span class="np-tulu">${v.tulu}</span><span class="np-en">${v.en}</span></div>
+    `).join('')}</div>
+  ` : '';
+  const noteHtml = node.note ? `<div class="np-note">${node.note}</div>` : '';
+  const sourceHtml = node.source ? `<div class="np-sources">Sources: ${node.source.map(s => `<a href="${s.url}" target="_blank" rel="noopener">${s.label}</a>`).join(', ')}</div>` : '';
+  const listHtml = node.vocab ? '' : `<ul class="np-list">${node.items.map(i => `<li>${i}</li>`).join('')}</ul>`;
   pop.innerHTML = `
     <div class="np-title">${node.icon} ${node.title}</div>
     <p class="np-desc">${node.desc}</p>
-    <ul class="np-list">${node.items.map(i => `<li>${i}</li>`).join('')}</ul>
+    ${listHtml}
+    ${vocabHtml}
+    ${noteHtml}
+    ${sourceHtml}
     <span class="np-btn ${locked ? 'is-locked' : ''}" style="${locked ? '' : `background:${theme.face};box-shadow:0 4px 0 0 ${theme.shadow}`}">${label}</span>
   `;
   pop.style.top = 'calc(100% + 10px)';
   pop.style.left = '50%';
-  pop.style.marginLeft = '-125px';
+  pop.style.marginLeft = '-140px';
   pop.addEventListener('click', e => e.stopPropagation());
 
   item.appendChild(pop);
   requestAnimationFrame(() => pop.classList.add('is-open'));
   btn.setAttribute('aria-expanded', 'true');
+  item.style.zIndex = '30';
   return pop;
 }
 

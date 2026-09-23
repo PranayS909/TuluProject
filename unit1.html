@@ -30,7 +30,7 @@
   <div class="u1-head">
     <span class="u1-eyebrow">UNIT 1</span>
     <h1 class="u1-title">First Words</h1>
-    <p class="u1-sub">Five quick games. Greetings, numbers, family, and market words.</p>
+    <p class="u1-sub">Learn each set of words first, then play the matching game to lock it in. Greetings, numbers, family, and market words.</p>
 
     <div class="u1-progress" id="u1Progress">
       <!-- dots injected by JS -->
@@ -40,8 +40,21 @@
   <!-- ---- exercise stage ---- -->
   <div class="u1-stage" id="u1Stage">
 
+    <!-- ============ 0. GREETINGS — LEARNING MODULE ============ -->
+    <section class="u1-ex lm-ex" data-ex="0" id="lmGreetings">
+      <div class="u1-ex-head">
+        <span class="u1-ex-icon" style="--c:var(--e1)">📖</span>
+        <div>
+          <h2>Learn: Greetings</h2>
+          <p>Tap a card to hear it spoken. Flip it to see the meaning.</p>
+        </div>
+      </div>
+      <div class="lm-grid" id="lmGreetingsGrid"></div>
+      <button type="button" class="ex-next-btn lm-continue-btn" data-next-label="Continue to matching game →">Continue to matching game →</button>
+    </section>
+
     <!-- ============ 1. GREETINGS — TAP TO MATCH ============ -->
-    <section class="u1-ex" data-ex="0" id="exGreetings">
+    <section class="u1-ex" data-ex="1" id="exGreetings" hidden>
       <div class="u1-ex-head">
         <span class="u1-ex-icon" style="--c:var(--e1)">👋</span>
         <div>
@@ -56,8 +69,22 @@
       <p class="u1-ex-status" id="greetStatus"></p>
     </section>
 
-    <!-- ============ 2. NUMBERS — DRAG WORD TO DOT GROUP ============ -->
-    <section class="u1-ex" data-ex="1" id="exNumbers" hidden>
+    <!-- ============ 2. NUMBERS — LEARNING MODULE ============ -->
+    <section class="u1-ex lm-ex" data-ex="2" id="lmNumbers" hidden>
+      <div class="u1-ex-head">
+        <span class="u1-ex-icon" style="--c:var(--e2)">📖</span>
+        <div>
+          <h2>Learn: Numbers</h2>
+          <p>Tap a card to hear it spoken. Flip it to see the number.</p>
+        </div>
+      </div>
+      <div class="lm-grid" id="lmNumbersGrid"></div>
+      <div class="lm-note" id="lmNumbersNote"></div>
+      <button type="button" class="ex-next-btn lm-continue-btn" data-next-label="Continue to drag game →">Continue to drag game →</button>
+    </section>
+
+    <!-- ============ 3. NUMBERS — DRAG WORD TO DOT GROUP ============ -->
+    <section class="u1-ex" data-ex="3" id="exNumbers" hidden>
       <div class="u1-ex-head">
         <span class="u1-ex-icon" style="--c:var(--e2)">🔢</span>
         <div>
@@ -70,8 +97,21 @@
       <p class="u1-ex-status" id="numbersStatus"></p>
     </section>
 
-    <!-- ============ 3. FAMILY — DRAG WORD TO PORTRAIT ============ -->
-    <section class="u1-ex" data-ex="2" id="exFamily" hidden>
+    <!-- ============ 4. FAMILY — LEARNING MODULE ============ -->
+    <section class="u1-ex lm-ex" data-ex="4" id="lmFamily" hidden>
+      <div class="u1-ex-head">
+        <span class="u1-ex-icon" style="--c:var(--e3)">📖</span>
+        <div>
+          <h2>Learn: Family</h2>
+          <p>Tap a card to hear it spoken. Flip it to see who it means.</p>
+        </div>
+      </div>
+      <div class="lm-grid" id="lmFamilyGrid"></div>
+      <button type="button" class="ex-next-btn lm-continue-btn" data-next-label="Continue to drag game →">Continue to drag game →</button>
+    </section>
+
+    <!-- ============ 5. FAMILY — DRAG WORD TO PORTRAIT ============ -->
+    <section class="u1-ex" data-ex="5" id="exFamily" hidden>
       <div class="u1-ex-head">
         <span class="u1-ex-icon" style="--c:var(--e3)">👨‍👩‍👧</span>
         <div>
@@ -84,8 +124,21 @@
       <p class="u1-ex-status" id="familyStatus"></p>
     </section>
 
-    <!-- ============ 4. MARKET — DRAG WORD TO ITEM ============ -->
-    <section class="u1-ex" data-ex="3" id="exMarket" hidden>
+    <!-- ============ 6. MARKET — LEARNING MODULE ============ -->
+    <section class="u1-ex lm-ex" data-ex="6" id="lmMarket" hidden>
+      <div class="u1-ex-head">
+        <span class="u1-ex-icon" style="--c:var(--e4)">📖</span>
+        <div>
+          <h2>Learn: Market Words</h2>
+          <p>Tap a card to hear it spoken. Flip it to see what it means.</p>
+        </div>
+      </div>
+      <div class="lm-grid" id="lmMarketGrid"></div>
+      <button type="button" class="ex-next-btn lm-continue-btn" data-next-label="Continue to drag game →">Continue to drag game →</button>
+    </section>
+
+    <!-- ============ 7. MARKET — DRAG WORD TO ITEM ============ -->
+    <section class="u1-ex" data-ex="7" id="exMarket" hidden>
       <div class="u1-ex-head">
         <span class="u1-ex-icon" style="--c:var(--e4)">🧺</span>
         <div>
@@ -98,8 +151,8 @@
       <p class="u1-ex-status" id="marketStatus"></p>
     </section>
 
-    <!-- ============ 5. QUICK QUIZ ============ -->
-    <section class="u1-ex" data-ex="4" id="exQuiz" hidden>
+    <!-- ============ 8. QUICK QUIZ ============ -->
+    <section class="u1-ex" data-ex="8" id="exQuiz" hidden>
       <div class="u1-ex-head">
         <span class="u1-ex-icon" style="--c:var(--e5)">⚡</span>
         <div>
@@ -111,7 +164,7 @@
     </section>
 
     <!-- ============ DONE SCREEN ============ -->
-    <section class="u1-ex u1-done" data-ex="5" id="exDone" hidden>
+    <section class="u1-ex u1-done" data-ex="9" id="exDone" hidden>
       <div class="u1-done-emoji">🎉</div>
       <h2>Unit 1 complete!</h2>
       <p id="doneSummary">Nice work — you matched every word.</p>

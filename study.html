@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Study Words &amp; Phrases · Tulu · ತುಳು</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&family=Noto+Sans+Kannada:wght@500;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="study.css">
+</head>
+<body>
+
+<header class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="index.html#top" class="nav-brand">
+      <span class="brand-mascot">🦜</span>
+      <span class="brand-kn">ತುಳು</span>
+      <span class="brand-en">Tulu</span>
+    </a>
+    <nav class="nav-links" id="navLinks">
+      <a href="index.html#history">History</a>
+      <a href="index.html#leaderboard">Leaderboard</a>
+      <a href="index.html#roadmap">Roadmap</a>
+    </nav>
+    <div class="nav-actions">
+      <a href="index.html#roadmap" class="btn btn-outline">Course</a>
+      <a href="index.html#leaderboard" class="btn btn-solid">GET STARTED</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="crumb-bar">
+  <a href="index.html#roadmap" class="crumb-link"><span class="crumb-arrow">←</span> Back to Roadmap</a>
+</div>
+
+<section class="pz-hero">
+  <p class="pz-eyebrow">📖 Study Material</p>
+  <h1 class="pz-title">Words &amp; Phrases</h1>
+  <p class="pz-sub">Learn these before jumping into the practice exercises. Tap any card — or its speaker icon — to hear it spoken. Everything here is organized into the same sections as the source material.</p>
+</section>
+
+<div class="study-meta" id="studyMeta">
+  <div class="study-meta-stat">🔎 <b id="metaHeard">0</b> / <span id="metaTotal">0</span> words explored</div>
+  <div class="study-meta-note">🔊 Native-speaker audio is being recorded and will drop in over time — cards without a clip yet show a muted speaker.</div>
+</div>
+
+<nav class="study-jumpnav" id="studyJumpnav" aria-label="Jump to section"></nav>
+
+<main class="study-main" id="studyMain"></main>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand"><span class="brand-mascot">🦜</span><span class="brand-kn">ತುಳು</span><span class="brand-en">Tulu</span></div>
+    <p class="footer-note">Words-explored progress is local to this page for now — nothing here is saved between visits.</p>
+  </div>
+</footer>
+
+<div class="study-toast" id="studyToast"></div>
+
+<script src="detail.js"></script>
+<script src="study.js"></script>
+</body>
+</html>
