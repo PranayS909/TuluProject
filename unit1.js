@@ -4,23 +4,25 @@
 
    AUDIO FILE CONVENTION — same folders/names as study.html, so a
    recording only has to be made once for a word:
-     audio/<section>/<slugified-tulu-term>.mp3
+     audio/<section>/<slugified-tulu-term>.m4a
    sections: greetings | numbers | family | market
    Slug rule: text before the first "/" or "(", lowercased, anything
    that isn't a-z/0-9 collapsed to a single hyphen. E.g. "Yencha
-   ullar?" → audio/greetings/yencha-ullar.mp3
-   Just drop real .mp3 files into those folders — no code changes
+   ullar?" → audio/greetings/yencha-ullar.m4a
+   Just drop real .m4a files into those folders — no code changes
    needed, cards pick them up automatically. (If you already used
    different filenames, edit AUDIO_OVERRIDES below to map a term to
-   its exact filename instead of relying on the slug.)
+   its exact filename instead of relying on the slug — include
+   whatever extension that file actually has.)
 =================================================================== */
 
 /* ---------------------------------------------------------------
    AUDIO
 --------------------------------------------------------------- */
+const AUDIO_EXT = 'm4a'; // change here if you switch formats again
+
 const AUDIO_OVERRIDES = {
-  // 'Yencha ullar?': 'greetings/how-are-you-formal.mp3',   // example override
-  
+  // 'Yencha ullar?': 'greetings/how-are-you-formal.m4a',   // example override
 };
 
 function slugify(term){
@@ -33,7 +35,7 @@ function slugify(term){
 
 function audioSrcFor(section, term){
   if (AUDIO_OVERRIDES[term]) return `audio/${AUDIO_OVERRIDES[term]}`;
-  return `audio/${section}/${slugify(term)}.mp3`;
+  return `audio/${section}/${slugify(term)}.${AUDIO_EXT}`;
 }
 
 let toastTimer = null;

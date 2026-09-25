@@ -1,16 +1,18 @@
 /* ===================================================================
    STUDY PAGE — sectioned vocab/phrase cards, click-to-play audio.
 
-   AUDIO FILE CONVENTION (no real recordings exist yet, but the click
-   handling below is fully wired up for when they do):
-     audio/<section-id>/<slugified-tulu-word>.mp3
+   AUDIO FILE CONVENTION (same folders/names as unit1.html, so a
+   recording only has to be made once for a word):
+     audio/<section-id>/<slugified-tulu-word>.m4a
    e.g. "Yencha ullar?" in the Greetings section looks for:
-     audio/greetings/yencha-ullar.mp3
+     audio/greetings/yencha-ullar.m4a
    Slugging rule: take the text before the first "/" or "(", lowercase
    it, and replace anything that isn't a-z/0-9 with a single hyphen.
-   Drop real .mp3 files into those folders later and cards will just
-   start playing them — no code changes needed.
+   Drop real .m4a files into those folders and cards will just start
+   playing them — no code changes needed.
 =================================================================== */
+
+const AUDIO_EXT = 'm4a'; // change here if you switch formats again
 
 function slugify(tulu){
   return tulu
@@ -190,7 +192,7 @@ let learnedWords = new Set();
 let totalWords = 0;
 
 function playAudio(card, sectionId, tuluWord){
-  const src = `audio/${sectionId}/${slugify(tuluWord)}.mp3`;
+  const src = `audio/${sectionId}/${slugify(tuluWord)}.${AUDIO_EXT}`;
   const audio = new Audio(src);
   card.classList.add('is-playing');
   const clearPlaying = () => card.classList.remove('is-playing');
