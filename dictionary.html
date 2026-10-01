@@ -3,12 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Study Words &amp; Phrases · Tulu · ತುಳು</title>
+<title>Tulu Dictionary · English ↔ Tulu · Tulu · ತುಳು</title>
+<meta name="description" content="Search Tulu words and phrases in English or Tulu: greetings, numbers, family terms and market words, with audio where recorded.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&family=Noto+Sans+Kannada:wght@500;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 <link rel="stylesheet" href="study.css">
+<link rel="stylesheet" href="tools.css">
 </head>
 <body>
 
@@ -37,28 +39,35 @@
 </header>
 
 <div class="crumb-bar">
-  <a href="index.html#roadmap" class="crumb-link"><span class="crumb-arrow">←</span> Back to Roadmap</a>
+  <a href="index.html#tools" class="crumb-link"><span class="crumb-arrow">←</span> Back to Tools</a>
 </div>
 
 <section class="pz-hero">
-  <p class="pz-eyebrow">📖 Study Material</p>
-  <h1 class="pz-title">Words &amp; Phrases</h1>
-  <p class="pz-sub">Learn these before jumping into the practice exercises. Tap any card — or its speaker icon — to hear it spoken. Everything here is organized into the same sections as the source material.</p>
+  <p class="pz-eyebrow">📚 Dictionary</p>
+  <h1 class="pz-title">Tulu ↔ English</h1>
+  <p class="pz-sub">Search in either language. Every word here is also in the course, so you can jump straight to practising it.</p>
 </section>
 
-<div class="study-meta" id="studyMeta">
-  <div class="study-meta-stat">🔎 <b id="metaHeard">0</b> / <span id="metaTotal">0</span> words explored</div>
-  <div class="study-meta-note">🔊 Native-speaker audio is being recorded and will drop in over time — cards without a clip yet show a muted speaker.</div>
-</div>
+<main class="tool-main">
+  <div class="dict-search">
+    <span class="dict-search-icon" aria-hidden="true">🔎</span>
+    <input type="search" id="dictQuery" placeholder="Try “water”, “thank you”, or “bangude”" autocomplete="off" aria-label="Search the dictionary">
+  </div>
+  <div class="dict-filters" id="dictFilters" role="tablist" aria-label="Filter by topic"></div>
+  <p class="dict-count" id="dictCount" aria-live="polite"></p>
+  <div class="dict-list" id="dictList"></div>
 
-<nav class="study-jumpnav" id="studyJumpnav" aria-label="Jump to section"></nav>
-
-<main class="study-main" id="studyMain"></main>
+  <div class="dict-empty" id="dictEmpty" hidden>
+    <span class="dict-empty-icon">🦜</span>
+    <p><strong>No match yet.</strong> The dictionary grows with the course and with suggestions from Tulu speakers.</p>
+    <a href="contribute.html" class="btn btn-solid">SUGGEST A WORD</a>
+  </div>
+</main>
 
 <footer class="footer">
   <div class="footer-inner">
     <div class="footer-brand"><span class="brand-mascot">🦜</span><span class="brand-kn">ತುಳು</span><span class="brand-en">Tulu</span></div>
-    <p class="footer-note">Words-explored progress is local to this page for now — nothing here is saved between visits.</p>
+    <p class="footer-note">Spellings vary by village and community. Know a better word? <a href="contribute.html" class="footer-link">Suggest it</a>.</p>
   </div>
 </footer>
 
@@ -66,6 +75,6 @@
 
 <script src="detail.js"></script>
 <script src="vocab-data.js"></script>
-<script src="study.js"></script>
+<script src="dictionary.js"></script>
 </body>
 </html>

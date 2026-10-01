@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tulu Transliterator &amp; Keyboard · Tulu · ತುಳು</title>
+<meta name="description" content="Free Tulu transliterator: type Tulu in English letters or Kannada script and get Tulu Lipi (Tigalari). Includes an on-screen Tulu Lipi keyboard.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&family=Noto+Sans+Kannada:wght@500;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="study.css">
+<link rel="stylesheet" href="tools.css">
+</head>
+<body>
+
+<header class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="index.html#top" class="nav-brand">
+      <span class="brand-mascot">🦜</span>
+      <span class="brand-kn">ತುಳು</span>
+      <span class="brand-en">Tulu</span>
+    </a>
+    <nav class="nav-links" id="navLinks">
+      <a href="index.html#history">History</a>
+      <a href="tulu-lipi.html">Tulu Lipi</a>
+      <a href="index.html#tools">Tools</a>
+      <a href="index.html#leaderboard">Leaderboard</a>
+      <a href="index.html#roadmap">Roadmap</a>
+    </nav>
+    <div class="nav-actions">
+      <a href="index.html#roadmap" class="btn btn-outline">Course</a>
+      <a href="index.html#leaderboard" class="btn btn-solid">GET STARTED</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="crumb-bar">
+  <a href="index.html#tools" class="crumb-link"><span class="crumb-arrow">←</span> Back to Tools</a>
+</div>
+
+<section class="pz-hero">
+  <p class="pz-eyebrow">🔁 Transliterator · Keyboard</p>
+  <h1 class="pz-title">Write Tulu in any script</h1>
+  <p class="pz-sub">Type Tulu in English letters or Kannada and see it in Tulu Lipi as you type. This only changes the script. It doesn't translate the meaning: <em>neer</em> stays <em>neer</em>, just written differently.</p>
+</section>
+
+<div class="font-notice" id="fontNotice" hidden>
+  <span class="fn-icon">🔤</span>
+  <div>
+    <strong>Your device doesn't have a Tulu Lipi font yet</strong>, so Tulu Lipi output will show as boxes.
+    Copy-paste still works: the text is correct Unicode and will display on any device that has the font.
+  </div>
+</div>
+
+<main class="tool-main">
+
+  <section class="tool-card">
+    <div class="tl-modes" role="tablist" aria-label="Input type">
+      <button class="study-jump-btn is-active" data-mode="roman" role="tab" aria-selected="true" type="button">abc English letters</button>
+      <button class="study-jump-btn" data-mode="kannada" role="tab" aria-selected="false" type="button">ಕ Kannada script</button>
+    </div>
+
+    <label class="tl-label" for="tlInput" id="tlInputLabel">Type Tulu in English letters</label>
+    <textarea id="tlInput" class="tl-input" rows="3" spellcheck="false" autocomplete="off" placeholder="e.g. namaskAra, tuLu, solmelu"></textarea>
+
+    <div class="tl-options" id="romanOptions">
+      <label class="tl-check"><input type="checkbox" id="ignoreCase"> Ignore capitals (casual spelling)</label>
+      <div class="tl-examples" id="tlExamples">
+        <span>Try:</span>
+        <button type="button" data-ex="namaskAra">namaskAra</button>
+        <button type="button" data-ex="tuLu nADu">tuLu nADu</button>
+        <button type="button" data-ex="kuDla">kuDla</button>
+        <button type="button" data-ex="solmelu">solmelu</button>
+        <button type="button" data-ex="neer">neer</button>
+      </div>
+    </div>
+
+    <div class="tl-outputs">
+      <div class="tl-out" id="knOutWrap">
+        <div class="tl-out-head"><span>Kannada script</span><button type="button" class="tl-copy" data-copy="knOut">Copy</button></div>
+        <div class="tl-out-text kn" id="knOut" aria-live="polite"></div>
+      </div>
+      <div class="tl-out tl-out--tg">
+        <div class="tl-out-head"><span>Tulu Lipi</span><button type="button" class="tl-copy" data-copy="tgOut">Copy</button></div>
+        <div class="tl-out-text tg" id="tgOut" aria-live="polite"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="study-section" id="keyboard">
+    <div class="study-section-head">
+      <div class="study-section-icon" style="--c:var(--e2)">⌨️</div>
+      <div>
+        <h2>Tulu Lipi keyboard</h2>
+        <p>Tap letters to type straight into Tulu Lipi. Add a vowel sign after a consonant, or ್ to join two consonants.</p>
+      </div>
+    </div>
+    <div class="tool-card">
+      <div class="kbd-screen">
+        <div class="tl-out-text tg" id="kbdOut"></div>
+        <div class="kbd-screen-actions">
+          <button type="button" class="tl-copy" id="kbdBack">⌫ Delete</button>
+          <button type="button" class="tl-copy" id="kbdSpace">Space</button>
+          <button type="button" class="tl-copy" id="kbdClear">Clear</button>
+          <button type="button" class="tl-copy" data-copy="kbdOut">Copy</button>
+        </div>
+      </div>
+      <div class="kbd-rows" id="kbdRows"></div>
+    </div>
+  </section>
+
+  <section class="study-section" id="cheatsheet">
+    <div class="study-section-head">
+      <div class="study-section-icon" style="--c:var(--e3)">📋</div>
+      <div>
+        <h2>What to type</h2>
+        <p>Capitals matter: <b>A</b> is a long ā, <b>T D N L</b> are the "tongue-curled" sounds. Casual <b>ee</b> and <b>oo</b> also work for long ī and ū.</p>
+      </div>
+    </div>
+    <div class="cheat-grid" id="cheatGrid"></div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand"><span class="brand-mascot">🦜</span><span class="brand-kn">ತುಳು</span><span class="brand-en">Tulu</span></div>
+    <p class="footer-note">Letter-by-letter conversion following Unicode 16.0. Conjunct shapes depend on your font. Something wrong? <a href="contribute.html" class="footer-link">Tell us</a>.</p>
+  </div>
+</footer>
+
+<div class="study-toast" id="studyToast"></div>
+
+<script src="detail.js"></script>
+<script src="lipi-data.js"></script>
+<script src="transliterator.js"></script>
+</body>
+</html>

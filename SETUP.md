@@ -128,10 +128,19 @@ units, with an **＋ Add course** button on Unit 1 (the others show
    `index.html#roadmap`. Next time they visit the dashboard, that
    course shows a **Continue →** button instead.
 
+## Suggest-a-word form (contribute.html)
+
+1. In **SQL Editor**, paste in `supabase-schema-suggestions.sql` and
+   click **Run**. This creates a `suggestions` table that anyone can
+   submit to but nobody can read from the website.
+2. Review what people send under **Table Editor → suggestions**. Set
+   `status` to `accepted` or `rejected` as you go.
+
 ## Notes
 
 - Never commit your **service role** key anywhere in this front-end
-  code — only the **anon** key belongs in `auth.js` and `dashboard.js`.
+  code — only the **anon** key belongs in `auth.js`, `dashboard.js`
+  and `contribute.js`.
 - In **Authentication → URL Configuration → Redirect URLs**, make sure
   both `dashboard.html` and `index.html` are covered (add the full
   URLs for each, or a wildcard like `https://your-site.com/*`).

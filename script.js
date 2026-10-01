@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initRoadmap();
   initReveal();
   initThemeCustomizer();
+  initFaqSchema();
 });
 
 /* ---------- NAV ---------- */
@@ -512,4 +513,25 @@ function initThemeCustomizer(){
     applyAccent(DEFAULT_THEME.accent);
     applyBackground(DEFAULT_THEME.bg);
   });
+}
+
+/* ---------- FAQ structured data ----------
+   Builds schema.org FAQPage JSON-LD from the visible #faqList, so
+   search engines can show the answers and the two never drift apart. */
+function initFaqSchema(){
+  const items = document.querySelectorAll('#faqList .faq-item');
+  if (!items.length) return;
+  const schema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: Array.from(items).map(item => ({
+      '@type': 'Question',
+      name: item.querySelector('summary').textContent.trim(),
+      acceptedAnswer: { '@type': 'Answer', text: item.querySelector('p').textContent.replace(/\s+/g, ' ').trim() },
+    })),
+  };
+  const tag = document.createElement('script');
+  tag.type = 'application/ld+json';
+  tag.textContent = JSON.stringify(schema);
+  document.head.appendChild(tag);
 }

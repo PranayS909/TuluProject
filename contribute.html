@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Suggest a Word · Tulu · ತುಳು</title>
+<meta name="description" content="Help grow the Tulu course: suggest a new word, send a correction, or share feedback as a Tulu speaker.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&family=Noto+Sans+Kannada:wght@500;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="study.css">
+<link rel="stylesheet" href="tools.css">
+</head>
+<body>
+
+<header class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="index.html#top" class="nav-brand">
+      <span class="brand-mascot">🦜</span>
+      <span class="brand-kn">ತುಳು</span>
+      <span class="brand-en">Tulu</span>
+    </a>
+    <nav class="nav-links" id="navLinks">
+      <a href="index.html#history">History</a>
+      <a href="tulu-lipi.html">Tulu Lipi</a>
+      <a href="index.html#tools">Tools</a>
+      <a href="index.html#leaderboard">Leaderboard</a>
+      <a href="index.html#roadmap">Roadmap</a>
+    </nav>
+    <div class="nav-actions">
+      <a href="index.html#roadmap" class="btn btn-outline">Course</a>
+      <a href="index.html#leaderboard" class="btn btn-solid">GET STARTED</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="crumb-bar">
+  <a href="index.html#tools" class="crumb-link"><span class="crumb-arrow">←</span> Back to Tools</a>
+</div>
+
+<section class="pz-hero">
+  <p class="pz-eyebrow">🤝 Community</p>
+  <h1 class="pz-title">Help keep Tulu spoken</h1>
+  <p class="pz-sub">Tulu changes from village to village, and no single course gets it all right. If you speak Tulu, your words and corrections go straight to the people building this course.</p>
+</section>
+
+<main class="tool-main tool-main--narrow">
+  <form class="tool-card contrib-form" id="contribForm" novalidate>
+    <fieldset class="contrib-kinds">
+      <legend>What would you like to send?</legend>
+      <label class="contrib-kind"><input type="radio" name="kind" value="new_word" checked><span>➕ A new word</span></label>
+      <label class="contrib-kind"><input type="radio" name="kind" value="correction"><span>✏️ A correction</span></label>
+      <label class="contrib-kind"><input type="radio" name="kind" value="feedback"><span>💬 Feedback</span></label>
+    </fieldset>
+
+    <div class="contrib-row" id="wordFields">
+      <label class="contrib-field">
+        <span>Tulu word or phrase</span>
+        <input type="text" name="tulu" maxlength="200" placeholder="e.g. Yencha ullar? / ಎಂಚ ಉಲ್ಲರ್?">
+      </label>
+      <label class="contrib-field">
+        <span>Meaning in English</span>
+        <input type="text" name="meaning" maxlength="300" placeholder="e.g. How are you?">
+      </label>
+    </div>
+
+    <label class="contrib-field">
+      <span>Where is it said this way?</span>
+      <select name="region">
+        <option value="">Not sure / everywhere</option>
+        <option>Mangaluru</option>
+        <option>Udupi</option>
+        <option>Kasaragod</option>
+        <option>Bantwal</option>
+        <option>Puttur</option>
+        <option>Sullia</option>
+        <option>Belthangady</option>
+        <option>Karkala</option>
+        <option>Moodbidri</option>
+        <option>Other</option>
+      </select>
+    </label>
+
+    <label class="contrib-field">
+      <span id="notesLabel">Notes (optional): usage, example sentence, which page has the mistake…</span>
+      <textarea name="notes" rows="4" maxlength="2000"></textarea>
+    </label>
+
+    <label class="contrib-field">
+      <span>Your name (optional, if you'd like credit)</span>
+      <input type="text" name="display_name" maxlength="80" autocomplete="name">
+    </label>
+
+    <!-- spam trap: real people never see or fill this -->
+    <label class="contrib-hp" aria-hidden="true">Leave empty <input type="text" name="website" tabindex="-1" autocomplete="off"></label>
+
+    <p class="contrib-msg" id="contribMsg" role="status"></p>
+    <button class="btn btn-solid btn-lg contrib-submit" id="contribSubmit" type="submit">SEND SUGGESTION</button>
+    <p class="contrib-privacy">We only store what you type here. We don't collect email addresses.</p>
+  </form>
+</main>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand"><span class="brand-mascot">🦜</span><span class="brand-kn">ತುಳು</span><span class="brand-en">Tulu</span></div>
+    <p class="footer-note">Built to keep a coastal language spoken. Content is a starting point — corrections from Tulu speakers are always welcome.</p>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="detail.js"></script>
+<script src="contribute.js"></script>
+</body>
+</html>

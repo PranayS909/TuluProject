@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Learn Tulu Lipi (Tigalari Script) · Tulu · ತುಳು</title>
+<meta name="description" content="Learn the Tulu Lipi (Tulu-Tigalari) alphabet for free: every vowel and consonant with its Kannada equivalent, syllable building, letter tracing and a quick quiz.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&family=Noto+Sans+Kannada:wght@500;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="study.css">
+<link rel="stylesheet" href="tools.css">
+</head>
+<body>
+
+<header class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="index.html#top" class="nav-brand">
+      <span class="brand-mascot">🦜</span>
+      <span class="brand-kn">ತುಳು</span>
+      <span class="brand-en">Tulu</span>
+    </a>
+    <nav class="nav-links" id="navLinks">
+      <a href="index.html#history">History</a>
+      <a href="tulu-lipi.html">Tulu Lipi</a>
+      <a href="index.html#tools">Tools</a>
+      <a href="index.html#leaderboard">Leaderboard</a>
+      <a href="index.html#roadmap">Roadmap</a>
+    </nav>
+    <div class="nav-actions">
+      <a href="index.html#roadmap" class="btn btn-outline">Course</a>
+      <a href="index.html#leaderboard" class="btn btn-solid">GET STARTED</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="crumb-bar">
+  <a href="index.html#tools" class="crumb-link"><span class="crumb-arrow">←</span> Back to Tools</a>
+</div>
+
+<section class="pz-hero">
+  <p class="pz-eyebrow">✍️ Tulu Lipi · Tigalari script</p>
+  <h1 class="pz-title">Read &amp; write Tulu Lipi</h1>
+  <p class="pz-sub">Tulu's own script, letter by letter. Each one sits next to its Kannada twin, so if you can read Kannada you're already halfway there. Learn the letters, build syllables, trace them by hand, then test yourself.</p>
+</section>
+
+<div class="font-notice" id="fontNotice" hidden>
+  <span class="fn-icon">🔤</span>
+  <div>
+    <strong>Your device doesn't have a Tulu Lipi font yet.</strong>
+    Tulu-Tigalari only joined Unicode in 2024 (version 16.0), so most phones and computers don't ship a font for it,
+    and Tulu letters show up as empty boxes. Install any Tulu-Tigalari font and reload. You can still learn the
+    Kannada pairs and sounds in the meantime.
+    <span class="fn-dev">Site owners: put a font file at <code>fonts/TuluTigalari.woff2</code> and every visitor gets it automatically.</span>
+  </div>
+</div>
+
+<nav class="study-jumpnav" aria-label="Jump to section">
+  <a href="#alphabet" class="study-jump-btn">🔤 Alphabet</a>
+  <a href="#syllables" class="study-jump-btn">🧩 Syllables</a>
+  <a href="#trace" class="study-jump-btn">✍️ Trace</a>
+  <a href="#quiz" class="study-jump-btn">🎯 Quiz</a>
+</nav>
+
+<main class="tool-main">
+
+  <!-- ALPHABET -->
+  <section class="study-section" id="alphabet">
+    <div class="study-section-head">
+      <div class="study-section-icon" style="--c:var(--e1)">🔤</div>
+      <div>
+        <h2>The alphabet</h2>
+        <p>Tap any letter to trace it. The small key shows what to type in the <a href="transliterator.html" class="inline-link">transliterator</a>.</p>
+      </div>
+    </div>
+
+    <div class="study-group">
+      <div class="study-group-head"><span class="study-group-name">Vowels · ಸ್ವರಗಳು</span><span class="study-group-count" id="vowelCount"></span></div>
+      <div class="lipi-grid" id="vowelGrid"></div>
+    </div>
+
+    <div id="consonantGroups"></div>
+
+    <p class="study-group-note">
+      Tigalari is the older sister of the Malayalam script and was used along the coast for Tulu and Sanskrit
+      palm-leaf manuscripts. It has no separate short <em>e</em> and <em>o</em>: one letter covers both lengths.
+      <a href="tigalari-script.html" class="inline-link">Read the history of the script →</a>
+    </p>
+  </section>
+
+  <!-- SYLLABLES -->
+  <section class="study-section" id="syllables">
+    <div class="study-section-head">
+      <div class="study-section-icon" style="--c:var(--e2)">🧩</div>
+      <div>
+        <h2>Build syllables</h2>
+        <p>Just like Kannada, a consonant carries an "a" sound until a vowel sign changes it. Pick a consonant and watch it change.</p>
+      </div>
+    </div>
+    <div class="syl-picker" id="sylPicker" role="tablist" aria-label="Pick a consonant"></div>
+    <div class="syl-grid" id="sylGrid"></div>
+    <p class="study-group-note">How the vowel signs look and join depends on your font. Some fonts draw a few combinations differently from old manuscripts.</p>
+  </section>
+
+  <!-- TRACE -->
+  <section class="study-section" id="trace">
+    <div class="study-section-head">
+      <div class="study-section-icon" style="--c:var(--e3)">✍️</div>
+      <div>
+        <h2>Trace it</h2>
+        <p>Draw over the faint letter with your finger or mouse, then press Check.</p>
+      </div>
+    </div>
+
+    <div class="trace-wrap">
+      <div class="trace-info">
+        <span class="trace-tg tg" id="traceTg"></span>
+        <div>
+          <div class="trace-kn" id="traceKn"></div>
+          <div class="trace-rom" id="traceRom"></div>
+        </div>
+      </div>
+      <canvas id="traceCanvas" class="trace-canvas" width="320" height="320" aria-label="Tracing area"></canvas>
+      <div class="trace-stars" id="traceStars" aria-live="polite"></div>
+      <div class="trace-actions">
+        <button class="btn btn-outline" id="tracePrev" type="button">← Prev</button>
+        <button class="btn btn-outline" id="traceClear" type="button">Clear</button>
+        <button class="btn btn-solid" id="traceCheck" type="button">Check</button>
+        <button class="btn btn-outline" id="traceNext" type="button">Next →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUIZ -->
+  <section class="study-section" id="quiz">
+    <div class="study-section-head">
+      <div class="study-section-icon" style="--c:var(--e4)">🎯</div>
+      <div>
+        <h2>Quick quiz</h2>
+        <p>Ten questions, mixed directions. Your best score is saved on this device.</p>
+      </div>
+    </div>
+
+    <div class="quiz-card" id="quizCard">
+      <div class="quiz-start" id="quizStart">
+        <p class="quiz-best" id="quizBest"></p>
+        <button class="btn btn-solid btn-lg" id="quizStartBtn" type="button">START QUIZ</button>
+      </div>
+      <div class="quiz-play" id="quizPlay" hidden>
+        <div class="quiz-progress"><div class="quiz-progress-fill" id="quizFill"></div></div>
+        <p class="quiz-prompt" id="quizPrompt"></p>
+        <div class="quiz-glyph" id="quizGlyph"></div>
+        <div class="quiz-options" id="quizOptions"></div>
+      </div>
+      <div class="quiz-done" id="quizDone" hidden>
+        <p class="quiz-score" id="quizScore"></p>
+        <button class="btn btn-solid btn-lg" id="quizAgainBtn" type="button">PLAY AGAIN</button>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand"><span class="brand-mascot">🦜</span><span class="brand-kn">ತುಳು</span><span class="brand-en">Tulu</span></div>
+    <p class="footer-note">Letters follow the Unicode 16.0 Tulu-Tigalari standard. Spotted a mistake? <a href="contribute.html" class="footer-link">Tell us</a>.</p>
+  </div>
+</footer>
+
+<script src="detail.js"></script>
+<script src="lipi-data.js"></script>
+<script src="tulu-lipi.js"></script>
+</body>
+</html>
