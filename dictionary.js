@@ -94,7 +94,7 @@ function row(e){
       <span class="dict-tag"></span>
       <a class="dict-practice" href="${e.section.crosslink ? e.section.crosslink.href : 'study.html'}">Practice →</a>
     </div>
-    <button type="button" class="study-speaker dict-speaker" aria-label="Play ${e.tulu}">🔊</button>
+    <button type="button" class="study-speaker dict-speaker${audioSrc(e.tulu) ? "" : " is-muted"}" aria-label="Play ${e.tulu}">${audioSrc(e.tulu) ? "🔊" : "🔇"}</button>
   `;
   // vocab text goes in via textContent so stray < or & can't break the page
   el.querySelector('.dict-tulu').textContent = e.tulu;
@@ -105,8 +105,9 @@ function row(e){
 }
 
 function play(e){
-  const audio = new Audio(`audio/${e.section.id}/${slugify(e.tulu)}.${AUDIO_EXT}`);
-  audio.play().catch(() => showToast(`🔇 No recording yet for "${e.tulu}"`));
+  const src = audioSrc(e.tulu);
+  if (!src) return showToast(`🔇 No recording yet for "${e.tulu}"`);
+  new Audio(src).play().catch(() => showToast(`🔇 Couldn't play "${e.tulu}"`));
 }
 
 let toastTimer = null;

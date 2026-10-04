@@ -1,43 +1,12 @@
 /* ===================================================================
    UNIT 1 PRACTICE — a learning module (flashcards, click-to-play
    audio) before each matching/dragging exercise, then a mixed quiz.
-
-   AUDIO FILE CONVENTION — same folders/names as study.html, so a
-   recording only has to be made once for a word:
-     audio/<section>/<slugified-tulu-term>.m4a
-   sections: greetings | numbers | family | market
-   Slug rule: text before the first "/" or "(", lowercased, anything
-   that isn't a-z/0-9 collapsed to a single hyphen. E.g. "Yencha
-   ullar?" → audio/greetings/yencha-ullar.m4a
-   Just drop real .m4a files into those folders — no code changes
-   needed, cards pick them up automatically. (If you already used
-   different filenames, edit AUDIO_OVERRIDES below to map a term to
-   its exact filename instead of relying on the slug — include
-   whatever extension that file actually has.)
+   Which recording plays for each term is set in audio-map.js.
 =================================================================== */
 
 /* ---------------------------------------------------------------
    AUDIO
 --------------------------------------------------------------- */
-const AUDIO_EXT = 'm4a'; // change here if you switch formats again
-
-const AUDIO_OVERRIDES = {
-  // 'Yencha ullar?': 'greetings/how-are-you-formal.m4a',   // example override
-};
-
-function slugify(term){
-  return term
-    .split('/')[0].split('(')[0]
-    .trim().toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '');
-}
-
-function audioSrcFor(section, term){
-  if (AUDIO_OVERRIDES[term]) return `audio/${AUDIO_OVERRIDES[term]}`;
-  return `audio/${section}/${slugify(term)}.${AUDIO_EXT}`;
-}
-
 let toastTimer = null;
 function showToast(msg){
   let toast = document.getElementById('u1Toast');
@@ -53,14 +22,9 @@ function showToast(msg){
   toastTimer = setTimeout(() => toast.classList.remove('is-shown'), 2000);
 }
 
-function playCardAudio(card, section, term){
-  const src = audioSrcFor(section, term);
-  const audio = new Audio(src);
-  card.classList.add('is-playing');
-  const clearPlaying = () => card.classList.remove('is-playing');
-
+function playCardAudio(card, term){
   const onFail = () => {
-    clearPlaying();
+    card.classList.remove('is-playing');
     card.classList.add('no-audio-known');
     card.classList.remove('has-audio');
     card.classList.add('is-noaudio-flash');
@@ -68,7 +32,13 @@ function playCardAudio(card, section, term){
     showToast(`🔇 No recording yet for "${term}"`);
   };
 
-  audio.addEventListener('ended', clearPlaying);
+  const src = audioSrc(term);
+  if (!src) return onFail();
+
+  if (currentClip) currentClip.pause();
+  const audio = currentClip = new Audio(src);
+  card.classList.add('is-playing');
+  audio.addEventListener('ended', () => card.classList.remove('is-playing'));
   audio.addEventListener('error', onFail);
   audio.play().then(() => {
     card.classList.add('has-audio');
@@ -322,7 +292,7 @@ function renderLearningModule(gridId, items, section, stageIndex, noteId, noteTe
   items.forEach(item => {
     const card = document.createElement('button');
     card.type = 'button';
-    card.className = 'lm-card';
+    card.className = audioSrc(item.term) ? 'lm-card has-audio' : 'lm-card no-audio-known';
     card.innerHTML = `
       <div class="lm-card-top">
         <span class="lm-flip-hint">tap to hear</span>
@@ -333,7 +303,7 @@ function renderLearningModule(gridId, items, section, stageIndex, noteId, noteTe
     `;
     card.addEventListener('click', () => {
       card.classList.add('is-flipped');
-      playCardAudio(card, section, item.term);
+      playCardAudio(card, item.term);
     });
     grid.appendChild(card);
   });
@@ -363,7 +333,9 @@ function initTapMatch(leftId, rightId, statusId, pairs, stageIndex){
     chip.type = 'button';
     chip.className = 'match-chip';
     chip.textContent = p.tulu;
+    markAudioChip(chip, p.tulu);
     chip.addEventListener('click', () => {
+      playTerm(p.tulu);
       if (chip.classList.contains('is-matched')) return;
       leftCol.querySelectorAll('.match-chip').forEach(c => c.classList.remove('is-selected'));
       chip.classList.add('is-selected');
@@ -423,14 +395,17 @@ function initDragMatch(trayId, gridId, statusId, pairs, stageIndex){
     chip.textContent = p.tulu;
     chip.draggable = true;
     chip.dataset.key = p.tulu;
+    markAudioChip(chip, p.tulu);
     chip.addEventListener('click', () => {
       if (chip.classList.contains('is-placed')) return;
+      playTerm(p.tulu);
       tray.querySelectorAll('.drag-chip').forEach(c => c.classList.remove('is-selected'));
       chip.classList.add('is-selected');
       selectedChip = chip;
     });
     chip.addEventListener('dragstart', (e) => {
       e.dataTransfer.setData('text/plain', p.tulu);
+      playTerm(p.tulu);
     });
     tray.appendChild(chip);
   });
@@ -497,12 +472,16 @@ function initQuiz(cardId, questions, stageIndex){
       return;
     }
     const q = questions[qIdx];
+    const promptTerm = quizPromptTerm(q);
     card.innerHTML = `
       <p class="quiz-progress">Question ${qIdx + 1} of ${questions.length}</p>
       <p class="quiz-question">${q.prompt}</p>
+      ${promptTerm ? '<button type="button" class="quiz-hear">🔊 Hear it</button>' : ''}
       <div class="quiz-choices"></div>
       <p class="quiz-feedback"></p>
     `;
+    const hearBtn = card.querySelector('.quiz-hear');
+    if (hearBtn) hearBtn.addEventListener('click', () => playTerm(promptTerm));
     const choicesWrap = card.querySelector('.quiz-choices');
     shuffle(q.choices).forEach(choice => {
       const btn = document.createElement('button');
@@ -511,6 +490,7 @@ function initQuiz(cardId, questions, stageIndex){
       btn.textContent = choice;
       btn.addEventListener('click', () => {
         card.querySelectorAll('.quiz-choice').forEach(b => b.disabled = true);
+        playTerm(quizAudioTerm(q));
         const fb = card.querySelector('.quiz-feedback');
         if (choice === q.answer){
           score++;
@@ -525,7 +505,7 @@ function initQuiz(cardId, questions, stageIndex){
             if (b.textContent === q.answer) b.classList.add('is-correct');
           });
         }
-        setTimeout(() => { qIdx++; render(); }, 900);
+        setTimeout(() => { qIdx++; render(); }, 1400);
       });
       choicesWrap.appendChild(btn);
     });

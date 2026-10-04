@@ -1,26 +1,7 @@
 /* ===================================================================
    SHARED VOCAB DATA — used by study.html and dictionary.html.
-
-   AUDIO FILE CONVENTION (same folders/names as unit1.html, so a
-   recording only has to be made once for a word):
-     audio/<section-id>/<slugified-tulu-word>.m4a
-   e.g. "Yencha ullar?" in the Greetings section looks for:
-     audio/greetings/yencha-ullar.m4a
-   Slugging rule: take the text before the first "/" or "(", lowercase
-   it, and replace anything that isn't a-z/0-9 with a single hyphen.
-   Drop real .m4a files into those folders and cards will just start
-   playing them — no code changes needed.
+   Which recording plays for each word is set in audio-map.js.
 =================================================================== */
-
-const AUDIO_EXT = 'm4a'; // change here if you switch formats again
-
-function slugify(tulu){
-  return tulu
-    .split('/')[0].split('(')[0]
-    .trim().toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '');
-}
 
 const SECTION_THEME = {
   greetings: { var:'--e1', shadow:'#46A302' },

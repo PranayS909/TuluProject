@@ -250,3 +250,4 @@
   .quiz-glyph{ font-size:64px; }
   .tool-card{ padding:18px; }
 }
+.dict-speaker.is-muted{ background:var(--canvas-2); color:rgba(18,51,44,.3); }

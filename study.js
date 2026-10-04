@@ -1,38 +1,31 @@
 /* ===================================================================
    STUDY PAGE — sectioned vocab/phrase cards, click-to-play audio.
-   Word lists + audio path convention live in vocab-data.js.
+   Word lists live in vocab-data.js; recordings are mapped in audio-map.js.
 =================================================================== */
 
 let heardWords = new Set();
 let learnedWords = new Set();
 let totalWords = 0;
 
-function playAudio(card, sectionId, tuluWord){
-  const src = `audio/${sectionId}/${slugify(tuluWord)}.${AUDIO_EXT}`;
+function flashNoAudio(card, tuluWord){
+  card.classList.add('no-audio-known');
+  card.classList.remove('has-audio');
+  card.classList.add('is-noaudio-flash');
+  setTimeout(() => card.classList.remove('is-noaudio-flash'), 400);
+  showToast(`🔇 No recording yet for "${tuluWord}" — text-only for now.`);
+}
+
+function playAudio(card, tuluWord){
+  const src = audioSrc(tuluWord);
+  if (!src) return flashNoAudio(card, tuluWord);
+
   const audio = new Audio(src);
   card.classList.add('is-playing');
   const clearPlaying = () => card.classList.remove('is-playing');
 
   audio.addEventListener('ended', clearPlaying);
-  audio.addEventListener('error', () => {
-    clearPlaying();
-    card.classList.add('no-audio-known');
-    card.classList.remove('has-audio');
-    card.classList.add('is-noaudio-flash');
-    setTimeout(() => card.classList.remove('is-noaudio-flash'), 400);
-    showToast(`🔇 No recording yet for "${tuluWord}" — text-only for now.`);
-  });
-
-  audio.play().then(() => {
-    card.classList.add('has-audio');
-    card.classList.remove('no-audio-known');
-  }).catch(() => {
-    clearPlaying();
-    card.classList.add('no-audio-known');
-    card.classList.add('is-noaudio-flash');
-    setTimeout(() => card.classList.remove('is-noaudio-flash'), 400);
-    showToast(`🔇 No recording yet for "${tuluWord}" — text-only for now.`);
-  });
+  audio.addEventListener('error', () => { clearPlaying(); flashNoAudio(card, tuluWord); });
+  audio.play().catch(() => { clearPlaying(); flashNoAudio(card, tuluWord); });
 }
 
 let toastTimer = null;
@@ -52,7 +45,7 @@ function updateMeta(){
 function buildCard(sectionId, item, theme, isNumeral){
   const card = document.createElement('button');
   card.type = 'button';
-  card.className = 'study-card';
+  card.className = audioSrc(item.tulu) ? 'study-card has-audio' : 'study-card no-audio-known';
   const wordKey = `${sectionId}::${item.tulu}`;
 
   const media = isNumeral
@@ -79,7 +72,7 @@ function buildCard(sectionId, item, theme, isNumeral){
     }
     heardWords.add(wordKey);
     updateMeta();
-    playAudio(card, sectionId, item.tulu);
+    playAudio(card, item.tulu);
   });
 
   return card;

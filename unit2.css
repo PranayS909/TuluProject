@@ -125,3 +125,13 @@
   .match-board{ grid-template-columns:1fr 1fr; }
   .drop-grid{ grid-template-columns:repeat(auto-fit, minmax(100px,1fr)); }
 }
+
+/* ---------- audio cues (recordings mapped in audio-map.js) ---------- */
+.match-chip.has-audio::after,
+.drag-chip.has-audio::after{ content:" 🔊"; font-size:.8em; opacity:.55; }
+.quiz-hear{
+  display:inline-flex; align-items:center; gap:6px; margin:-10px 0 18px; padding:8px 14px;
+  border-radius:12px; border:2px solid var(--grey-light); background:var(--white);
+  font-family:var(--font-display); font-weight:700; font-size:13.5px; color:var(--accent-dark);
+}
+.quiz-hear:hover{ border-color:var(--accent); }

@@ -141,7 +141,9 @@ function initTapMatch(leftId, rightId, statusId, pairs, stageIndex){
     chip.type = 'button';
     chip.className = 'match-chip';
     chip.textContent = p.tulu;
+    markAudioChip(chip, p.tulu);
     chip.addEventListener('click', () => {
+      playTerm(p.tulu);
       if (chip.classList.contains('is-matched')) return;
       leftCol.querySelectorAll('.match-chip').forEach(c => c.classList.remove('is-selected'));
       chip.classList.add('is-selected');
@@ -201,14 +203,17 @@ function initDragMatch(trayId, gridId, statusId, pairs, stageIndex){
     chip.textContent = p.tulu;
     chip.draggable = true;
     chip.dataset.key = p.tulu;
+    markAudioChip(chip, p.tulu);
     chip.addEventListener('click', () => {
       if (chip.classList.contains('is-placed')) return;
+      playTerm(p.tulu);
       tray.querySelectorAll('.drag-chip').forEach(c => c.classList.remove('is-selected'));
       chip.classList.add('is-selected');
       selectedChip = chip;
     });
     chip.addEventListener('dragstart', (e) => {
       e.dataTransfer.setData('text/plain', p.tulu);
+      playTerm(p.tulu);
     });
     tray.appendChild(chip);
   });
@@ -273,12 +278,16 @@ function initQuiz(cardId, questions, stageIndex){
       return;
     }
     const q = questions[qIdx];
+    const promptTerm = quizPromptTerm(q);
     card.innerHTML = `
       <p class="quiz-progress">Question ${qIdx + 1} of ${questions.length}</p>
       <p class="quiz-question">${q.prompt}</p>
+      ${promptTerm ? '<button type="button" class="quiz-hear">🔊 Hear it</button>' : ''}
       <div class="quiz-choices"></div>
       <p class="quiz-feedback"></p>
     `;
+    const hearBtn = card.querySelector('.quiz-hear');
+    if (hearBtn) hearBtn.addEventListener('click', () => playTerm(promptTerm));
     const choicesWrap = card.querySelector('.quiz-choices');
     shuffle(q.choices).forEach(choice => {
       const btn = document.createElement('button');
@@ -287,6 +296,7 @@ function initQuiz(cardId, questions, stageIndex){
       btn.textContent = choice;
       btn.addEventListener('click', () => {
         card.querySelectorAll('.quiz-choice').forEach(b => b.disabled = true);
+        playTerm(quizAudioTerm(q));
         const fb = card.querySelector('.quiz-feedback');
         if (choice === q.answer){
           score++;
@@ -301,7 +311,7 @@ function initQuiz(cardId, questions, stageIndex){
             if (b.textContent === q.answer) b.classList.add('is-correct');
           });
         }
-        setTimeout(() => { qIdx++; render(); }, 900);
+        setTimeout(() => { qIdx++; render(); }, 1400);
       });
       choicesWrap.appendChild(btn);
     });
