@@ -115,7 +115,7 @@ function initCopyButtons(){
       if (!text) return showToast('Nothing to copy yet');
       try {
         await navigator.clipboard.writeText(text);
-        showToast('Copied ✓');
+        showToast('Copied');
       } catch (e){
         showToast('Copy failed — select the text and copy manually');
       }

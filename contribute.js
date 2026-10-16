@@ -59,12 +59,12 @@ contribForm.addEventListener('submit', async (e) => {
 
     f.reset();
     f.querySelector('input[name="kind"]:checked').dispatchEvent(new Event('change'));
-    showContribMessage('Solmelu! 🙏 Thank you, your suggestion has been sent.', 'success');
+    showContribMessage('Solmelu! Thank you, your suggestion has been sent.', 'success');
   } catch (err){
     console.error(err);
     showContribMessage('Sorry, that didn\'t send. Please try again in a moment.', 'error');
   } finally {
     contribSubmit.disabled = false;
-    contribSubmit.textContent = 'SEND SUGGESTION';
+    contribSubmit.textContent = 'Send suggestion';
   }
 });

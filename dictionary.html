@@ -3,77 +3,106 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tulu Dictionary · English ↔ Tulu · Tulu · ತುಳು</title>
-<meta name="description" content="Search Tulu words and phrases in English or Tulu: greetings, numbers, family terms and market words, with audio where recorded.">
+<title>Tulu–English Dictionary · Tulu · ತುಳು</title>
+<meta name="description" content="Search Tulu and English words across greetings, numbers, family and market vocabulary, with native-speaker audio.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&family=Noto+Sans+Kannada:wght@500;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css">
-<link rel="stylesheet" href="study.css">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..600,0..100;1,9..144,300..600,0..100&family=Inter:wght@400;500;600;700&family=Noto+Sans+Kannada:wght@400;500;600;700&family=Noto+Serif+Kannada:wght@400;500&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="site.css">
 <link rel="stylesheet" href="tools.css">
 </head>
 <body>
 
-<header class="nav" id="nav">
-  <div class="nav-inner">
-    <a href="index.html#top" class="nav-brand">
-      <span class="brand-mascot">🦜</span>
-      <span class="brand-kn">ತುಳು</span>
-      <span class="brand-en">Tulu</span>
+<header class="site-nav" id="nav">
+  <div class="nav-pill">
+    <a href="index.html" class="nav-brand" aria-label="Tulu, home">
+      <span class="nav-brand-kn" lang="kn">ತುಳು</span>
+      <span class="nav-brand-en">Tulu</span>
     </a>
-    <nav class="nav-links" id="navLinks">
-      <a href="index.html#history">History</a>
+    <nav class="nav-links" id="navLinks" aria-label="Main">
+      <a href="index.html#course">Course</a>
+      <a href="index.html#language">Language</a>
+      <a href="index.html#culture">Culture</a>
       <a href="tulu-lipi.html">Tulu Lipi</a>
       <a href="index.html#tools">Tools</a>
-      <a href="index.html#leaderboard">Leaderboard</a>
-      <a href="index.html#roadmap">Roadmap</a>
+      <a href="register.html" class="nav-links-extra">Sign in</a>
     </nav>
     <div class="nav-actions">
-      <a href="index.html#roadmap" class="btn btn-outline">Course</a>
-      <a href="index.html#leaderboard" class="btn btn-solid">GET STARTED</a>
-      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
-        <span></span><span></span><span></span>
+      <a href="register.html" class="nav-signin">Sign in</a>
+      <a href="index.html#course" class="btn btn-primary btn-sm">Start learning</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">
+        <span></span><span></span>
       </button>
     </div>
   </div>
 </header>
+<main>
 
-<div class="crumb-bar">
-  <a href="index.html#tools" class="crumb-link"><span class="crumb-arrow">←</span> Back to Tools</a>
-</div>
-
-<section class="pz-hero">
-  <p class="pz-eyebrow">📚 Dictionary</p>
-  <h1 class="pz-title">Tulu ↔ English</h1>
-  <p class="pz-sub">Search in either language. Every word here is also in the course, so you can jump straight to practising it.</p>
-</section>
-
-<main class="tool-main">
-  <div class="dict-search">
-    <span class="dict-search-icon" aria-hidden="true">🔎</span>
-    <input type="search" id="dictQuery" placeholder="Try “water”, “thank you”, or “bangude”" autocomplete="off" aria-label="Search the dictionary">
+<header class="tool-head page-top">
+  <div class="container">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="index.html">Home</a><span class="sep" aria-hidden="true">/</span>
+      <a href="index.html#tools">Tools</a><span class="sep" aria-hidden="true">/</span>
+      <span aria-current="page">Dictionary</span>
+    </nav>
+    <p class="eyebrow">Dictionary<span class="eyebrow-rule"></span>Tulu and English</p>
+    <h1 class="display">Look up a word.</h1>
+    <p class="lede">Search in either language. Every word here is also in the course, so you can jump straight to practising it.</p>
   </div>
-  <div class="dict-filters" id="dictFilters" role="tablist" aria-label="Filter by topic"></div>
+</header>
+
+<div class="container tool-main">
+  <div class="dict-search">
+    <label for="dictQuery">Search</label>
+    <input type="search" id="dictQuery" placeholder="Try “water”, “thank you”, or “bangude”" autocomplete="off">
+  </div>
+  <div class="dict-filters pills" id="dictFilters" role="tablist" aria-label="Filter by topic"></div>
   <p class="dict-count" id="dictCount" aria-live="polite"></p>
   <div class="dict-list" id="dictList"></div>
 
   <div class="dict-empty" id="dictEmpty" hidden>
-    <span class="dict-empty-icon">🦜</span>
     <p><strong>No match yet.</strong> The dictionary grows with the course and with suggestions from Tulu speakers.</p>
-    <a href="contribute.html" class="btn btn-solid">SUGGEST A WORD</a>
+    <a href="contribute.html" class="btn btn-dark">Suggest a word</a>
   </div>
+</div>
 </main>
 
 <footer class="footer">
-  <div class="footer-inner">
-    <div class="footer-brand"><span class="brand-mascot">🦜</span><span class="brand-kn">ತುಳು</span><span class="brand-en">Tulu</span></div>
-    <p class="footer-note">Spellings vary by village and community. Know a better word? <a href="contribute.html" class="footer-link">Suggest it</a>.</p>
+  <div class="container">
+    <div class="footer-top">
+      <p class="footer-statement serif">Built to keep a coastal language spoken. <span class="kn" lang="kn">ತುಳು</span></p>
+      <div class="footer-cols">
+        <div class="footer-col">
+          <h4>Learn</h4>
+          <a href="index.html#course">Course</a>
+          <a href="study.html">Words &amp; phrases</a>
+          <a href="unit1.html">Unit 1 practice</a>
+          <a href="unit2.html">Unit 2 practice</a>
+        </div>
+        <div class="footer-col">
+          <h4>Read &amp; write</h4>
+          <a href="tulu-lipi.html">Tulu Lipi</a>
+          <a href="transliterator.html">Transliterator</a>
+          <a href="dictionary.html">Dictionary</a>
+        </div>
+        <div class="footer-col">
+          <h4>Explore</h4>
+          <a href="index.html#language">Language</a>
+          <a href="index.html#culture">Culture</a>
+          <a href="index.html#faq">FAQ</a>
+          <a href="contribute.html">Suggest a word</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>Spellings vary by village and community. Know a better word? <a href="contribute.html">Suggest it</a>.</p>
+      <p>Free to use, no sign-up needed.</p>
+    </div>
   </div>
 </footer>
+<div class="study-toast" id="studyToast" role="status"></div>
 
-<div class="study-toast" id="studyToast"></div>
-
-<script src="detail.js"></script>
+<script src="site.js"></script>
 <script src="audio-map.js"></script>
 <script src="vocab-data.js"></script>
 <script src="dictionary.js"></script>

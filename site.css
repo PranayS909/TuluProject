@@ -727,3 +727,13 @@ input,select,textarea{ font:inherit; letter-spacing:inherit; color:inherit; }
 .faq-item[open] summary::after{ transform:rotate(45deg); }
 .faq-item p{ padding:0 48px 24px 0; font-size:16px; color:var(--text); line-height:1.7; }
 .faq-item p a{ color:var(--accent-ink); text-decoration:underline; text-underline-offset:3px; }
+
+/* ---------- breadcrumbs ---------- */
+.crumbs{
+  display:flex; flex-wrap:wrap; align-items:center; gap:8px;
+  margin-bottom:clamp(32px, 5vw, 48px);
+  font-size:14px; color:var(--text-muted);
+}
+.crumbs a{ color:var(--text); text-decoration:underline; text-decoration-color:var(--line-strong); text-underline-offset:3px; }
+.crumbs a:hover{ text-decoration-color:currentColor; }
+.crumbs .sep{ color:var(--line-strong); }

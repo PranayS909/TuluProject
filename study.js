@@ -12,7 +12,7 @@ function flashNoAudio(card, tuluWord){
   card.classList.remove('has-audio');
   card.classList.add('is-noaudio-flash');
   setTimeout(() => card.classList.remove('is-noaudio-flash'), 400);
-  showToast(`🔇 No recording yet for "${tuluWord}" — text-only for now.`);
+  showToast(`No recording yet for "${tuluWord}". Text only for now.`);
 }
 
 function playAudio(card, tuluWord){
@@ -42,24 +42,21 @@ function updateMeta(){
   document.getElementById('metaTotal').textContent = totalWords;
 }
 
-function buildCard(sectionId, item, theme, isNumeral){
+function buildCard(sectionId, item, isNumeral){
   const card = document.createElement('button');
   card.type = 'button';
   card.className = audioSrc(item.tulu) ? 'study-card has-audio' : 'study-card no-audio-known';
+  card.setAttribute('aria-label', `${item.tulu}: ${item.en}. Play recording`);
   const wordKey = `${sectionId}::${item.tulu}`;
-
-  const media = isNumeral
-    ? `<span class="study-card-numeral">${item.en}</span>`
-    : `<span class="study-card-emoji">${item.emoji || '🗣️'}</span>`;
 
   card.innerHTML = `
     <div class="study-card-top">
-      ${media}
-      <span class="study-speaker" aria-hidden="true">🔊</span>
+      ${isNumeral ? `<span class="study-card-numeral">${item.en}</span>` : '<span></span>'}
+      <span class="play" aria-hidden="true"></span>
     </div>
     <div class="study-card-tulu">${item.tulu}</div>
     <div class="study-card-en">${isNumeral ? 'tap to hear it spoken' : item.en}</div>
-    <span class="study-card-learned" title="Mark as learned">✓</span>
+    <span class="study-card-learned" title="Mark as learned"></span>
   `;
 
   card.addEventListener('click', (e) => {
@@ -81,52 +78,44 @@ function buildCard(sectionId, item, theme, isNumeral){
 function renderSections(){
   const main = document.getElementById('studyMain');
   const jumpnav = document.getElementById('studyJumpnav');
-  const rootStyle = getComputedStyle(document.documentElement);
 
-  STUDY_SECTIONS.forEach(section => {
-    const theme = SECTION_THEME[section.id];
-    const face = rootStyle.getPropertyValue(theme.var).trim();
-
+  STUDY_SECTIONS.forEach((section, i) => {
     // jump nav pill
     const pill = document.createElement('a');
     pill.href = `#sec-${section.id}`;
-    pill.className = 'study-jump-btn';
-    pill.dataset.section = section.id;
-    pill.innerHTML = `${section.icon} ${section.title}`;
-    pill.style.setProperty('--pill-face', face);
+    pill.className = 'jump-btn';
+    pill.textContent = section.title;
     jumpnav.appendChild(pill);
 
     // section
     const sectionEl = document.createElement('section');
-    sectionEl.className = 'study-section';
+    sectionEl.className = 'tool-section';
     sectionEl.id = `sec-${section.id}`;
 
     const head = document.createElement('div');
-    head.className = 'study-section-head';
+    head.className = 'tool-section-head';
     head.innerHTML = `
-      <div class="study-section-icon" style="--c:${face}">${section.icon}</div>
-      <div>
-        <h2>${section.title}</h2>
-        <p>${section.desc}</p>
-      </div>
+      <span class="num">${String(i + 1).padStart(2, '0')}</span>
+      <h2>${section.title}</h2>
+      <p>${section.desc}</p>
     `;
     sectionEl.appendChild(head);
 
     section.groups.forEach(group => {
       const groupEl = document.createElement('div');
-      groupEl.className = 'study-group';
+      groupEl.className = 'group';
       groupEl.innerHTML = `
-        <div class="study-group-head">
-          <span class="study-group-name">${group.name}</span>
-          <span class="study-group-count">${group.items.length} words</span>
+        <div class="group-head">
+          <span class="group-name">${group.name}</span>
+          <span class="group-count">${group.items.length} words</span>
         </div>
-        ${group.note ? `<div class="study-group-note">${group.note}</div>` : ''}
+        ${group.note ? `<div class="group-note">${group.note}</div>` : ''}
       `;
       const grid = document.createElement('div');
       grid.className = 'study-grid';
       group.items.forEach(item => {
         totalWords++;
-        grid.appendChild(buildCard(section.id, item, theme, !!group.numeral));
+        grid.appendChild(buildCard(section.id, item, !!group.numeral));
       });
       groupEl.appendChild(grid);
       sectionEl.appendChild(groupEl);
@@ -135,7 +124,7 @@ function renderSections(){
     if (section.crosslink){
       const link = document.createElement('a');
       link.href = section.crosslink.href;
-      link.className = 'study-crosslink';
+      link.className = 'btn btn-primary study-crosslink';
       link.textContent = section.crosslink.label;
       sectionEl.appendChild(link);
     }
@@ -144,32 +133,7 @@ function renderSections(){
   });
 
   updateMeta();
-  setupScrollSpy();
-}
-
-function setupScrollSpy(){
-  const pills = Array.from(document.querySelectorAll('.study-jump-btn'));
-  const sections = STUDY_SECTIONS.map(s => document.getElementById(`sec-${s.id}`));
-
-  function setActive(id){
-    pills.forEach(p => {
-      const active = p.dataset.section === id;
-      p.classList.toggle('is-active', active);
-      p.style.background = active ? p.style.getPropertyValue('--pill-face') : '';
-      p.style.borderColor = active ? 'transparent' : '';
-    });
-  }
-
-  if ('IntersectionObserver' in window){
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) setActive(entry.target.id.replace('sec-', ''));
-      });
-    }, { rootMargin: '-140px 0px -70% 0px', threshold: 0 });
-    sections.forEach(s => s && io.observe(s));
-  }
-
-  if (pills[0]) setActive(pills[0].dataset.section);
+  if (typeof initJumpnav === 'function') initJumpnav();
 }
 
 document.addEventListener('DOMContentLoaded', renderSections);

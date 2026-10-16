@@ -43,15 +43,15 @@ function renderFilters(){
   const make = (id, label) => {
     const b = document.createElement('button');
     b.type = 'button';
-    b.className = 'study-jump-btn';
+    b.className = 'pill';
     b.dataset.section = id;
     b.setAttribute('role', 'tab');
     b.textContent = label;
     b.addEventListener('click', () => { activeSection = id; render(); });
     wrap.appendChild(b);
   };
-  make('all', '✨ All');
-  STUDY_SECTIONS.forEach(s => make(s.id, `${s.icon} ${s.title}`));
+  make('all', 'All');
+  STUDY_SECTIONS.forEach(s => make(s.id, s.title));
 }
 
 function render(){
@@ -81,20 +81,16 @@ function render(){
 function row(e){
   const el = document.createElement('div');
   el.className = 'dict-row';
-  const badge = e.numeral
-    ? `<span class="dict-badge dict-badge--num">${e.en}</span>`
-    : `<span class="dict-badge">${e.emoji || '🗣️'}</span>`;
   el.innerHTML = `
-    ${badge}
     <div class="dict-words">
       <div class="dict-tulu"></div>
       <div class="dict-en"></div>
     </div>
     <div class="dict-meta">
       <span class="dict-tag"></span>
-      <a class="dict-practice" href="${e.section.crosslink ? e.section.crosslink.href : 'study.html'}">Practice →</a>
+      <a class="dict-practice" href="${e.section.crosslink ? e.section.crosslink.href : 'study.html'}">Practise this word →</a>
     </div>
-    <button type="button" class="study-speaker dict-speaker${audioSrc(e.tulu) ? "" : " is-muted"}" aria-label="Play ${e.tulu}">${audioSrc(e.tulu) ? "🔊" : "🔇"}</button>
+    <button type="button" class="play dict-speaker${audioSrc(e.tulu) ? "" : " is-muted"}" aria-label="Play ${e.tulu}"></button>
   `;
   // vocab text goes in via textContent so stray < or & can't break the page
   el.querySelector('.dict-tulu').textContent = e.tulu;
@@ -106,8 +102,8 @@ function row(e){
 
 function play(e){
   const src = audioSrc(e.tulu);
-  if (!src) return showToast(`🔇 No recording yet for "${e.tulu}"`);
-  new Audio(src).play().catch(() => showToast(`🔇 Couldn't play "${e.tulu}"`));
+  if (!src) return showToast(`No recording yet for "${e.tulu}"`);
+  new Audio(src).play().catch(() => showToast(`Couldn't play "${e.tulu}"`));
 }
 
 let toastTimer = null;

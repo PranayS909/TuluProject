@@ -4,57 +4,62 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Suggest a Word · Tulu · ತುಳು</title>
-<meta name="description" content="Help grow the Tulu course: suggest a new word, send a correction, or share feedback as a Tulu speaker.">
+<meta name="description" content="Speak Tulu? Send new words, corrections and feedback straight to the people building this free Tulu course.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&family=Noto+Sans+Kannada:wght@500;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css">
-<link rel="stylesheet" href="study.css">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..600,0..100;1,9..144,300..600,0..100&family=Inter:wght@400;500;600;700&family=Noto+Sans+Kannada:wght@400;500;600;700&family=Noto+Serif+Kannada:wght@400;500&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="site.css">
 <link rel="stylesheet" href="tools.css">
 </head>
 <body>
 
-<header class="nav" id="nav">
-  <div class="nav-inner">
-    <a href="index.html#top" class="nav-brand">
-      <span class="brand-mascot">🦜</span>
-      <span class="brand-kn">ತುಳು</span>
-      <span class="brand-en">Tulu</span>
+<header class="site-nav" id="nav">
+  <div class="nav-pill">
+    <a href="index.html" class="nav-brand" aria-label="Tulu, home">
+      <span class="nav-brand-kn" lang="kn">ತುಳು</span>
+      <span class="nav-brand-en">Tulu</span>
     </a>
-    <nav class="nav-links" id="navLinks">
-      <a href="index.html#history">History</a>
+    <nav class="nav-links" id="navLinks" aria-label="Main">
+      <a href="index.html#course">Course</a>
+      <a href="index.html#language">Language</a>
+      <a href="index.html#culture">Culture</a>
       <a href="tulu-lipi.html">Tulu Lipi</a>
       <a href="index.html#tools">Tools</a>
-      <a href="index.html#leaderboard">Leaderboard</a>
-      <a href="index.html#roadmap">Roadmap</a>
+      <a href="register.html" class="nav-links-extra">Sign in</a>
     </nav>
     <div class="nav-actions">
-      <a href="index.html#roadmap" class="btn btn-outline">Course</a>
-      <a href="index.html#leaderboard" class="btn btn-solid">GET STARTED</a>
-      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
-        <span></span><span></span><span></span>
+      <a href="register.html" class="nav-signin">Sign in</a>
+      <a href="index.html#course" class="btn btn-primary btn-sm">Start learning</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">
+        <span></span><span></span>
       </button>
     </div>
   </div>
 </header>
+<main>
 
-<div class="crumb-bar">
-  <a href="index.html#tools" class="crumb-link"><span class="crumb-arrow">←</span> Back to Tools</a>
-</div>
+<header class="tool-head page-top">
+  <div class="container container--narrow">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="index.html">Home</a><span class="sep" aria-hidden="true">/</span>
+      <a href="index.html#tools">Tools</a><span class="sep" aria-hidden="true">/</span>
+      <span aria-current="page">Suggest a word</span>
+    </nav>
+    <p class="eyebrow">Community</p>
+    <h1 class="display">Help keep Tulu spoken.</h1>
+    <p class="lede">Tulu changes from village to village, and no single course gets it all right. If you speak Tulu, your words and corrections go straight to the people building this course.</p>
+  </div>
+</header>
 
-<section class="pz-hero">
-  <p class="pz-eyebrow">🤝 Community</p>
-  <h1 class="pz-title">Help keep Tulu spoken</h1>
-  <p class="pz-sub">Tulu changes from village to village, and no single course gets it all right. If you speak Tulu, your words and corrections go straight to the people building this course.</p>
-</section>
-
-<main class="tool-main tool-main--narrow">
-  <form class="tool-card contrib-form" id="contribForm" novalidate>
+<div class="container container--narrow tool-main">
+  <form class="contrib-form card" id="contribForm" novalidate>
     <fieldset class="contrib-kinds">
       <legend>What would you like to send?</legend>
-      <label class="contrib-kind"><input type="radio" name="kind" value="new_word" checked><span>➕ A new word</span></label>
-      <label class="contrib-kind"><input type="radio" name="kind" value="correction"><span>✏️ A correction</span></label>
-      <label class="contrib-kind"><input type="radio" name="kind" value="feedback"><span>💬 Feedback</span></label>
+      <div class="contrib-kind-row">
+        <label class="contrib-kind"><input type="radio" name="kind" value="new_word" checked><span>A new word</span></label>
+        <label class="contrib-kind"><input type="radio" name="kind" value="correction"><span>A correction</span></label>
+        <label class="contrib-kind"><input type="radio" name="kind" value="feedback"><span>Feedback</span></label>
+      </div>
     </fieldset>
 
     <div class="contrib-row" id="wordFields">
@@ -99,20 +104,48 @@
     <label class="contrib-hp" aria-hidden="true">Leave empty <input type="text" name="website" tabindex="-1" autocomplete="off"></label>
 
     <p class="contrib-msg" id="contribMsg" role="status"></p>
-    <button class="btn btn-solid btn-lg contrib-submit" id="contribSubmit" type="submit">SEND SUGGESTION</button>
+    <button class="btn btn-dark btn-lg contrib-submit" id="contribSubmit" type="submit">Send suggestion</button>
     <p class="contrib-privacy">We only store what you type here. We don't collect email addresses.</p>
   </form>
+</div>
 </main>
 
 <footer class="footer">
-  <div class="footer-inner">
-    <div class="footer-brand"><span class="brand-mascot">🦜</span><span class="brand-kn">ತುಳು</span><span class="brand-en">Tulu</span></div>
-    <p class="footer-note">Built to keep a coastal language spoken. Content is a starting point — corrections from Tulu speakers are always welcome.</p>
+  <div class="container">
+    <div class="footer-top">
+      <p class="footer-statement serif">Built to keep a coastal language spoken. <span class="kn" lang="kn">ತುಳು</span></p>
+      <div class="footer-cols">
+        <div class="footer-col">
+          <h4>Learn</h4>
+          <a href="index.html#course">Course</a>
+          <a href="study.html">Words &amp; phrases</a>
+          <a href="unit1.html">Unit 1 practice</a>
+          <a href="unit2.html">Unit 2 practice</a>
+        </div>
+        <div class="footer-col">
+          <h4>Read &amp; write</h4>
+          <a href="tulu-lipi.html">Tulu Lipi</a>
+          <a href="transliterator.html">Transliterator</a>
+          <a href="dictionary.html">Dictionary</a>
+        </div>
+        <div class="footer-col">
+          <h4>Explore</h4>
+          <a href="index.html#language">Language</a>
+          <a href="index.html#culture">Culture</a>
+          <a href="index.html#faq">FAQ</a>
+          <a href="contribute.html">Suggest a word</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>Content is a starting point. Corrections from Tulu speakers are always welcome.</p>
+      <p>Free to use, no sign-up needed.</p>
+    </div>
   </div>
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="detail.js"></script>
+<script src="site.js"></script>
 <script src="contribute.js"></script>
 </body>
 </html>

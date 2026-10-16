@@ -50,11 +50,11 @@ function renderAlphabet(){
   let index = LIPI_VOWELS.length;
   LIPI_CONSONANT_GROUPS.forEach(group => {
     const groupEl = document.createElement('div');
-    groupEl.className = 'study-group';
+    groupEl.className = 'group';
     groupEl.innerHTML = `
-      <div class="study-group-head">
-        <span class="study-group-name">Consonants · ${group.name}</span>
-        <span class="study-group-count">${group.items.length} letters</span>
+      <div class="group-head">
+        <span class="group-name">Consonants · ${group.name}</span>
+        <span class="group-count">${group.items.length} letters</span>
       </div>
     `;
     const grid = document.createElement('div');
@@ -197,7 +197,7 @@ function redrawTrace(){
   ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
   // guide lines
   ctx.save();
-  ctx.strokeStyle = '#E5E5E5';
+  ctx.strokeStyle = '#DEE2DE';
   ctx.setLineDash([6, 6]);
   ctx.beginPath();
   ctx.moveTo(0, ctx.canvas.height / 2); ctx.lineTo(ctx.canvas.width, ctx.canvas.height / 2);
@@ -205,8 +205,8 @@ function redrawTrace(){
   ctx.stroke();
   ctx.restore();
 
-  drawGlyph(ctx, 'rgba(18,51,44,.13)');
-  drawStrokes(ctx, getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#58CC02', 14);
+  drawGlyph(ctx, 'rgba(40,40,52,.12)');
+  drawStrokes(ctx, getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#41a1cf', 14);
 }
 
 function maskFrom(drawFn){
@@ -222,7 +222,7 @@ function maskFrom(drawFn){
 }
 
 function scoreTrace(){
-  if (!strokes.length){ setStars('Draw over the letter first ✏️'); return; }
+  if (!strokes.length){ setStars('Draw over the letter first.'); return; }
 
   const glyph = maskFrom(ctx => drawGlyph(ctx, '#000'));
   const glyphNear = maskFrom(ctx => drawGlyph(ctx, '#000', 22));
@@ -238,11 +238,31 @@ function scoreTrace(){
 
   const score = Math.sqrt((covered / glyphPx) * (onTarget / Math.max(inkPx, 1)));
   const stars = score >= 0.72 ? 3 : score >= 0.52 ? 2 : score >= 0.32 ? 1 : 0;
-  const words = ['Keep going — try again!', 'Nice start!', 'Good tracing!', 'Excellent! 🎉'];
-  setStars(`${'★'.repeat(stars)}${'☆'.repeat(3 - stars)}  ${words[stars]}`);
+  const words = ['Keep going, try again.', 'Nice start.', 'Good tracing.', 'Excellent tracing!'];
+  setStars(words[stars], stars);
 }
 
-function setStars(text){ document.getElementById('traceStars').textContent = text; }
+// Score shows as a three-step meter (CSS bars) plus a short message.
+function setStars(text, stars){
+  const box = document.getElementById('traceStars');
+  box.innerHTML = '';
+  if (!text) return;
+  if (typeof stars === 'number'){
+    const meter = document.createElement('div');
+    meter.className = 'trace-meter';
+    meter.setAttribute('aria-label', `${stars} out of 3`);
+    for (let i = 0; i < 3; i++){
+      const bar = document.createElement('span');
+      if (i < stars) bar.className = 'is-on';
+      meter.appendChild(bar);
+    }
+    box.appendChild(meter);
+  }
+  const msg = document.createElement('p');
+  msg.className = 'trace-msg';
+  msg.textContent = text;
+  box.appendChild(msg);
+}
 
 /* ---------- quiz ---------- */
 let quiz = null;
@@ -329,7 +349,7 @@ function finishQuiz(){
   document.getElementById('quizDone').hidden = false;
   const best = Math.max(readBest(), quiz.score);
   try { localStorage.setItem(QUIZ_BEST_KEY, String(best)); } catch (e){ /* private mode */ }
-  const cheer = quiz.score === QUIZ_LENGTH ? 'Perfect! 🏆' : quiz.score >= 7 ? 'Great work! 🎉' : 'Keep practising 💪';
+  const cheer = quiz.score === QUIZ_LENGTH ? 'Perfect score!' : quiz.score >= 7 ? 'Great work.' : 'Keep practising.';
   document.getElementById('quizScore').textContent = `${quiz.score} / ${QUIZ_LENGTH} — ${cheer}`;
   showBest();
 }
