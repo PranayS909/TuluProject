@@ -3,187 +3,220 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Unit 1 Practice · Tulu · ತುಳು</title>
+<title>Unit 1 Practice: First Words · Tulu · ತುಳು</title>
+<meta name="description" content="Practise your first Tulu words: greetings, numbers, family and market words, with native-speaker audio and short matching games.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&family=Noto+Sans+Kannada:wght@500;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css">
-<link rel="stylesheet" href="unit1.css">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..600,0..100;1,9..144,300..600,0..100&family=Inter:wght@400;500;600;700&family=Noto+Sans+Kannada:wght@400;500;600;700&family=Noto+Serif+Kannada:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="site.css">
+<link rel="stylesheet" href="practice.css">
 </head>
 <body>
 
-<!-- ============ NAV ============ -->
-<header class="nav" id="nav">
-  <div class="nav-inner">
-    <a href="dashboard.html" class="nav-brand">
-      <span class="brand-mascot">🦜</span>
-      <span class="brand-kn">ತುಳು</span>
-      <span class="brand-en">Tulu</span>
+<header class="site-nav" id="nav">
+  <div class="nav-pill">
+    <a href="index.html" class="nav-brand" aria-label="Tulu, home">
+      <span class="nav-brand-kn" lang="kn">ತುಳು</span>
+      <span class="nav-brand-en">Tulu</span>
     </a>
-    <a href="dashboard.html" class="btn btn-outline">← Dashboard</a>
-  </div>
-</header>
-
-<main class="u1">
-
-  <!-- ---- header / progress ---- -->
-  <div class="u1-head">
-    <span class="u1-eyebrow">UNIT 1</span>
-    <h1 class="u1-title">First Words</h1>
-    <p class="u1-sub">Learn each set of words first, then play the matching game to lock it in. Greetings, numbers, family, and market words.</p>
-
-    <div class="u1-progress" id="u1Progress">
-      <!-- dots injected by JS -->
+    <nav class="nav-links" id="navLinks" aria-label="Main">
+      <a href="index.html#course">Course</a>
+      <a href="index.html#language">Language</a>
+      <a href="index.html#culture">Culture</a>
+      <a href="tulu-lipi.html">Tulu Lipi</a>
+      <a href="index.html#tools">Tools</a>
+      <a href="register.html" class="nav-links-extra">Sign in</a>
+    </nav>
+    <div class="nav-actions">
+      <a href="register.html" class="nav-signin">Sign in</a>
+      <a href="index.html#course" class="btn btn-primary btn-sm">Start learning</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">
+        <span></span><span></span>
+      </button>
     </div>
   </div>
+</header>
+<main class="container practice page-top">
+
+  <!-- ---- header / progress ---- -->
+  <header class="practice-head">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="index.html">Home</a><span class="sep" aria-hidden="true">/</span>
+      <a href="index.html#course">Course</a><span class="sep" aria-hidden="true">/</span>
+      <span aria-current="page">Unit 1</span>
+    </nav>
+    <p class="eyebrow">Unit 1<span class="eyebrow-rule"></span>Practice</p>
+    <h1 class="display">First words.</h1>
+    <p class="lede">Learn each set of words first, then play a short game to lock it in. Greetings, numbers, family and market words.</p>
+
+    <div class="u1-progress" id="u1Progress" aria-hidden="true"><!-- filled by JS --></div>
+    <p class="progress-caption"><span id="u1Caption"></span><span>9 steps</span></p>
+  </header>
 
   <!-- ---- exercise stage ---- -->
   <div class="u1-stage" id="u1Stage">
 
-    <!-- ============ 0. GREETINGS — LEARNING MODULE ============ -->
-    <section class="u1-ex lm-ex" data-ex="0" id="lmGreetings">
+    <!-- 0. GREETINGS — LEARN -->
+    <section class="u1-ex lm-ex card" data-ex="0" id="lmGreetings">
       <div class="u1-ex-head">
-        <span class="u1-ex-icon" style="--c:var(--e1)">📖</span>
-        <div>
-          <h2>Learn: Greetings</h2>
-          <p>Tap a card to hear it spoken. Flip it to see the meaning.</p>
-        </div>
+        <span class="u1-ex-kind">Learn</span>
+        <h2>Greetings</h2>
+        <p>Tap a card to hear it spoken and see what it means.</p>
       </div>
       <div class="lm-grid" id="lmGreetingsGrid"></div>
-      <button type="button" class="ex-next-btn lm-continue-btn" data-next-label="Continue to matching game →">Continue to matching game →</button>
+      <button type="button" class="btn btn-dark btn-lg ex-next-btn lm-continue-btn">Continue to the matching game <span class="arr-dot" aria-hidden="true">→</span></button>
     </section>
 
-    <!-- ============ 1. GREETINGS — TAP TO MATCH ============ -->
-    <section class="u1-ex" data-ex="1" id="exGreetings" hidden>
+    <!-- 1. GREETINGS — TAP TO MATCH -->
+    <section class="u1-ex card" data-ex="1" id="exGreetings" hidden>
       <div class="u1-ex-head">
-        <span class="u1-ex-icon" style="--c:var(--e1)">👋</span>
-        <div>
-          <h2>Match the greetings</h2>
-          <p>Tap a Tulu phrase, then tap its English meaning.</p>
-        </div>
+        <span class="u1-ex-kind is-game">Game</span>
+        <h2>Match the greetings</h2>
+        <p>Tap a Tulu phrase on the left, then its English meaning on the right.</p>
       </div>
       <div class="match-board">
         <div class="match-col" id="matchTulu"></div>
         <div class="match-col" id="matchEnglish"></div>
       </div>
-      <p class="u1-ex-status" id="greetStatus"></p>
+      <p class="u1-ex-status" id="greetStatus" aria-live="polite"></p>
     </section>
 
-    <!-- ============ 2. NUMBERS — LEARNING MODULE ============ -->
-    <section class="u1-ex lm-ex" data-ex="2" id="lmNumbers" hidden>
+    <!-- 2. NUMBERS — LEARN -->
+    <section class="u1-ex lm-ex card" data-ex="2" id="lmNumbers" hidden>
       <div class="u1-ex-head">
-        <span class="u1-ex-icon" style="--c:var(--e2)">📖</span>
-        <div>
-          <h2>Learn: Numbers</h2>
-          <p>Tap a card to hear it spoken. Flip it to see the number.</p>
-        </div>
+        <span class="u1-ex-kind">Learn</span>
+        <h2>Numbers</h2>
+        <p>Tap a card to hear it spoken and see the number.</p>
       </div>
       <div class="lm-grid" id="lmNumbersGrid"></div>
       <div class="lm-note" id="lmNumbersNote"></div>
-      <button type="button" class="ex-next-btn lm-continue-btn" data-next-label="Continue to drag game →">Continue to drag game →</button>
+      <button type="button" class="btn btn-dark btn-lg ex-next-btn lm-continue-btn">Continue to the counting game <span class="arr-dot" aria-hidden="true">→</span></button>
     </section>
 
-    <!-- ============ 3. NUMBERS — DRAG WORD TO DOT GROUP ============ -->
-    <section class="u1-ex" data-ex="3" id="exNumbers" hidden>
+    <!-- 3. NUMBERS — DRAG TO DOT GROUP -->
+    <section class="u1-ex card" data-ex="3" id="exNumbers" hidden>
       <div class="u1-ex-head">
-        <span class="u1-ex-icon" style="--c:var(--e2)">🔢</span>
-        <div>
-          <h2>Numbers: drag to the right group</h2>
-          <p>Drag each word onto the tile with the matching number of shells.</p>
-        </div>
+        <span class="u1-ex-kind is-game">Game</span>
+        <h2>Count the dots</h2>
+        <p>Drag each word onto the tile with the same number of dots. You can also tap a word, then tap a tile.</p>
       </div>
       <div class="drag-tray" id="numbersTray"></div>
       <div class="drop-grid" id="numbersGrid"></div>
-      <p class="u1-ex-status" id="numbersStatus"></p>
+      <p class="u1-ex-status" id="numbersStatus" aria-live="polite"></p>
     </section>
 
-    <!-- ============ 4. FAMILY — LEARNING MODULE ============ -->
-    <section class="u1-ex lm-ex" data-ex="4" id="lmFamily" hidden>
+    <!-- 4. FAMILY — LEARN -->
+    <section class="u1-ex lm-ex card" data-ex="4" id="lmFamily" hidden>
       <div class="u1-ex-head">
-        <span class="u1-ex-icon" style="--c:var(--e3)">📖</span>
-        <div>
-          <h2>Learn: Family</h2>
-          <p>Tap a card to hear it spoken. Flip it to see who it means.</p>
-        </div>
+        <span class="u1-ex-kind">Learn</span>
+        <h2>Family</h2>
+        <p>Tap a card to hear it spoken and see who it means.</p>
       </div>
       <div class="lm-grid" id="lmFamilyGrid"></div>
-      <button type="button" class="ex-next-btn lm-continue-btn" data-next-label="Continue to drag game →">Continue to drag game →</button>
+      <button type="button" class="btn btn-dark btn-lg ex-next-btn lm-continue-btn">Continue to the family game <span class="arr-dot" aria-hidden="true">→</span></button>
     </section>
 
-    <!-- ============ 5. FAMILY — DRAG WORD TO PORTRAIT ============ -->
-    <section class="u1-ex" data-ex="5" id="exFamily" hidden>
+    <!-- 5. FAMILY — DRAG TO PERSON -->
+    <section class="u1-ex card" data-ex="5" id="exFamily" hidden>
       <div class="u1-ex-head">
-        <span class="u1-ex-icon" style="--c:var(--e3)">👨‍👩‍👧</span>
-        <div>
-          <h2>Family: drag the word to the person</h2>
-          <p>Match each Tulu word to who it means.</p>
-        </div>
+        <span class="u1-ex-kind is-game">Game</span>
+        <h2>Who's who?</h2>
+        <p>Drag each Tulu word onto the family member it means.</p>
       </div>
       <div class="drag-tray" id="familyTray"></div>
       <div class="drop-grid" id="familyGrid"></div>
-      <p class="u1-ex-status" id="familyStatus"></p>
+      <p class="u1-ex-status" id="familyStatus" aria-live="polite"></p>
     </section>
 
-    <!-- ============ 6. MARKET — LEARNING MODULE ============ -->
-    <section class="u1-ex lm-ex" data-ex="6" id="lmMarket" hidden>
+    <!-- 6. MARKET — LEARN -->
+    <section class="u1-ex lm-ex card" data-ex="6" id="lmMarket" hidden>
       <div class="u1-ex-head">
-        <span class="u1-ex-icon" style="--c:var(--e4)">📖</span>
-        <div>
-          <h2>Learn: Market Words</h2>
-          <p>Tap a card to hear it spoken. Flip it to see what it means.</p>
-        </div>
+        <span class="u1-ex-kind">Learn</span>
+        <h2>Market words</h2>
+        <p>Tap a card to hear it spoken and see what it means.</p>
       </div>
       <div class="lm-grid" id="lmMarketGrid"></div>
-      <button type="button" class="ex-next-btn lm-continue-btn" data-next-label="Continue to drag game →">Continue to drag game →</button>
+      <button type="button" class="btn btn-dark btn-lg ex-next-btn lm-continue-btn">Continue to the market game <span class="arr-dot" aria-hidden="true">→</span></button>
     </section>
 
-    <!-- ============ 7. MARKET — DRAG WORD TO ITEM ============ -->
-    <section class="u1-ex" data-ex="7" id="exMarket" hidden>
+    <!-- 7. MARKET — DRAG TO ITEM -->
+    <section class="u1-ex card" data-ex="7" id="exMarket" hidden>
       <div class="u1-ex-head">
-        <span class="u1-ex-icon" style="--c:var(--e4)">🧺</span>
-        <div>
-          <h2>Market basket: drag the word to the item</h2>
-          <p>Match each Tulu word to what's on the table.</p>
-        </div>
+        <span class="u1-ex-kind is-game">Game</span>
+        <h2>At the market</h2>
+        <p>Drag each Tulu word onto the item it names.</p>
       </div>
       <div class="drag-tray" id="marketTray"></div>
       <div class="drop-grid" id="marketGrid"></div>
-      <p class="u1-ex-status" id="marketStatus"></p>
+      <p class="u1-ex-status" id="marketStatus" aria-live="polite"></p>
     </section>
 
-    <!-- ============ 8. QUICK QUIZ ============ -->
-    <section class="u1-ex" data-ex="8" id="exQuiz" hidden>
+    <!-- 8. QUICK QUIZ -->
+    <section class="u1-ex card" data-ex="8" id="exQuiz" hidden>
       <div class="u1-ex-head">
-        <span class="u1-ex-icon" style="--c:var(--e5)">⚡</span>
-        <div>
-          <h2>Quick quiz</h2>
-          <p>A speed round mixing everything from this unit.</p>
-        </div>
+        <span class="u1-ex-kind is-game">Quiz</span>
+        <h2>Quick quiz</h2>
+        <p>A short round mixing everything from this unit.</p>
       </div>
       <div class="quiz-card" id="quizCard"></div>
     </section>
 
-    <!-- ============ DONE SCREEN ============ -->
-    <section class="u1-ex u1-done" data-ex="9" id="exDone" hidden>
-      <div class="u1-done-emoji">🎉</div>
-      <h2>Unit 1 complete!</h2>
-      <p id="doneSummary">Nice work — you matched every word.</p>
+    <!-- DONE -->
+    <section class="u1-ex u1-done card" data-ex="9" id="exDone" hidden>
+      <div class="done-mark" aria-hidden="true"></div>
+      <h2>Unit 1 complete.</h2>
+      <p id="doneSummary">Nice work, you matched every word.</p>
       <div class="u1-done-actions">
-        <button class="btn btn-outline btn-lg" id="replayBtn">Replay unit</button>
-        <a href="dashboard.html" class="btn btn-solid btn-lg">Back to dashboard →</a>
+        <button class="btn btn-lg" id="replayBtn">Play the unit again</button>
+        <a href="unit2.html" class="btn btn-dark btn-lg">Go to Unit 2 <span class="arr-dot" aria-hidden="true">→</span></a>
       </div>
     </section>
 
   </div>
 
-  <!-- ---- nav buttons ---- -->
+  <!-- ---- prev / next ---- -->
   <div class="u1-nav" id="u1Nav">
-    <button class="btn btn-outline" id="prevBtn">← Back</button>
-    <button class="btn btn-solid" id="nextBtn">Next →</button>
+    <button class="btn" id="prevBtn">← Back</button>
+    <button class="btn btn-dark" id="nextBtn">Next →</button>
   </div>
 
 </main>
 
+<footer class="footer">
+  <div class="container">
+    <div class="footer-top">
+      <p class="footer-statement serif">Built to keep a coastal language spoken. <span class="kn" lang="kn">ತುಳು</span></p>
+      <div class="footer-cols">
+        <div class="footer-col">
+          <h4>Learn</h4>
+          <a href="index.html#course">Course</a>
+          <a href="study.html">Words &amp; phrases</a>
+          <a href="unit1.html">Unit 1 practice</a>
+          <a href="unit2.html">Unit 2 practice</a>
+        </div>
+        <div class="footer-col">
+          <h4>Read &amp; write</h4>
+          <a href="tulu-lipi.html">Tulu Lipi</a>
+          <a href="transliterator.html">Transliterator</a>
+          <a href="dictionary.html">Dictionary</a>
+        </div>
+        <div class="footer-col">
+          <h4>Explore</h4>
+          <a href="index.html#language">Language</a>
+          <a href="index.html#culture">Culture</a>
+          <a href="index.html#faq">FAQ</a>
+          <a href="contribute.html">Suggest a word</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>Practice progress is kept on this page only for now. Nothing here is saved between visits.</p>
+      <p>Free to use, no sign-up needed.</p>
+    </div>
+  </div>
+</footer>
+
+<script src="site.js"></script>
 <script src="audio-map.js"></script>
 <script src="unit1.js"></script>
 </body>

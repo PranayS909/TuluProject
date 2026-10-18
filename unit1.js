@@ -29,7 +29,7 @@ function playCardAudio(card, term){
     card.classList.remove('has-audio');
     card.classList.add('is-noaudio-flash');
     setTimeout(() => card.classList.remove('is-noaudio-flash'), 400);
-    showToast(`🔇 No recording yet for "${term}"`);
+    showToast(`No recording yet for "${term}"`);
   };
 
   const src = audioSrc(term);
@@ -168,29 +168,29 @@ const GREETINGS_MATCH_PAIRS = [
 ];
 
 const NUMBERS_DRAG_PAIRS = [1,2,3,4,5,6,7,8,9,10].map((n, i) => ({
-  tulu: LEARN_NUMBERS[i].term, en:`${n}`, icon:'🐚'.repeat(n),
+  tulu: LEARN_NUMBERS[i].term, en:`${n}`, dots:n,
 }));
 
 const FAMILY_DRAG_PAIRS = [
-  { tulu:'appae (amma)', en:'mother', icon:'👩' },
-  { tulu:'amme (ayye / poppa)', en:'father', icon:'👨' },
-  { tulu:'mage', en:'son', icon:'👦' },
-  { tulu:'magal', en:'daughter', icon:'👧' },
-  { tulu:'palaye (aNNe)', en:'elder brother', icon:'🧑' },
-  { tulu:'paldi / pali (akka)', en:'elder sister', icon:'👩‍🦱' },
-  { tulu:'ajje', en:'grandfather', icon:'👴' },
-  { tulu:'ajji (abba)', en:'grandmother', icon:'👵' },
+  { tulu:'appae (amma)', en:'mother' },
+  { tulu:'amme (ayye / poppa)', en:'father' },
+  { tulu:'mage', en:'son' },
+  { tulu:'magal', en:'daughter' },
+  { tulu:'palaye (aNNe)', en:'elder brother' },
+  { tulu:'paldi / pali (akka)', en:'elder sister' },
+  { tulu:'ajje', en:'grandfather' },
+  { tulu:'ajji (abba)', en:'grandmother' },
 ];
 
 const MARKET_DRAG_PAIRS = [
-  { tulu:'Ari', en:'rice', icon:'🍚' },
-  { tulu:'Neer', en:'water', icon:'💧' },
-  { tulu:'Pela', en:'milk', icon:'🥛' },
-  { tulu:'Meen', en:'fish', icon:'🐟' },
-  { tulu:'Yetti', en:'prawns', icon:'🦐' },
-  { tulu:'Ulli / Nirulli', en:'onion', icon:'🧅' },
-  { tulu:'Bollulli', en:'garlic', icon:'🧄' },
-  { tulu:'Munchi', en:'chilli', icon:'🌶️' },
+  { tulu:'Ari', en:'rice' },
+  { tulu:'Neer', en:'water' },
+  { tulu:'Pela', en:'milk' },
+  { tulu:'Meen', en:'fish' },
+  { tulu:'Yetti', en:'prawns' },
+  { tulu:'Ulli / Nirulli', en:'onion' },
+  { tulu:'Bollulli', en:'garlic' },
+  { tulu:'Munchi', en:'chilli' },
 ];
 
 const QUIZ_QUESTIONS = [
@@ -231,6 +231,7 @@ const TOTAL_STAGES = 10;
 const LESSON_STAGES = new Set([0, 2, 4, 6]);
 const stageComplete = [false, false, false, false, false, false, false, false, false];
 let curStage = 0;
+let furthestStage = 0; // learn steps complete on load, so only show them done once reached
 
 function initStages(){
   document.getElementById('prevBtn').addEventListener('click', () => goTo(curStage - 1));
@@ -251,6 +252,7 @@ function goTo(i){
 }
 
 function showStage(i){
+  furthestStage = Math.max(furthestStage, i);
   document.querySelectorAll('.u1-ex').forEach(sec => {
     sec.hidden = Number(sec.dataset.ex) !== i;
   });
@@ -275,10 +277,12 @@ function renderDots(){
     const dot = document.createElement('span');
     dot.className = 'u1-dot';
     if (LESSON_STAGES.has(i)) dot.classList.add('is-lesson');
-    if (stageComplete[i]) dot.classList.add('is-done');
+    if (stageComplete[i] && i <= furthestStage) dot.classList.add('is-done');
     if (i === curStage) dot.classList.add('is-current');
     wrap.appendChild(dot);
   }
+  const caption = document.getElementById('u1Caption');
+  if (caption) caption.textContent = curStage < 9 ? `Step ${curStage + 1} of 9` : 'All steps done';
 }
 
 /* ---------------------------------------------------------------
@@ -296,7 +300,7 @@ function renderLearningModule(gridId, items, section, stageIndex, noteId, noteTe
     card.innerHTML = `
       <div class="lm-card-top">
         <span class="lm-flip-hint">tap to hear</span>
-        <span class="lm-speaker" aria-hidden="true">🔊</span>
+        <span class="play" aria-hidden="true"></span>
       </div>
       <div class="lm-card-term">${item.term}</div>
       <div class="lm-card-def">${item.def}</div>
@@ -358,7 +362,7 @@ function initTapMatch(leftId, rightId, statusId, pairs, stageIndex){
         matchedCount++;
         selected = null;
         document.getElementById(statusId).textContent =
-          matchedCount === pairs.length ? 'All matched! ✓' : `${matchedCount} / ${pairs.length} matched`;
+          matchedCount === pairs.length ? 'All matched!' : `${matchedCount} / ${pairs.length} matched`;
         if (matchedCount === pairs.length) markComplete(stageIndex);
       } else {
         const wrongChip = selected.chip;
@@ -414,7 +418,7 @@ function initDragMatch(trayId, gridId, statusId, pairs, stageIndex){
     const tile = document.createElement('div');
     tile.className = 'drop-tile';
     tile.innerHTML = `
-      <span class="drop-icon">${p.icon || '🔹'}</span>
+      ${p.dots ? `<span class="drop-dots" aria-hidden="true">${'<i></i>'.repeat(p.dots)}</span>` : ''}
       <span class="drop-label">${p.en}</span>
       <span class="drop-fill"></span>
     `;
@@ -443,7 +447,7 @@ function initDragMatch(trayId, gridId, statusId, pairs, stageIndex){
       placedCount++;
       selectedChip = null;
       document.getElementById(statusId).textContent =
-        placedCount === pairs.length ? 'All placed! ✓' : `${placedCount} / ${pairs.length} placed`;
+        placedCount === pairs.length ? 'All placed!' : `${placedCount} / ${pairs.length} placed`;
       if (placedCount === pairs.length) markComplete(stageIndex);
     } else {
       tile.classList.add('is-wrong');
@@ -465,7 +469,7 @@ function initQuiz(cardId, questions, stageIndex){
 
   function render(){
     if (qIdx >= questions.length){
-      card.innerHTML = `<p class="quiz-final">You got ${score} / ${questions.length} right! 🎉</p>`;
+      card.innerHTML = `<p class="quiz-final">You got ${score} / ${questions.length} right!</p>`;
       document.getElementById('doneSummary').textContent =
         `Nice work — you scored ${score} / ${questions.length} on the quiz and matched every word along the way.`;
       markComplete(stageIndex);
@@ -476,7 +480,7 @@ function initQuiz(cardId, questions, stageIndex){
     card.innerHTML = `
       <p class="quiz-progress">Question ${qIdx + 1} of ${questions.length}</p>
       <p class="quiz-question">${q.prompt}</p>
-      ${promptTerm ? '<button type="button" class="quiz-hear">🔊 Hear it</button>' : ''}
+      ${promptTerm ? '<button type="button" class="quiz-hear"><span class="play" aria-hidden="true"></span>Hear it</button>' : ''}
       <div class="quiz-choices"></div>
       <p class="quiz-feedback"></p>
     `;
@@ -495,11 +499,11 @@ function initQuiz(cardId, questions, stageIndex){
         if (choice === q.answer){
           score++;
           btn.classList.add('is-correct');
-          fb.textContent = '✓ Correct!';
+          fb.textContent = 'Correct!';
           fb.className = 'quiz-feedback is-correct';
         } else {
           btn.classList.add('is-wrong');
-          fb.textContent = `✗ It's "${q.answer}."`;
+          fb.textContent = `Not quite. It's "${q.answer}."`;
           fb.className = 'quiz-feedback is-wrong';
           card.querySelectorAll('.quiz-choice').forEach(b => {
             if (b.textContent === q.answer) b.classList.add('is-correct');

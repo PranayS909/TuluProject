@@ -24,9 +24,9 @@ const MARKET_PAIRS = [
 ];
 
 const SENTENCE_PAIRS = [
-  { tulu:'yAn pOpae', en:'I go', icon:'🧍' },
-  { tulu:'Aye pOpe', en:'he goes', icon:'👨' },
-  { tulu:'mOlu pOpal', en:'she goes', icon:'👩' },
+  { tulu:'yAn pOpae', en:'I go' },
+  { tulu:'Aye pOpe', en:'he goes' },
+  { tulu:'mOlu pOpal', en:'she goes' },
 ];
 // Used only in the quiz round (don't fit the drag-to-subject format above)
 const SENTENCE_EXTRA = [
@@ -40,11 +40,11 @@ const PHRASE_PAIRS = [
 ];
 
 const QUESTION_PAIRS = [
-  { tulu:'att / ata', en:'no / isn’t it (statement)', icon:'🚫' },
-  { tulu:'ijji / ijja', en:'no / isn’t it (existence)', icon:'❌' },
-  { tulu:'undu dAde?', en:'what is this?', icon:'❓' },
-  { tulu:'Ir dUra pOvondullar?', en:'where are you going? (formal)', icon:'🚶' },
-  { tulu:'gaNTae EtAND?', en:'what time is it?', icon:'🕐' },
+  { tulu:'att / ata', en:'no / isn’t it (statement)' },
+  { tulu:'ijji / ijja', en:'no / isn’t it (existence)' },
+  { tulu:'undu dAde?', en:'what is this?' },
+  { tulu:'Ir dUra pOvondullar?', en:'where are you going? (formal)' },
+  { tulu:'gaNTae EtAND?', en:'what time is it?' },
 ];
 
 const QUIZ_QUESTIONS = [
@@ -123,6 +123,8 @@ function renderDots(){
     if (i === curStage) dot.classList.add('is-current');
     wrap.appendChild(dot);
   }
+  const caption = document.getElementById('u2Caption');
+  if (caption) caption.textContent = curStage < 5 ? `Step ${curStage + 1} of 5` : 'All steps done';
 }
 
 /* ---------------------------------------------------------------
@@ -166,7 +168,7 @@ function initTapMatch(leftId, rightId, statusId, pairs, stageIndex){
         matchedCount++;
         selected = null;
         document.getElementById(statusId).textContent =
-          matchedCount === pairs.length ? 'All matched! ✓' : `${matchedCount} / ${pairs.length} matched`;
+          matchedCount === pairs.length ? 'All matched!' : `${matchedCount} / ${pairs.length} matched`;
         if (matchedCount === pairs.length) markComplete(stageIndex);
       } else {
         const wrongChip = selected.chip;
@@ -222,7 +224,7 @@ function initDragMatch(trayId, gridId, statusId, pairs, stageIndex){
     const tile = document.createElement('div');
     tile.className = 'drop-tile';
     tile.innerHTML = `
-      <span class="drop-icon">${p.icon || '🔹'}</span>
+      ${p.dots ? `<span class="drop-dots" aria-hidden="true">${'<i></i>'.repeat(p.dots)}</span>` : ''}
       <span class="drop-label">${p.en}</span>
       <span class="drop-fill"></span>
     `;
@@ -251,7 +253,7 @@ function initDragMatch(trayId, gridId, statusId, pairs, stageIndex){
       placedCount++;
       selectedChip = null;
       document.getElementById(statusId).textContent =
-        placedCount === pairs.length ? 'All placed! ✓' : `${placedCount} / ${pairs.length} placed`;
+        placedCount === pairs.length ? 'All placed!' : `${placedCount} / ${pairs.length} placed`;
       if (placedCount === pairs.length) markComplete(stageIndex);
     } else {
       tile.classList.add('is-wrong');
@@ -273,7 +275,7 @@ function initQuiz(cardId, questions, stageIndex){
 
   function render(){
     if (qIdx >= questions.length){
-      card.innerHTML = `<p class="quiz-final">You got ${score} / ${questions.length} right! 🎉</p>`;
+      card.innerHTML = `<p class="quiz-final">You got ${score} / ${questions.length} right!</p>`;
       markComplete(stageIndex);
       return;
     }
@@ -282,7 +284,7 @@ function initQuiz(cardId, questions, stageIndex){
     card.innerHTML = `
       <p class="quiz-progress">Question ${qIdx + 1} of ${questions.length}</p>
       <p class="quiz-question">${q.prompt}</p>
-      ${promptTerm ? '<button type="button" class="quiz-hear">🔊 Hear it</button>' : ''}
+      ${promptTerm ? '<button type="button" class="quiz-hear"><span class="play" aria-hidden="true"></span>Hear it</button>' : ''}
       <div class="quiz-choices"></div>
       <p class="quiz-feedback"></p>
     `;
@@ -301,11 +303,11 @@ function initQuiz(cardId, questions, stageIndex){
         if (choice === q.answer){
           score++;
           btn.classList.add('is-correct');
-          fb.textContent = '✓ Correct!';
+          fb.textContent = 'Correct!';
           fb.className = 'quiz-feedback is-correct';
         } else {
           btn.classList.add('is-wrong');
-          fb.textContent = `✗ It's "${q.answer}."`;
+          fb.textContent = `Not quite. It's "${q.answer}."`;
           fb.className = 'quiz-feedback is-wrong';
           card.querySelectorAll('.quiz-choice').forEach(b => {
             if (b.textContent === q.answer) b.classList.add('is-correct');
