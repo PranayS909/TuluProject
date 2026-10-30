@@ -116,17 +116,33 @@ wire that up.
 
 ## 8. Courses on the dashboard
 
-The dashboard now has a **Courses** card listing the four homepage
-units, with an **＋ Add course** button on Unit 1 (the others show
-🔒 Locked until unit progression is wired up).
+The dashboard has a **Units** card listing all five practice units.
 
 1. Run `supabase-schema-enrollments.sql` in the SQL Editor (same way
    as the first schema file) — it adds an `enrollments` table with
    RLS so users can only see/add their own rows.
-2. Clicking **＋ Add course** on Unit 1 inserts a row into
-   `enrollments` for that user, then takes them to
-   `index.html#roadmap`. Next time they visit the dashboard, that
-   course shows a **Continue →** button instead.
+2. Clicking **Start** on a unit inserts a row into `enrollments` for
+   that user, then opens the unit. Next time they visit the
+   dashboard, that unit shows **Continue →** (or **Review** once it's
+   complete).
+
+## 9. Saving progress (XP and streaks)
+
+When a learner finishes a unit, the practice page (via `progress.js`)
+calls a database function that awards XP and updates their streak.
+
+1. Run `supabase-schema-progress.sql` in the SQL Editor, **after** the
+   two files above. It:
+   - adds a `unit_completions` table and a `last_active_on` column,
+   - creates the `complete_unit()` function, which awards a fixed
+     amount of XP per unit (once) and keeps the daily streak,
+   - stops the website from editing `xp` and `streak` directly, so
+     learners can't give themselves points from the browser. They can
+     still edit their name and avatar.
+2. XP per unit is set inside `complete_unit()`. To add a unit 6, add a
+   line there as well as creating `unit6.html` / `unit6.js`.
+3. Learners who aren't signed in still get their progress remembered
+   on their own device; the homepage course list uses that.
 
 ## Suggest-a-word form (contribute.html)
 

@@ -59,7 +59,7 @@ function initSceneAudio(){
   const src = audioSrc('Namaskara');
   if (!src){ btn.hidden = true; return; }
   btn.addEventListener('click', () => {
-    const audio = new Audio(src);
+    const audio = newClip(src);
     btn.classList.add('is-playing');
     const done = () => btn.classList.remove('is-playing');
     audio.addEventListener('ended', done);
@@ -132,7 +132,7 @@ const ROADMAP_UNITS = [
   {
     name:'Unit 1', title:'First Words',
     nodes:[
-      { type:'lesson', title:'Greetings', status:'complete',
+      { type:'lesson', title:'Greetings', status:'open',
         desc:'Say hello, introduce yourself, and be polite in Tulu.',
         items:['Common greetings','Introducing yourself','Please & thank you'],
         vocab:[
@@ -148,7 +148,7 @@ const ROADMAP_UNITS = [
         note:'“solmelu” turns up meaning both “hi” and “thank you” depending on the source — confirm which with a speaker before teaching it.',
         source:[{label:'Easy Tulu — Lesson 41', url:'https://www.easytulu.com/2016/12/tulu-lesson-41-useful-phrases-in-tulu.html'},
                 {label:'Raveesh Kumar — Common Phrases', url:'https://www.raveeshkumar.com/2009/05/learn-tulu-online-commonly-used-phrases.html'}] },
-      { type:'lesson', title:'Numbers 1–20', status:'complete',
+      { type:'lesson', title:'Numbers 1–20', status:'open',
         desc:'Count, ask prices, and tell simple quantities.',
         items:['Numbers 1–20','Asking "how many?"','Simple counting phrases'],
         vocab:[
@@ -161,12 +161,12 @@ const ROADMAP_UNITS = [
           {tulu:'padinorumba', en:'19'}, {tulu:'irva', en:'20'},
         ],
         source:[{label:'Easy Tulu — Lesson 5', url:'https://www.easytulu.com/2016/02/tulu-lesson-5-more-interrogative.html'}] },
-      { type:'chest', title:'Bonus: Tongue-Twisters', status:'complete',
+      { type:'chest', title:'Bonus: Tongue-Twisters', status:'open',
         desc:'A playful bonus round of classic Tulu tongue-twisters.',
         items:['Rhythm & pronunciation','Fun local phrases'],
         note:'Real Tulu tongue-twisters are thin on the open web — native speakers or Tulu community groups are a better source than any site found so far.',
         source:[{label:'Quora — Tulu slang thread (starting point)', url:'https://www.quora.com/What-are-some-tulu-slangs'}] },
-      { type:'lesson', title:'Family Words', status:'complete',
+      { type:'lesson', title:'Family Words', status:'open',
         desc:'Tulu has famously specific kinship terms — learn the essentials.',
         items:['Immediate family terms','Extended family terms','Talking about relatives'],
         vocab:[
@@ -180,7 +180,7 @@ const ROADMAP_UNITS = [
         note:'Sources list “appae” as mother and “amme” as father — the reverse of Kannada. Surprising enough to double-check before teaching it.',
         source:[{label:'Easy Tulu — Family Relationships', url:'https://www.easytulu.com/p/family-relationships-in-tulu.html'},
                 {label:'TuluBuzz — Family Relationship names', url:'https://www.tulubuzz.in/2024/03/Family-Relationship-names-in-tulu.html'}] },
-      { type:'trophy', title:'Unit 1 Complete', status:'complete',
+      { type:'trophy', title:'Unit 1 Complete', status:'open',
         desc:'You can greet people, count, and talk about family in Tulu.',
         items:['Review all Unit 1 skills'] },
     ]
@@ -188,7 +188,7 @@ const ROADMAP_UNITS = [
   {
     name:'Unit 2', title:'Everyday Tulu',
     nodes:[
-      { type:'lesson', title:'Food & Market', status:'complete',
+      { type:'lesson', title:'Food & Market', status:'open',
         desc:'Order food, shop at a market, and talk about meals.',
         items:['Food vocabulary','Market phrases','Talking about meals'],
         vocab:[
@@ -199,7 +199,7 @@ const ROADMAP_UNITS = [
           {tulu:'vaNas aanDa?', en:'had your lunch?'},
         ],
         source:[{label:'Raveesh Kumar — Common Phrases', url:'https://www.raveeshkumar.com/2009/05/learn-tulu-online-commonly-used-phrases.html'}] },
-      { type:'lesson', title:'Simple Sentences', status:'complete',
+      { type:'lesson', title:'Simple Sentences', status:'open',
         desc:'Build basic present-tense sentences with correct word order.',
         items:['Subject–object–verb order','Present tense basics','Everyday statements'],
         vocab:[
@@ -209,13 +209,13 @@ const ROADMAP_UNITS = [
         ],
         note:'Pattern: short verbs take “-p-” + ending (pO → pOpe, “he goes”); longer verbs take “-uv-” + ending (mAr → mAruve, “he sells”).',
         source:[{label:'Easy Tulu — Lesson 3: Simple Present Tense', url:'https://www.easytulu.com/2016/02/tulu-lesson-3-simple-present-tense.html'}] },
-      { type:'chest', title:'Bonus: Coastal Slang', status:'current',
+      { type:'chest', title:'Bonus: Coastal Slang', status:'open',
         desc:'Casual, everyday expressions you’ll actually hear on the coast.',
         items:['Informal greetings','Local expressions'],
         note:'Idioms and slang need a native speaker to vet — the links below are a starting point, not a vocab list to copy verbatim.',
         source:[{label:'Raveesh Kumar — Tulu/Kannada idioms & sayings', url:'https://www.raveeshkumar.com/2011/11/learn-tulu-idioms-sayings-with.html'},
                 {label:'Quora — Tulu slang thread', url:'https://www.quora.com/What-are-some-tulu-slangs'}] },
-      { type:'lesson', title:'Questions & Verbs', status:'locked',
+      { type:'lesson', title:'Questions & Verbs', status:'open',
         desc:'Ask questions and conjugate verbs across past, present, and future.',
         items:['Question formation','Verb conjugation','Case markers'],
         vocab:[
@@ -227,57 +227,80 @@ const ROADMAP_UNITS = [
         ],
         source:[{label:'Easy Tulu — Lesson 5', url:'https://www.easytulu.com/2016/02/tulu-lesson-5-more-interrogative.html'},
                 {label:'Easy Tulu — Lesson 41', url:'https://www.easytulu.com/2016/12/tulu-lesson-41-useful-phrases-in-tulu.html'}] },
-      { type:'trophy', title:'Unit 2 Complete', status:'locked',
+      { type:'trophy', title:'Unit 2 Complete', status:'open',
         desc:'Hold a basic everyday conversation in Tulu.',
         items:['Review all Unit 2 skills'] },
     ]
   },
   {
-    name:'Unit 3', title:'Reading Tulu',
+    name:'Unit 3', title:'Reading Tulu', draft:true,
     nodes:[
-      { type:'lesson', title:'Kannada Script', status:'locked',
-        desc:'Most modern Tulu writing uses the Kannada script — start reading it.',
-        items:['Vowels & consonants','Combining letters','Common words'] },
-      { type:'lesson', title:'Reading Practice', status:'locked',
-        desc:'Read short everyday passages, signs, and menus.',
-        items:['Short passages','Signs & labels','Comprehension checks'] },
-      { type:'chest', title:'Bonus: Proverbs', status:'locked',
-        desc:'Classic Tulu proverbs and what they reveal about coastal life.',
-        items:['Proverbs & meanings'] },
-      { type:'lesson', title:'Writing Practice', status:'locked',
-        desc:'Write simple words and sentences in the Kannada script.',
-        items:['Handwriting basics','Spelling practice','Simple composition'] },
-      { type:'trophy', title:'Unit 3 Complete', status:'locked',
-        desc:'Read and write everyday Tulu confidently.',
-        items:['Review all Unit 3 skills'] },
+      { type:'lesson', title:'Kannada vowels', status:'open',
+        desc:'Most modern Tulu is printed in the Kannada script. Start with the vowels.',
+        items:['Vowel chart','Letter-to-sound game'] },
+      { type:'lesson', title:'Kannada consonants', status:'open',
+        desc:'Every consonant, with its built-in "a" sound.',
+        items:['Consonant chart','Letter-to-sound game','Find the letter'] },
+      { type:'lesson', title:'Words you already know', status:'open',
+        desc:'Read words from Units 1 and 2 written in Kannada script.',
+        items:['Numbers','Family','Greetings'] },
+      { type:'lesson', title:'Signboards & menus', status:'open',
+        desc:'Read the kinds of signs you see around Mangaluru and Udupi.',
+        items:['Hotel & bus stand','Place names','Shops'] },
+      { type:'chest', title:'Bonus: Proverbs & passages', status:'locked',
+        desc:'Tulu proverbs and short reading passages, once a Tulu speaker has chosen and translated them.',
+        items:['Proverbs with word-by-word meanings','Short reading passages'] },
     ]
   },
   {
     name:'Unit 4', title:'Culture Deep-Dive',
     nodes:[
-      { type:'lesson', title:'Kambala & Festivals', status:'locked',
-        desc:'Vocabulary from Kambala buffalo races, Dasara, and the Tulu New Year.',
-        items:['Festival terms','Kambala vocabulary'] },
-      { type:'lesson', title:'Folk Songs', status:'locked',
-        desc:'Listen to Paddana-style oral songs and pick out key phrases.',
-        items:['Listening practice','Recognising sung Tulu','Regional dialect variation'] },
-      { type:'chest', title:'Bonus: Bhoota Kola', status:'locked',
-        desc:'Vocabulary around the spirit-possession ritual and its performance.',
-        items:['Ritual terms','Cultural context'] },
-      { type:'lesson', title:'Tigalari Script', status:'locked',
-        desc:'An introduction to Tulu\u2019s own historical script.',
-        items:['Tigalari letterforms','Reading short inscriptions','History of the script'] },
-      { type:'trophy', title:'Course Complete', status:'locked',
-        desc:'From first greeting to reading historical Tulu inscriptions.',
-        items:['Review all skills'] },
+      { type:'lesson', title:'Ritual words', status:'open',
+        desc:'Words from Bhoota Kola, the Paddana tradition and Nagaradhane.',
+        items:['daiva, bhoota, sthana','paddana','naga kallu, naga bana'] },
+      { type:'lesson', title:'Festivals & food', status:'open',
+        desc:'Bisu Parba, Aati, Pili Nalike and the dishes of the coast.',
+        items:['Festival calendar','Pili Nalike','Kori Rotti & Neer Dosa'] },
+      { type:'lesson', title:'On the Yakshagana stage', status:'open',
+        desc:"Who's who in an all-night Yakshagana: troupe, musicians, drums and plays.",
+        items:['mela, himmela, mummela','chende & maddale','prasanga'] },
+      { type:'chest', title:'Bonus: Paddana listening', status:'locked',
+        desc:'Pick out refrain words in short Paddana chants, once recordings are available.',
+        items:['Listening practice'] },
+      { type:'trophy', title:'Culture quiz', status:'open',
+        desc:'Sort the words into rituals, festivals and stage, then a final quiz.',
+        items:['Sorting game','Quiz'] },
+    ]
+  },
+  {
+    name:'Unit 5', title:'Out and About', draft:true,
+    nodes:[
+      { type:'lesson', title:'Directions & transport', status:'open',
+        desc:'Left, right, straight on, and taking an auto-rickshaw.',
+        items:['Direction words','Auto-rickshaw conversation'] },
+      { type:'lesson', title:'Days, time & weather', status:'open',
+        desc:'Days of the week, times of day, rain and sunshine.',
+        items:['Days of the week','Times of day','Weather'] },
+      { type:'lesson', title:'At a Tuluva mess', status:'open',
+        desc:'Order coastal dishes, ask for water and praise the cook.',
+        items:['Dishes','Ordering conversation'] },
+      { type:'chest', title:'Bonus: Coastal slang', status:'open',
+        desc:'Casual words you might hear among friends on the coast.',
+        items:['Slang words','Matching game'] },
+      { type:'trophy', title:'Unit 5 quiz', status:'open',
+        desc:'A short round mixing everything from this unit.',
+        items:['Quiz'] },
     ]
   },
 ];
 
 // Units with a practice page of their own
-const UNIT_PRACTICE = { 'Unit 1':'unit1.html', 'Unit 2':'unit2.html' };
+const UNIT_PRACTICE = {
+  'Unit 1':'unit1.html', 'Unit 2':'unit2.html', 'Unit 3':'unit3.html',
+  'Unit 4':'unit4.html', 'Unit 5':'unit5.html',
+};
 
-const STATUS_LABEL = { complete:'Complete', current:'Up next', locked:'Coming soon' };
+const STATUS_LABEL = { complete:'Complete', current:'Up next', open:'Available', locked:'Coming soon' };
 const TYPE_TAG = { chest:'Bonus', trophy:'Review' };
 
 function escapeHtml(s){
@@ -288,12 +311,18 @@ function initCourse(){
   const wrap = document.getElementById('pathWrap');
   if (!wrap) return;
   let total = 0, complete = 0;
+  // Units finished on this device (see progress.js); finishing a unit's
+  // practice page marks all its available lessons complete.
+  const doneUnits = typeof TuluProgress !== 'undefined' ? TuluProgress.localDone() : [];
 
   ROADMAP_UNITS.forEach((unit, u) => {
-    const states = unit.nodes.map(n => n.status);
-    const unitState = states.every(s => s === 'complete') ? 'done'
-      : states.some(s => s !== 'locked') ? 'active' : 'later';
-    const unitStateLabel = { done:'Complete', active:'In progress', later:'Coming soon' }[unitState];
+    if (doneUnits.includes(`unit-${u + 1}`)){
+      unit.nodes.forEach(n => { if (n.status !== 'locked') n.status = 'complete'; });
+    }
+    const states = unit.nodes.map(n => n.status).filter(s => s !== 'locked');
+    const unitState = states.length && states.every(s => s === 'complete') ? 'done'
+      : states.length ? 'active' : 'later';
+    const unitStateLabel = { done:'Complete', active:unit.draft ? 'Draft' : 'Available', later:'Coming soon' }[unitState];
 
     const card = document.createElement('article');
     card.className = 'unit card';
@@ -317,13 +346,26 @@ function initCourse(){
 
     const list = card.querySelector('.lessons');
     unit.nodes.forEach((node, n) => {
-      total++;
+      if (node.status !== 'locked') total++;
       if (node.status === 'complete') complete++;
       list.appendChild(lessonItem(node, `${u + 1}.${n + 1}`));
     });
 
     wrap.appendChild(card);
   });
+
+  // Point "Continue" at the first unit not yet finished on this device.
+  const btn = document.getElementById('continueBtn');
+  if (btn){
+    const next = ROADMAP_UNITS.findIndex((unit, u) => UNIT_PRACTICE[unit.name] && !doneUnits.includes(`unit-${u + 1}`));
+    if (next === -1){
+      btn.href = 'unit1.html';
+      btn.textContent = 'Review from Unit 1';
+    } else {
+      btn.href = UNIT_PRACTICE[ROADMAP_UNITS[next].name];
+      btn.textContent = doneUnits.length ? `Continue: Unit ${next + 1}` : 'Start Unit 1';
+    }
+  }
 
   const pct = total ? Math.round((complete / total) * 100) : 0;
   document.getElementById('ppCount').textContent = `${complete} / ${total}`;

@@ -3,34 +3,42 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dashboard · Tulu · ತುಳು</title>
+<title>Your Dashboard · Tulu · ತುಳು</title>
+<meta name="robots" content="noindex">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&family=Noto+Sans+Kannada:wght@500;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css">
-<link rel="stylesheet" href="dashboard.css">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..600,0..100;1,9..144,300..600,0..100&family=Inter:wght@400;500;600;700&family=Noto+Sans+Kannada:wght@400;500;600;700&family=Noto+Serif+Kannada:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="site.css">
+<link rel="stylesheet" href="account.css">
 </head>
 <body>
 
-<!-- ============ NAV ============ -->
-<header class="nav" id="nav">
-  <div class="nav-inner">
-    <a href="index.html" class="nav-brand">
-      <span class="brand-mascot">🦜</span>
-      <span class="brand-kn">ತುಳು</span>
-      <span class="brand-en">Tulu</span>
+<header class="site-nav" id="nav">
+  <div class="nav-pill">
+    <a href="index.html" class="nav-brand" aria-label="Tulu, home">
+      <span class="nav-brand-kn" lang="kn">ತುಳು</span>
+      <span class="nav-brand-en">Tulu</span>
     </a>
+    <nav class="nav-links" id="navLinks" aria-label="Main">
+      <a href="index.html#course">Course</a>
+      <a href="index.html#language">Language</a>
+      <a href="index.html#culture">Culture</a>
+      <a href="tulu-lipi.html">Tulu Lipi</a>
+      <a href="index.html#tools">Tools</a>
+      <a href="register.html" class="nav-links-extra">Sign in</a>
+    </nav>
     <div class="nav-actions">
-      <a href="index.html#roadmap" class="btn btn-outline">Course</a>
-      <button class="btn btn-solid" id="logoutBtn">Log out</button>
+      <a href="register.html" class="nav-signin">Sign in</a>
+      <a href="index.html#course" class="btn btn-primary btn-sm">Start learning</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">
+        <span></span><span></span>
+      </button>
     </div>
   </div>
 </header>
+<main class="container dash page-top" id="dash">
 
-<!-- ============ DASHBOARD ============ -->
-<section class="dash" id="dash">
-
-  <!-- loading skeleton, swapped out once profile data arrives -->
+  <!-- loading state, swapped out once profile data arrives -->
   <div class="dash-loading" id="dashLoading">
     <div class="dash-spinner" aria-hidden="true"></div>
     <p>Loading your dashboard…</p>
@@ -38,83 +46,120 @@
 
   <div class="dash-content" id="dashContent" hidden>
 
-    <!-- welcome -->
-    <div class="dash-welcome">
-      <span class="dash-avatar" id="dashAvatar">🦜</span>
-      <div>
-        <h1 class="dash-hello" id="dashHello">Welcome back!</h1>
-        <p class="dash-sub">Keep the momentum going — every lesson counts.</p>
+    <header class="dash-head">
+      <div class="dash-welcome">
+        <span class="dash-avatar" id="dashAvatar" aria-hidden="true"></span>
+        <div>
+          <p class="eyebrow">Your dashboard</p>
+          <h1 class="dash-hello serif" id="dashHello">Welcome back.</h1>
+          <p class="dash-sub">Every lesson counts. Pick up where you left off.</p>
+        </div>
       </div>
-    </div>
+      <a href="unit1.html" class="btn btn-dark btn-lg dash-cta" id="dashCta">Continue learning <span class="arr-dot" aria-hidden="true">→</span></a>
+    </header>
 
-    <!-- stat cards: streak / xp / level -->
+    <!-- streak / xp / level -->
     <div class="dash-stats">
-      <div class="dash-stat-card">
-        <span class="dash-stat-icon">🔥</span>
+      <div class="dash-stat-card card">
         <span class="dash-stat-num" id="statStreak">0</span>
         <span class="dash-stat-label">day streak</span>
       </div>
-      <div class="dash-stat-card">
-        <span class="dash-stat-icon">💎</span>
+      <div class="dash-stat-card card">
         <span class="dash-stat-num" id="statXp">0</span>
         <span class="dash-stat-label">total XP</span>
       </div>
-      <div class="dash-stat-card">
-        <span class="dash-stat-icon">🏅</span>
+      <div class="dash-stat-card card">
         <span class="dash-stat-num" id="statLevel">1</span>
         <span class="dash-stat-label">level</span>
       </div>
     </div>
 
-    <!-- xp level progress -->
-    <div class="dash-card dash-level-card">
-      <div class="dash-card-head">
-        <h3>Level <span id="levelNow">1</span></h3>
-        <span class="dash-level-next" id="levelXpLabel">0 / 500 XP</span>
+    <div class="dash-grid">
+      <div class="dash-col">
+        <!-- courses -->
+        <section class="dash-card card">
+          <div class="dash-card-head">
+            <h2>Units</h2>
+            <span class="dash-level-next" id="courseCount">0 / 0 started</span>
+          </div>
+          <div class="dash-courses" id="dashCourses"></div>
+        </section>
+
+        <!-- badges -->
+        <section class="dash-card card">
+          <div class="dash-card-head">
+            <h2>Badges</h2>
+            <span class="dash-level-next" id="badgeCount">0 / 0 earned</span>
+          </div>
+          <div class="dash-badges" id="dashBadges"></div>
+        </section>
       </div>
-      <div class="pp-bar"><div class="pp-fill" id="levelFill"></div></div>
-      <p class="dash-level-hint" id="levelHint">Earn 500 XP to reach Level 2.</p>
+
+      <div class="dash-col">
+        <!-- level progress -->
+        <section class="dash-card card">
+          <div class="dash-card-head">
+            <h2>Level <span id="levelNow">1</span></h2>
+            <span class="dash-level-next" id="levelXpLabel">0 / 500 XP</span>
+          </div>
+          <div class="progress" role="progressbar" aria-label="Progress to the next level"><span id="levelFill"></span></div>
+          <p class="dash-level-hint" id="levelHint">Earn 500 XP to reach Level 2.</p>
+        </section>
+
+        <!-- weekly streak -->
+        <section class="dash-card card">
+          <div class="dash-card-head">
+            <h2>This week</h2>
+            <span class="dash-level-next" id="weekStreakLabel">0 day streak</span>
+          </div>
+          <div class="dash-week" id="dashWeek"></div>
+        </section>
+      </div>
     </div>
 
-    <!-- weekly streak tracker -->
-    <div class="dash-card">
-      <div class="dash-card-head">
-        <h3>This week</h3>
-        <span class="dash-level-next" id="weekStreakLabel">0 day streak</span>
-      </div>
-      <div class="dash-week" id="dashWeek"></div>
+    <div class="dash-foot">
+      <a href="index.html#course" class="btn">See the full course</a>
+      <button class="btn" id="logoutBtn" type="button">Log out</button>
     </div>
-
-    <!-- courses -->
-    <div class="dash-card">
-      <div class="dash-card-head">
-        <h3>Courses</h3>
-        <span class="dash-level-next" id="courseCount">0 / 0 started</span>
-      </div>
-      <div class="dash-courses" id="dashCourses"></div>
-    </div>
-
-    <!-- badges -->
-    <div class="dash-card">
-      <div class="dash-card-head">
-        <h3>Badges</h3>
-        <span class="dash-level-next" id="badgeCount">0 / 0 earned</span>
-      </div>
-      <div class="dash-badges" id="dashBadges"></div>
-    </div>
-
-    <a href="unit1.html" class="btn btn-solid btn-lg dash-cta">Continue learning →</a>
   </div>
-</section>
+</main>
 
 <footer class="footer">
-  <div class="footer-inner">
-    <div class="footer-brand"><span class="brand-mascot">🦜</span><span class="brand-kn">ತುಳು</span><span class="brand-en">Tulu</span></div>
-    <p class="footer-note">Built to keep a coastal language spoken.</p>
+  <div class="container">
+    <div class="footer-top">
+      <p class="footer-statement serif">Built to keep a coastal language spoken. <span class="kn" lang="kn">ತುಳು</span></p>
+      <div class="footer-cols">
+        <div class="footer-col">
+          <h4>Learn</h4>
+          <a href="index.html#course">Course</a>
+          <a href="study.html">Words &amp; phrases</a>
+          <a href="unit1.html">Unit 1 practice</a>
+          <a href="unit2.html">Unit 2 practice</a>
+        </div>
+        <div class="footer-col">
+          <h4>Read &amp; write</h4>
+          <a href="tulu-lipi.html">Tulu Lipi</a>
+          <a href="transliterator.html">Transliterator</a>
+          <a href="dictionary.html">Dictionary</a>
+        </div>
+        <div class="footer-col">
+          <h4>Explore</h4>
+          <a href="index.html#language">Language</a>
+          <a href="index.html#culture">Culture</a>
+          <a href="index.html#faq">FAQ</a>
+          <a href="contribute.html">Suggest a word</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>Your XP and streak are saved to your account when you finish a unit.</p>
+      <p>Free to use, no sign-up needed.</p>
+    </div>
   </div>
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="site.js"></script>
 <script src="dashboard.js"></script>
 </body>
 </html>

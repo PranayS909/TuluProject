@@ -19,7 +19,7 @@ function playAudio(card, tuluWord){
   const src = audioSrc(tuluWord);
   if (!src) return flashNoAudio(card, tuluWord);
 
-  const audio = new Audio(src);
+  const audio = newClip(src);
   card.classList.add('is-playing');
   const clearPlaying = () => card.classList.remove('is-playing');
 

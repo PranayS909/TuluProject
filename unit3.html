@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unit 3 Practice: Reading Tulu · Tulu · ತುಳು</title>
+<meta name="description" content="Learn to read Tulu in Kannada script: vowels, consonants, familiar words and the signboards of Tulu Nadu.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..600,0..100;1,9..144,300..600,0..100&family=Inter:wght@400;500;600;700&family=Noto+Sans+Kannada:wght@400;500;600;700&family=Noto+Serif+Kannada:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="site.css">
+<link rel="stylesheet" href="practice.css">
+</head>
+<body>
+
+<header class="site-nav" id="nav">
+  <div class="nav-pill">
+    <a href="index.html" class="nav-brand" aria-label="Tulu, home">
+      <span class="nav-brand-kn" lang="kn">ತುಳು</span>
+      <span class="nav-brand-en">Tulu</span>
+    </a>
+    <nav class="nav-links" id="navLinks" aria-label="Main">
+      <a href="index.html#course">Course</a>
+      <a href="index.html#language">Language</a>
+      <a href="index.html#culture">Culture</a>
+      <a href="tulu-lipi.html">Tulu Lipi</a>
+      <a href="index.html#tools">Tools</a>
+      <a href="register.html" class="nav-links-extra">Sign in</a>
+    </nav>
+    <div class="nav-actions">
+      <a href="register.html" class="nav-signin">Sign in</a>
+      <a href="index.html#course" class="btn btn-primary btn-sm">Start learning</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">
+        <span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+<main class="container practice page-top">
+
+  <header class="practice-head">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="index.html">Home</a><span class="sep" aria-hidden="true">/</span>
+      <a href="index.html#course">Course</a><span class="sep" aria-hidden="true">/</span>
+      <span aria-current="page">Unit 3</span>
+    </nav>
+    <p class="eyebrow">Unit 3<span class="eyebrow-rule"></span>Practice</p>
+    <h1 class="display">Reading Tulu.</h1>
+    <p class="lede">Most Tulu today is printed in Kannada script. Learn the letters, then read words you know and real signboards.</p>
+
+    <div class="u1-progress" id="u1Progress" aria-hidden="true"><!-- filled by unit-engine.js --></div>
+    <p class="progress-caption"><span id="stepCaption"></span><span id="stepCount"></span></p>
+
+    <div class="practice-tools">
+      <div class="script-switch" role="group" aria-label="Show Tulu words in">
+        <span class="tools-label">Show Tulu in</span>
+        <button type="button" data-script="roman">English letters</button>
+        <button type="button" data-script="kannada"><span class="kn" lang="kn">ಕನ್ನಡ</span> Kannada</button>
+        <button type="button" data-script="tulu-lipi">Tulu Lipi</button>
+      </div>
+      <label class="slow-toggle"><input type="checkbox" id="slowAudio"> Slow audio</label>
+    </div>
+    <p class="script-hint">Kannada and Tulu Lipi are converted automatically from the English spelling, so a few words may look different from how they're usually written.</p>
+  </header>
+
+  <div class="draft-notice" id="draftNotice" hidden>
+    <strong>Draft content.</strong> The Tulu in this unit hasn't been checked by a native speaker yet. Some words may be regional, borrowed from Kannada, or simply wrong.
+    <a href="contribute.html">Send a correction</a>.
+  </div>
+
+  <div class="u1-stage" id="stage"></div>
+
+  <div class="u1-nav" id="u1Nav">
+    <button class="btn" id="prevBtn" type="button">← Back</button>
+    <button class="btn btn-dark" id="nextBtn" type="button">Next →</button>
+  </div>
+
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-top">
+      <p class="footer-statement serif">Built to keep a coastal language spoken. <span class="kn" lang="kn">ತುಳು</span></p>
+      <div class="footer-cols">
+        <div class="footer-col">
+          <h4>Learn</h4>
+          <a href="index.html#course">Course</a>
+          <a href="study.html">Words &amp; phrases</a>
+          <a href="unit1.html">Unit 1 practice</a>
+          <a href="unit2.html">Unit 2 practice</a>
+        </div>
+        <div class="footer-col">
+          <h4>Read &amp; write</h4>
+          <a href="tulu-lipi.html">Tulu Lipi</a>
+          <a href="transliterator.html">Transliterator</a>
+          <a href="dictionary.html">Dictionary</a>
+        </div>
+        <div class="footer-col">
+          <h4>Explore</h4>
+          <a href="index.html#language">Language</a>
+          <a href="index.html#culture">Culture</a>
+          <a href="index.html#faq">FAQ</a>
+          <a href="contribute.html">Suggest a word</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>Progress is saved on this device. Sign in to earn XP and keep a streak.</p>
+      <p>Free to use, no sign-up needed.</p>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="site.js"></script>
+<script src="lipi-data.js"></script>
+<script src="audio-map.js"></script>
+<script src="progress.js"></script>
+<script src="unit-engine.js"></script>
+<script src="unit3.js"></script>
+</body>
+</html>

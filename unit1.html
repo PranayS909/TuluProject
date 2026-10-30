@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Unit 1 Practice: First Words · Tulu · ತುಳು</title>
-<meta name="description" content="Practise your first Tulu words: greetings, numbers, family and market words, with native-speaker audio and short matching games.">
+<title>Unit 1 Practice: First words · Tulu · ತುಳು</title>
+<meta name="description" content="Practise your first Tulu words: greetings, numbers, family and market words, with native-speaker audio and short games.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..600,0..100;1,9..144,300..600,0..100&family=Inter:wght@400;500;600;700&family=Noto+Sans+Kannada:wght@400;500;600;700&family=Noto+Serif+Kannada:wght@400;500&display=swap" rel="stylesheet">
@@ -38,7 +38,6 @@
 </header>
 <main class="container practice page-top">
 
-  <!-- ---- header / progress ---- -->
   <header class="practice-head">
     <nav class="crumbs" aria-label="Breadcrumb">
       <a href="index.html">Home</a><span class="sep" aria-hidden="true">/</span>
@@ -49,135 +48,31 @@
     <h1 class="display">First words.</h1>
     <p class="lede">Learn each set of words first, then play a short game to lock it in. Greetings, numbers, family and market words.</p>
 
-    <div class="u1-progress" id="u1Progress" aria-hidden="true"><!-- filled by JS --></div>
-    <p class="progress-caption"><span id="u1Caption"></span><span>9 steps</span></p>
+    <div class="u1-progress" id="u1Progress" aria-hidden="true"><!-- filled by unit-engine.js --></div>
+    <p class="progress-caption"><span id="stepCaption"></span><span id="stepCount"></span></p>
+
+    <div class="practice-tools">
+      <div class="script-switch" role="group" aria-label="Show Tulu words in">
+        <span class="tools-label">Show Tulu in</span>
+        <button type="button" data-script="roman">English letters</button>
+        <button type="button" data-script="kannada"><span class="kn" lang="kn">ಕನ್ನಡ</span> Kannada</button>
+        <button type="button" data-script="tulu-lipi">Tulu Lipi</button>
+      </div>
+      <label class="slow-toggle"><input type="checkbox" id="slowAudio"> Slow audio</label>
+    </div>
+    <p class="script-hint">Kannada and Tulu Lipi are converted automatically from the English spelling, so a few words may look different from how they're usually written.</p>
   </header>
 
-  <!-- ---- exercise stage ---- -->
-  <div class="u1-stage" id="u1Stage">
-
-    <!-- 0. GREETINGS — LEARN -->
-    <section class="u1-ex lm-ex card" data-ex="0" id="lmGreetings">
-      <div class="u1-ex-head">
-        <span class="u1-ex-kind">Learn</span>
-        <h2>Greetings</h2>
-        <p>Tap a card to hear it spoken and see what it means.</p>
-      </div>
-      <div class="lm-grid" id="lmGreetingsGrid"></div>
-      <button type="button" class="btn btn-dark btn-lg ex-next-btn lm-continue-btn">Continue to the matching game <span class="arr-dot" aria-hidden="true">→</span></button>
-    </section>
-
-    <!-- 1. GREETINGS — TAP TO MATCH -->
-    <section class="u1-ex card" data-ex="1" id="exGreetings" hidden>
-      <div class="u1-ex-head">
-        <span class="u1-ex-kind is-game">Game</span>
-        <h2>Match the greetings</h2>
-        <p>Tap a Tulu phrase on the left, then its English meaning on the right.</p>
-      </div>
-      <div class="match-board">
-        <div class="match-col" id="matchTulu"></div>
-        <div class="match-col" id="matchEnglish"></div>
-      </div>
-      <p class="u1-ex-status" id="greetStatus" aria-live="polite"></p>
-    </section>
-
-    <!-- 2. NUMBERS — LEARN -->
-    <section class="u1-ex lm-ex card" data-ex="2" id="lmNumbers" hidden>
-      <div class="u1-ex-head">
-        <span class="u1-ex-kind">Learn</span>
-        <h2>Numbers</h2>
-        <p>Tap a card to hear it spoken and see the number.</p>
-      </div>
-      <div class="lm-grid" id="lmNumbersGrid"></div>
-      <div class="lm-note" id="lmNumbersNote"></div>
-      <button type="button" class="btn btn-dark btn-lg ex-next-btn lm-continue-btn">Continue to the counting game <span class="arr-dot" aria-hidden="true">→</span></button>
-    </section>
-
-    <!-- 3. NUMBERS — DRAG TO DOT GROUP -->
-    <section class="u1-ex card" data-ex="3" id="exNumbers" hidden>
-      <div class="u1-ex-head">
-        <span class="u1-ex-kind is-game">Game</span>
-        <h2>Count the dots</h2>
-        <p>Drag each word onto the tile with the same number of dots. You can also tap a word, then tap a tile.</p>
-      </div>
-      <div class="drag-tray" id="numbersTray"></div>
-      <div class="drop-grid" id="numbersGrid"></div>
-      <p class="u1-ex-status" id="numbersStatus" aria-live="polite"></p>
-    </section>
-
-    <!-- 4. FAMILY — LEARN -->
-    <section class="u1-ex lm-ex card" data-ex="4" id="lmFamily" hidden>
-      <div class="u1-ex-head">
-        <span class="u1-ex-kind">Learn</span>
-        <h2>Family</h2>
-        <p>Tap a card to hear it spoken and see who it means.</p>
-      </div>
-      <div class="lm-grid" id="lmFamilyGrid"></div>
-      <button type="button" class="btn btn-dark btn-lg ex-next-btn lm-continue-btn">Continue to the family game <span class="arr-dot" aria-hidden="true">→</span></button>
-    </section>
-
-    <!-- 5. FAMILY — DRAG TO PERSON -->
-    <section class="u1-ex card" data-ex="5" id="exFamily" hidden>
-      <div class="u1-ex-head">
-        <span class="u1-ex-kind is-game">Game</span>
-        <h2>Who's who?</h2>
-        <p>Drag each Tulu word onto the family member it means.</p>
-      </div>
-      <div class="drag-tray" id="familyTray"></div>
-      <div class="drop-grid" id="familyGrid"></div>
-      <p class="u1-ex-status" id="familyStatus" aria-live="polite"></p>
-    </section>
-
-    <!-- 6. MARKET — LEARN -->
-    <section class="u1-ex lm-ex card" data-ex="6" id="lmMarket" hidden>
-      <div class="u1-ex-head">
-        <span class="u1-ex-kind">Learn</span>
-        <h2>Market words</h2>
-        <p>Tap a card to hear it spoken and see what it means.</p>
-      </div>
-      <div class="lm-grid" id="lmMarketGrid"></div>
-      <button type="button" class="btn btn-dark btn-lg ex-next-btn lm-continue-btn">Continue to the market game <span class="arr-dot" aria-hidden="true">→</span></button>
-    </section>
-
-    <!-- 7. MARKET — DRAG TO ITEM -->
-    <section class="u1-ex card" data-ex="7" id="exMarket" hidden>
-      <div class="u1-ex-head">
-        <span class="u1-ex-kind is-game">Game</span>
-        <h2>At the market</h2>
-        <p>Drag each Tulu word onto the item it names.</p>
-      </div>
-      <div class="drag-tray" id="marketTray"></div>
-      <div class="drop-grid" id="marketGrid"></div>
-      <p class="u1-ex-status" id="marketStatus" aria-live="polite"></p>
-    </section>
-
-    <!-- 8. QUICK QUIZ -->
-    <section class="u1-ex card" data-ex="8" id="exQuiz" hidden>
-      <div class="u1-ex-head">
-        <span class="u1-ex-kind is-game">Quiz</span>
-        <h2>Quick quiz</h2>
-        <p>A short round mixing everything from this unit.</p>
-      </div>
-      <div class="quiz-card" id="quizCard"></div>
-    </section>
-
-    <!-- DONE -->
-    <section class="u1-ex u1-done card" data-ex="9" id="exDone" hidden>
-      <div class="done-mark" aria-hidden="true"></div>
-      <h2>Unit 1 complete.</h2>
-      <p id="doneSummary">Nice work, you matched every word.</p>
-      <div class="u1-done-actions">
-        <button class="btn btn-lg" id="replayBtn">Play the unit again</button>
-        <a href="unit2.html" class="btn btn-dark btn-lg">Go to Unit 2 <span class="arr-dot" aria-hidden="true">→</span></a>
-      </div>
-    </section>
-
+  <div class="draft-notice" id="draftNotice" hidden>
+    <strong>Draft content.</strong> The Tulu in this unit hasn't been checked by a native speaker yet. Some words may be regional, borrowed from Kannada, or simply wrong.
+    <a href="contribute.html">Send a correction</a>.
   </div>
 
-  <!-- ---- prev / next ---- -->
+  <div class="u1-stage" id="stage"></div>
+
   <div class="u1-nav" id="u1Nav">
-    <button class="btn" id="prevBtn">← Back</button>
-    <button class="btn btn-dark" id="nextBtn">Next →</button>
+    <button class="btn" id="prevBtn" type="button">← Back</button>
+    <button class="btn btn-dark" id="nextBtn" type="button">Next →</button>
   </div>
 
 </main>
@@ -210,14 +105,18 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>Practice progress is kept on this page only for now. Nothing here is saved between visits.</p>
+      <p>Progress is saved on this device. Sign in to earn XP and keep a streak.</p>
       <p>Free to use, no sign-up needed.</p>
     </div>
   </div>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="site.js"></script>
+<script src="lipi-data.js"></script>
 <script src="audio-map.js"></script>
+<script src="progress.js"></script>
+<script src="unit-engine.js"></script>
 <script src="unit1.js"></script>
 </body>
 </html>

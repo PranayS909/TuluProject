@@ -53,7 +53,7 @@ function setMode(nextMode) {
   if (mode === "signup") {
     form.classList.remove("is-login");
     authTitle.textContent = "Create your account";
-    authSub.textContent = "Start your Tulu journey — it's free.";
+    authSub.textContent = "Start your Tulu journey. It's free.";
     submitBtn.textContent = "Create account";
     switchText.textContent = "Already have an account?";
     switchBtn.textContent = "Log in";

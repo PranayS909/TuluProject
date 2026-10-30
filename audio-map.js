@@ -136,6 +136,22 @@ function audioSrc(term){
   return file ? encodeURI(`audio/${file}`) : null;
 }
 
+// Playback speed for every clip: 1 (normal) or 0.75 (slow), chosen by
+// the learner and remembered on this device.
+function audioRate(){
+  try { return Number(localStorage.getItem('tuluAudioRate')) || 1; } catch (e){ return 1; }
+}
+function setAudioRate(rate){
+  try { localStorage.setItem('tuluAudioRate', String(rate)); } catch (e){ /* private mode */ }
+}
+// Every recording on the site is created through this, so the speed applies everywhere.
+function newClip(src){
+  const clip = new Audio(src);
+  clip.playbackRate = audioRate();
+  clip.preservesPitch = true;
+  return clip;
+}
+
 // Play a term's recording. Calls onMissing if there isn't one (or it
 // fails to play). Starting a new clip stops the previous one.
 let currentClip = null;
@@ -143,7 +159,7 @@ function playTerm(term, onMissing){
   const src = audioSrc(term);
   if (!src){ if (onMissing) onMissing(); return null; }
   if (currentClip) currentClip.pause();
-  currentClip = new Audio(src);
+  currentClip = newClip(src);
   currentClip.play().catch(() => { if (onMissing) onMissing(); });
   return currentClip;
 }

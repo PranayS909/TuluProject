@@ -103,7 +103,7 @@ function row(e){
 function play(e){
   const src = audioSrc(e.tulu);
   if (!src) return showToast(`No recording yet for "${e.tulu}"`);
-  new Audio(src).play().catch(() => showToast(`Couldn't play "${e.tulu}"`));
+  newClip(src).play().catch(() => showToast(`Couldn't play "${e.tulu}"`));
 }
 
 let toastTimer = null;

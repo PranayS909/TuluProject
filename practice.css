@@ -173,3 +173,133 @@
   .lm-grid{ grid-template-columns:repeat(2, minmax(0,1fr)); }
   .drop-grid{ grid-template-columns:repeat(2, minmax(0,1fr)); }
 }
+
+/* ===================================================================
+   ENGINE ADDITIONS — controls, draft notice, new exercise types
+=================================================================== */
+
+/* Tulu-Tigalari has no Google Font yet; see tools.css for details. */
+@font-face{
+  font-family:"Tulu Tigalari Site";
+  src:url("fonts/TuluTigalari.woff2") format("woff2"),
+      url("fonts/TuluTigalari.ttf") format("truetype");
+  font-display:swap;
+  unicode-range:U+11380-113FF, U+25CC;
+}
+:root{ --font-tg: "Tulu Tigalari Site", "Noto Serif Tulu Tigalari", "Noto Sans Tulu Tigalari", serif; }
+.script-kn [data-tulu]{ font-family:var(--font-kn); letter-spacing:0; }
+.script-tg [data-tulu]{ font-family:var(--font-tg); letter-spacing:0; }
+
+/* script + speed controls */
+.practice-tools{
+  display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:12px 20px;
+  margin:28px 0 24px; padding:10px 10px 10px 16px;
+  border-radius:var(--radius-xl); background:var(--surface); border:1px solid var(--line);
+}
+.tools-label{ font-size:13px; font-weight:500; color:var(--text-muted); margin-right:4px; }
+.script-switch{ display:flex; flex-wrap:wrap; align-items:center; gap:4px; }
+.script-switch button{
+  padding:6px 12px; border-radius:50px; border:1px solid transparent;
+  font-size:14px; font-weight:500; color:var(--text);
+  transition:background .2s, color .2s, border-color .2s;
+}
+.script-switch button:hover{ border-color:var(--line-strong); }
+.script-switch button.is-active{ background:var(--color-dusk); color:#fff; }
+.script-switch .kn{ font-family:var(--font-kn); }
+.slow-toggle{ display:inline-flex; align-items:center; gap:8px; font-size:14px; color:var(--text); cursor:pointer; }
+.slow-toggle input{ width:16px; height:16px; accent-color:var(--color-dusk); }
+.script-hint{ width:100%; font-size:12.5px; color:var(--text-muted); margin-top:-12px; margin-bottom:20px; }
+
+/* draft content notice */
+.draft-notice{
+  position:relative; margin-bottom:24px; padding:16px 20px 16px 24px;
+  border-radius:var(--radius-xl); background:#fbf8ef; border:1px solid #eadfbf;
+  font-size:14.5px; line-height:1.6; color:var(--text);
+}
+.draft-notice::before{ content:""; position:absolute; left:0; top:16px; bottom:16px; width:2px; border-radius:2px; background:#c9a548; }
+.draft-notice strong{ color:var(--text-strong); }
+.draft-notice a{ color:var(--accent-ink); text-decoration:underline; text-underline-offset:3px; }
+
+.save-msg{ font-size:15px !important; color:var(--text) !important; min-height:22px; }
+.save-msg a{ color:var(--accent-ink); text-decoration:underline; text-underline-offset:3px; }
+
+/* letter chart */
+.letter-grid{ display:grid; grid-template-columns:repeat(auto-fill, minmax(84px, 1fr)); gap:8px; }
+.letter-tile{
+  display:flex; flex-direction:column; align-items:center; gap:2px;
+  padding:14px 6px 10px; border-radius:var(--radius-xl);
+  background:var(--wash); border:1px solid var(--line);
+}
+.letter-kn{ font-family:var(--font-kn); font-size:30px; line-height:1.3; color:var(--text-strong); }
+.letter-rom{ font-size:13px; color:var(--text-muted); }
+
+/* multiple choice laid out 2 × 2 */
+.quiz-options-grid{ display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:10px; }
+.quiz-options-grid .quiz-choice{ text-align:center; }
+
+/* reading Kannada */
+.read-word{ font-family:var(--font-kn); font-size:clamp(44px, 7vw, 64px); line-height:1.3; color:var(--text-strong); margin:4px 0 8px; }
+.read-rom{ font-size:16px; color:var(--text-muted); margin-bottom:20px; }
+.read .quiz-choices{ margin-top:16px; }
+
+/* listen */
+.listen-play{
+  display:inline-flex; align-items:center; gap:14px;
+  margin:4px 0 20px; padding:10px 22px 10px 10px; border-radius:50px;
+  border:1px solid var(--line-strong); background:var(--surface);
+  font-size:16px; font-weight:500; color:var(--text-strong);
+  transition:border-color .2s, background .2s;
+}
+.listen-play:hover{ border-color:var(--accent); background:var(--accent-wash); }
+.listen-play .play{ --size:44px; }
+
+/* sentence builder */
+.build{ max-width:640px; margin:0 auto; text-align:center; }
+.build-prompt{ font-family:var(--font-serif); font-variation-settings:"SOFT" 100; font-size:clamp(22px, 2.6vw, 26px); color:var(--text-strong); margin-bottom:20px; }
+.build-answer{
+  min-height:64px; display:flex; flex-wrap:wrap; justify-content:center; align-items:center; gap:8px;
+  padding:12px; margin-bottom:16px;
+  border-bottom:1px solid var(--color-charcoal); background:var(--wash);
+  transition:background .2s, border-color .2s;
+}
+.build-answer:empty::before{ content:"Tap words below to build the sentence"; font-size:14px; color:var(--text-muted); }
+.build-answer.is-right{ background:var(--success-wash); border-color:var(--success); }
+.build-answer.is-wrong{ background:var(--danger-wash); border-color:var(--danger); animation:nudge .35s ease; }
+.build-pool{ display:flex; flex-wrap:wrap; justify-content:center; gap:8px; min-height:52px; margin-bottom:20px; }
+.build-actions{ display:flex; justify-content:center; gap:8px; }
+
+/* dialogue */
+.chat{ display:flex; flex-direction:column; gap:10px; max-width:600px; margin:0 auto 20px; }
+.chat-bubble{
+  max-width:78%; display:flex; flex-direction:column; gap:2px;
+  padding:12px 16px; border-radius:18px;
+  animation:bubbleIn .3s var(--ease);
+}
+@keyframes bubbleIn{ from{ opacity:0; transform:translateY(6px); } }
+.chat-bubble--them{ align-self:flex-start; background:var(--wash); border:1px solid var(--line); border-bottom-left-radius:6px; }
+.chat-bubble--you{ align-self:flex-end; background:var(--color-dusk); color:#fff; border-bottom-right-radius:6px; }
+.chat-who{ font-size:12px; font-weight:500; opacity:.7; }
+.chat-tulu{ font-family:var(--font-serif); font-variation-settings:"SOFT" 100; font-size:19px; line-height:1.35; }
+.chat-en{ font-size:13.5px; opacity:.75; }
+.chat-choices{ max-width:600px; margin:0 auto; display:flex; flex-direction:column; gap:8px; }
+.chat-goal{ font-size:14px; font-weight:500; color:var(--accent-ink); margin-bottom:4px; }
+.chat-option .chat-tulu{ font-size:17px; }
+
+/* sort into groups */
+.sort-bins{ display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:12px; }
+.sort-bin{
+  min-height:150px; padding:16px; border-radius:var(--radius-xl);
+  border:1px dashed var(--line-strong); background:var(--surface); cursor:pointer;
+  transition:border-color .2s, background .2s;
+}
+.sort-bin:hover{ border-color:var(--accent); background:var(--accent-wash); }
+.sort-bin.is-wrong{ border-color:var(--danger); background:var(--danger-wash); animation:nudge .35s ease; }
+.sort-bin-label{ font-family:var(--font-serif); font-variation-settings:"SOFT" 100; font-size:20px; color:var(--text-strong); }
+.sort-bin-hint{ font-size:13px; color:var(--text-muted); margin-top:2px; }
+.sort-bin-items{ display:flex; flex-wrap:wrap; gap:6px; margin-top:12px; }
+.drag-chip.is-sorted{ opacity:1; border-color:#bcd9c8; background:var(--success-wash); color:var(--success); cursor:default; }
+
+@media (max-width:520px){
+  .chat-bubble{ max-width:92%; }
+  .practice-tools{ padding:12px; }
+}
